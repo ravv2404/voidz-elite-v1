@@ -10,7 +10,7 @@
     <style>
         :root { 
             --neon-red: #ff0000; --neon-green: #00ff00; --neon-blue: #00f2ff;
-            --neon-purple: #bf00ff; --dark-red: #200000; --bg: #000; 
+            --dark-red: #200000; --bg: #000; 
             --card: rgba(15, 0, 0, 0.96); 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
@@ -54,12 +54,14 @@
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; }
         .nav-btn.active { color: var(--neon-red); }
 
+        /* MODAL & TOAST */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
         #userList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
         
-        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; }
-        .toast { background: rgba(20,0,0,0.9); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 5px; font-size: 11px; }
+        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; width: 250px; }
+        .toast { background: rgba(20,0,0,0.95); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 8px; font-size: 11px; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -133,10 +135,30 @@
         const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW'; 
         let SESSION = {}; let ALL_USERS = {};
 
+        // --- NOTIFICATION ENGINE ---
         function showNotify(msg) {
-            const c = document.getElementById('notification-container');
-            const t = document.createElement('div'); t.className = 'toast'; t.innerText = msg;
-            c.appendChild(t); setTimeout(() => t.remove(), 3000);
+            const container = document.getElementById('notification-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        function showRoyalNotify() {
+            const container = document.getElementById('notification-container');
+            const royal = document.createElement('div');
+            royal.className = 'toast';
+            royal.style.borderLeft = '4px solid var(--neon-blue)';
+            royal.style.background = 'rgba(0, 10, 20, 0.98)';
+            royal.style.boxShadow = '0 0 15px rgba(0, 242, 255, 0.4)';
+            royal.innerHTML = `
+                <div style="color: var(--neon-blue); font-weight: 900; font-size: 12px; font-family: 'Orbitron';">WELCOME DEVELOPER 👑</div>
+                <div style="color: #fff; font-size: 9px; margin-top: 5px; line-height: 1.4;">
+                    › STATUS: SUPREME ACTIVATED<br>› BYPASS: GRANTED
+                </div>`;
+            container.appendChild(royal);
+            setTimeout(() => royal.remove(), 5000);
         }
 
         particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
@@ -166,15 +188,10 @@
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
 
-                    // --- STYLED GREETING ---
                     if(SESSION.role === 'owner') {
-                        setTimeout(() => {
-                            alert("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n   WELCOME DEVELOPER 👑\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n› STATUS: SUPREME ACTIVATED\n› BYPASS: GRANTED\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                        }, 500);
+                        setTimeout(showRoyalNotify, 600);
                     } else {
-                        setTimeout(() => {
-                            showNotify("◢◤ Welcome !! ◢◤");
-                        }, 500);
+                        setTimeout(() => showNotify("◢◤ Welcome !! ◢◤"), 600);
                     }
                 } else { showNotify('KEY SALAH!'); }
             } catch(e) { showNotify('DATABASE ERROR!'); }
@@ -217,17 +234,13 @@
             const q = parseInt(document.getElementById('gQuota').value) || 0;
 
             if(!n || !p) return showNotify('LENGKAPI DATA!');
-
-            // LOCK QUOTA RESELLER
             if(SESSION.role === 'reseller') {
-                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('GAGAL: KUOTA ANDA HABIS!');
+                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('GAGAL: KUOTA HABIS!');
                 ALL_USERS[SESSION.username].quota -= 1;
                 SESSION.quota -= 1;
             }
 
             ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
-            
-            showNotify('UPLOADING...');
             try {
                 await pushCloudDB(ALL_USERS);
                 showNotify('KEY AKTIF!');
@@ -236,7 +249,6 @@
         }
 
         function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
-
         function searchUser() {
             const q = document.getElementById('userSearch').value.toLowerCase();
             const l = document.getElementById('userList'); l.innerHTML = "";
@@ -255,8 +267,7 @@
         }
 
         async function deleteUser(id) {
-            if (id === SESSION.username) return showNotify('CANT DELETE SELF!');
-            if (ALL_USERS[id].role === 'owner') return showNotify('OWNER IS IMMORTAL!');
+            if (id === SESSION.username || ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL TARGET!');
             if (!confirm(`HAPUS ${id.toUpperCase()}?`)) return;
             delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('ERASED!');
         }
