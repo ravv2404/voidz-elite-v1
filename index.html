@@ -10,8 +10,6 @@
         :root { --fire: #ff4500; --army: #4b5320; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        
-        /* ASH PARTICLES - SHARP CANVAS */
         #ash-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
@@ -26,7 +24,7 @@
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
 
         /* DASHBOARD */
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 45px 0 5px; background: #000; }
         .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 1px; }
@@ -62,6 +60,8 @@
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - STATUS: SECURED - ALL SYSTEMS OPERATIONAL - WELCOME OPERATOR</marquee>
+                
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
                     <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
@@ -98,43 +98,37 @@
         </nav>
     </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
-            <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-            <select id="gRole" class="input-box" onchange="toggleQArea()"></select>
-            <select id="gTime" class="input-box"></select>
-            <div id="qArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
-            <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
-        </div>
-    </div>
+    <div id="modalGen" class="modal"><div class="modal-content">
+        <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
+        <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
+        <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
+        <select id="gRole" class="input-box" onchange="toggleQArea()"></select>
+        <select id="gTime" class="input-box"></select>
+        <div id="qArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+        <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
+        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
+    </div></div>
 
-    <div id="modalDB" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px;">USER DATABASE</h3>
-            <input type="text" id="dbSearch" class="input-box" placeholder="Search..." oninput="renderDB()">
-            <div id="dbList" style="max-height:250px; overflow-y:auto; border:1px solid #222; margin-top:10px;"></div>
-            <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
-        </div>
-    </div>
+    <div id="modalDB" class="modal"><div class="modal-content">
+        <h3 style="color:var(--fire); font-size:12px;">USER DATABASE</h3>
+        <input type="text" id="dbSearch" class="input-box" placeholder="Search..." oninput="renderDB()">
+        <div id="dbList" style="max-height:250px; overflow-y:auto; border:1px solid #222; margin-top:10px;"></div>
+        <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
+    </div></div>
 
-    <div id="modalConfig" class="modal">
-        <div class="modal-content" style="border-color: var(--army);">
-            <h3 style="color:var(--army); font-size:12px; font-family:'Orbitron'"><i class="fas fa-satellite"></i> INTEL CONFIG</h3>
-            <input type="text" id="botToken" class="input-box" placeholder="BOT TOKEN TELEGRAM" style="margin-top:15px;">
-            <input type="text" id="chatID" class="input-box" placeholder="CHAT ID MARKAS">
-            <button class="btn-main" style="background:var(--army); color:#fff;" onclick="saveConfig()">LOCK INTEL</button>
-            <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">ABORT</button>
-        </div>
-    </div>
+    <div id="modalConfig" class="modal"><div class="modal-content" style="border-color: var(--army);">
+        <h3 style="color:var(--army); font-size:12px; font-family:'Orbitron'"><i class="fas fa-satellite"></i> INTEL CONFIG</h3>
+        <input type="text" id="botToken" class="input-box" placeholder="BOT TOKEN TELEGRAM" style="margin-top:15px;">
+        <input type="text" id="chatID" class="input-box" placeholder="CHAT ID MARKAS">
+        <button class="btn-main" style="background:var(--army); color:#fff;" onclick="saveConfig()">LOCK INTEL</button>
+        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">ABORT</button>
+    </div></div>
 
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOGS = [];
 
-        // --- ASH CANVAS (STABLE) ---
+        // --- ASH CANVAS ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -154,7 +148,7 @@
         async function sync() { try { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); } catch(e) { notify("SYNC ERROR!"); } }
         async function save() { try { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); } catch(e) { notify("SAVE ERROR!"); } }
 
-        // --- MILITARY SPY TELEGRAM ---
+        // --- SPY NOTIF ---
         async function sendTele(msg) {
             const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
             if(!token || !chat) return;
@@ -168,11 +162,11 @@
             notify("INTEL LOCKED!"); closeModal();
         }
 
-        // --- AUTH & ENGINE ---
+        // --- CORE ENGINE ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            if(!u || !p) return notify("DATA KOSONG!");
-            btn.disabled = true; btn.innerText = "AUTHENTICATING...";
+            if(!u || !p) return notify("LENGKAPI DATA!");
+            btn.disabled = true; btn.innerText = "WAITING...";
             try {
                 await sync();
                 if(DB[u] && DB[u].pw === p) {
@@ -181,7 +175,7 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); getIP(); sendTele("LOGIN DETECTED - Dashboard Accessed");
+                    renderHome(); getIP(); sendTele("LOGIN - User Entered");
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("ACCESS DENIED!"); btn.disabled = false; btn.innerText = "IGNITE"; }
@@ -193,13 +187,18 @@
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
             document.getElementById('uRole').className = "info-val " + (USER.role === 'owner' ? "neon-red" : "neon-blue");
+            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+            // New Tools for Members
+            m.innerHTML += `<div onclick="notify('YOUR IP: ' + document.getElementById('wifiIP').value)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00ff00; border-radius:10px;"><i class="fas fa-network-wired" style="color:#00ff00"></i><br><span style="font-size:9px;">IP LOOKUP</span></div>`;
+            m.innerHTML += `<div onclick="notify('OS: ' + navigator.platform)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #ff00ff; border-radius:10px;"><i class="fas fa-mobile-alt" style="color:#ff00ff"></i><br><span style="font-size:9px;">DEVICE</span></div>`;
+
+            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             if(USER.role === 'owner') {
-                m.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-database" style="color:var(--fire)"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
+                m.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-database" style="color:#00e5ff"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
                 m.innerHTML += `<div onclick="openModal('modalConfig')" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--army); border-radius:10px;"><i class="fas fa-satellite-dish" style="color:var(--army)"></i><br><span style="font-size:9px;">CONFIG</span></div>`;
             }
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-power-off" style="color:var(--fire)"></i><br><span style="font-size:9px;">EXIT</span></div>`;
+            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
         function openGen() {
@@ -225,7 +224,7 @@
             DB[u] = { pw: p, role: r, exp: t, quota: q };
             if(USER.role === 'reseller') { DB[USER.id].quota--; USER.quota--; }
             await save();
-            sendTele(`GENERATE UNIT - Created ${r.toUpperCase()} | ID: ${u}`);
+            sendTele(`GENERATE - Created ${r.toUpperCase()} | ID: ${u}`);
             notify("UNIT PUSHED!"); closeModal(); renderHome(); addLog("GEN", `UNIT ${u} DEPLOYED`);
             btn.disabled = false; btn.innerText = "PUSH UNIT";
         }
@@ -240,19 +239,9 @@
                 }
             });
         }
-        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", `WIPED ${k}`); sendTele(`DELETE ACTION - Removed ID: ${k}`); } }
+        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", `WIPED ${k}`); sendTele(`DELETE - Removed ID: ${k}`); } }
         function addLog(a, d) { LOGS.unshift(`> [${new Date().toLocaleTimeString()}] ${a}: ${d}`); if(USER.role === 'owner') document.getElementById('logContent').innerHTML = LOGS.join('<br>'); }
         async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
+        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'attack') getIP(); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         
-        function startAttack(m) { 
-            const target = m === 'WIFI' ? document.getElementById('targetWiFi').value : document.getElementById('targetBug').value;
-            notify("STRIKE EXECUTED!"); 
-            addLog("STRIKE", m); 
-            sendTele(`STRIKE LAUNCHED - Method: ${m} | Target: ${target}`);
-        }
-    </script>
-</body>
-</html>
