@@ -14,40 +14,34 @@
             --card: rgba(15, 0, 0, 0.96); 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; height: 100vh; overflow: hidden; width: 100%; }
+        body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* FIX BACKGROUND & Z-INDEX */
-        #particles-js { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        /* FIX BACKGROUND PARTIKEL */
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+        /* AREA KONTEN UTAMA */
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; z-index: 20; }
+        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 20; }
         .login-box { 
             width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; 
             padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
-            pointer-events: auto; /* Biar bisa diklik */
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+            pointer-events: auto !important;
         }
 
         .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 12px; object-fit: cover; display: block; }
         .login-box h2 { font-family: 'Orbitron'; font-size: 16px; color: var(--neon-red); margin-bottom: 15px; }
         
-        .input-box { 
-            width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; 
-            color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; 
-            pointer-events: auto;
-        }
+        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; pointer-events: auto; }
         
-        .btn-main { 
-            width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; 
-            font-weight: 900; cursor: pointer; font-family: 'Orbitron'; position: relative; 
-            z-index: 100; pointer-events: auto !important;
-        }
+        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; z-index: 100; pointer-events: auto !important; }
 
         .app-title { font-family: 'Orbitron'; color: var(--neon-red); text-align: center; padding: 15px 0; font-size: 18px; }
         .banner-container { width: 92%; aspect-ratio: 3/1; margin: 0 auto 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
         .banner-video { width: 100%; height: 100%; object-fit: cover; }
 
-        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; position: relative; z-index: 20; }
+        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; z-index: 30; }
         .tab-content { display: none; }
         .active-tab { display: block !important; }
         
@@ -64,13 +58,12 @@
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; pointer-events: auto; }
         .nav-btn.active { color: var(--neon-red); }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; pointer-events: auto; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; pointer-events: auto; }
+        .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
         #userList, #logList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
         
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; width: 250px; }
-        .toast { background: rgba(20,0,0,0.95); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 8px; font-size: 11px; animation: slideIn 0.3s ease-out; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast { background: rgba(20,0,0,0.95); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 8px; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -162,24 +155,12 @@
             setTimeout(() => toast.remove(), 3500);
         }
 
-        function showRoyalNotify() {
-            const container = document.getElementById('notification-container');
-            const royal = document.createElement('div');
-            royal.className = 'toast';
-            royal.style.borderLeft = '4px solid var(--neon-blue)';
-            royal.style.background = 'rgba(0, 10, 20, 0.98)';
-            royal.style.boxShadow = '0 0 15px rgba(0, 242, 255, 0.4)';
-            royal.innerHTML = `<div style="color: var(--neon-blue); font-weight: 900; font-size: 12px; font-family: 'Orbitron';">WELCOME DEVELOPER 👑</div><div style="color: #fff; font-size: 9px; margin-top: 5px; line-height: 1.4;">› STATUS: SUPREME ACTIVATED<br>› BYPASS: GRANTED</div>`;
-            container.appendChild(royal);
-            setTimeout(() => royal.remove(), 5000);
-        }
-
         async function sendTele(msg) {
             const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`;
-            try { await fetch(url); } catch(e) { console.log("Tele Error"); }
+            try { await fetch(url); } catch(e) {}
         }
 
-        particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
+        particlesJS("particles-js", { "particles": { "number": { "value": 35 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
 
         async function pushCloudDB(data) {
             await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
@@ -188,27 +169,24 @@
         async function auth() {
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
-            const btn = document.getElementById('igniteBtn');
-            if(!u || !p) return showNotify("ISI DULU BRE!");
-            btn.innerText = "IGNITING...";
+            if(!u || !p) return showNotify("ISI DATA!");
+            document.getElementById('igniteBtn').innerText = "IGNITING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
                 ALL_USERS = await res.json();
                 if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
                     SESSION = { username: u, ...ALL_USERS[u] };
                     const durasi = SESSION.exp === '999' ? 'UNLIMITED' : '1 MONTH';
-                    sendTele(`🌐 <b>LOGIN DETECTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> <code>${SESSION.role.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasi}</code>\n⏰ <b>LOG:</b> <code>${new Date().toLocaleString('id-ID')}</code>\n━━━━━━━━━━━━━━━━━━`);
+                    sendTele(`🌐 <b>LOGIN DETECTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> <code>${SESSION.role.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasi}</code>\n━━━━━━━━━━━━━━━━━━`);
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
-                    if(SESSION.role === 'owner') setTimeout(showRoyalNotify, 600);
-                    else setTimeout(() => showNotify("◢◤ Welcome !! ◢◤"), 600);
                 } else {
-                    sendTele(`⚠️ <b>INTRUSION ALERT</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>ID:</b> <code>${u}</code>\n🔑 <b>PASS:</b> <code>${p}</code>\n📍 <b>STATUS:</b> ACCESS DENIED`);
-                    showNotify('KEY SALAH!');
+                    sendTele(`⚠️ <b>LOGIN FAILED</b>\n👤 User: ${u}\n🔑 Pass: ${p}`);
+                    showNotify('SALAH!');
                 }
-            } catch(e) { showNotify('DB ERROR!'); } finally { btn.innerText = "IGNITE"; }
+            } catch(e) { showNotify('OFFLINE!'); } finally { document.getElementById('igniteBtn').innerText = "IGNITE"; }
         }
 
         function renderUI() {
@@ -241,38 +219,34 @@
 
         async function confirmGen() {
             const n = document.getElementById('gName').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            const durasiBaru = t === '999' ? 'UNLIMITED' : '1 MONTH';
-            if(!n || !p) return showNotify('LENGKAPI DATA!');
+            if(!n || !p) return showNotify('LENGKAPI!');
             if(SESSION.role === 'reseller') {
-                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('GAGAL: KUOTA HABIS!');
+                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('KUOTA HABIS!');
                 ALL_USERS[SESSION.username].quota -= 1; SESSION.quota -= 1;
             }
             ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
             if(!ALL_USERS._logs) ALL_USERS._logs = [];
             const timeNow = new Date().toLocaleString('id-ID');
             ALL_USERS._logs.unshift({ by: SESSION.username, type: "GEN", target: n, role: r, time: timeNow });
-            sendTele(`💎 <b>KEY GENERATED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>BY:</b> <code>${SESSION.username.toUpperCase()}</code>\n🎯 <b>NEW ID:</b> <code>${n.toUpperCase()}</code>\n🎖️ <b>ROLE:</b> <code>${r.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasiBaru}</code>\n⏰ <b>TIME:</b> <code>${timeNow}</code>\n━━━━━━━━━━━━━━━━━━`);
-            try { await pushCloudDB(ALL_USERS); showNotify('KEY AKTIF!'); closeModal(); renderUI(); } catch(e) { showNotify('SERVER ERROR!'); }
+            sendTele(`💎 <b>KEY GENERATED</b>\n👤 BY: ${SESSION.username}\n🎯 NEW: ${n}\n🎖️ ROLE: ${r}\n⏳ EXP: ${t === '999' ? 'PERM' : '30D'}`);
+            await pushCloudDB(ALL_USERS); showNotify('BERHASIL!'); closeModal(); renderUI();
         }
 
         async function executeLethalAtk() {
             const target = document.getElementById('waTarget').value.trim(), type = document.getElementById('bugType').value;
-            if(!target || target.length < 10) return showNotify("TARGET INVALID!");
+            if(!target || target.length < 10) return showNotify("TARGET SALAH!");
             const timeNow = new Date().toLocaleString('id-ID');
             if(!ALL_USERS._logs) ALL_USERS._logs = [];
             ALL_USERS._logs.unshift({ by: SESSION.username, type: "ATTACK", target: target, method: type.toUpperCase(), time: timeNow });
-            sendTele(`🚀 <b>ATTACK EXECUTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>EXECUTOR:</b> <code>${SESSION.username.toUpperCase()}</code>\n🎯 <b>TARGET:</b> <code>${target}</code>\n💣 <b>METHOD:</b> <code>${type.toUpperCase()}</code>\n⏰ <b>TIME:</b> <code>${timeNow}</code>\n━━━━━━━━━━━━━━━━━━`);
-            try { await pushCloudDB(ALL_USERS); showNotify("ATTACK SENT!"); } catch(e) { showNotify("LOG ERROR!"); }
+            sendTele(`🚀 <b>ATTACK SENT</b>\n👤 BY: ${SESSION.username}\n🎯 TARGET: ${target}\n💣 METHOD: ${type.toUpperCase()}`);
+            await pushCloudDB(ALL_USERS); showNotify("SENT!");
         }
 
         function openLogModal() {
             document.getElementById('logModal').style.display = 'flex';
             const l = document.getElementById('logList'); l.innerHTML = "";
-            const logs = ALL_USERS._logs || [];
-            if(logs.length === 0) l.innerHTML = "<center>NO ACTIVITY</center>";
-            logs.forEach(log => {
-                const isAtk = log.type === "ATTACK";
-                l.innerHTML += `<div style="border-bottom:1px solid #111; padding:8px 0; font-size:9px;"><span style="color:#666">[${log.time}]</span><br><b style="color:var(--neon-blue)">${log.by.toUpperCase()}</b> ${isAtk ? `launch <b style="color:var(--neon-red)">${log.method}</b> to <b style="color:#fff">${log.target}</b>` : `gen <b style="color:var(--neon-green)">${log.target.toUpperCase()}</b> (${log.role})`}</div>`;
+            (ALL_USERS._logs || []).forEach(log => {
+                l.innerHTML += `<div style="border-bottom:1px solid #111; padding:5px 0; font-size:9px;"><span style="color:#666">[${log.time}]</span><br><b style="color:red">${log.by}</b> -> ${log.type} ${log.target}</div>`;
             });
         }
 
@@ -281,5 +255,24 @@
             const q = document.getElementById('userSearch').value.toLowerCase(), l = document.getElementById('userList'); l.innerHTML = "";
             Object.keys(ALL_USERS).forEach(k => {
                 if(!k.startsWith('_') && k.includes(q)) {
-                    const isOwner = ALL_USERS[k].role === 'owner';
-                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; align-items:center;"><div><span style="color:${isOwner ? 'var(--neon-blue)' : '#fff'}; font-weight:bold;">${k.toUpperCase()}</span><br><small style="font-size:8px; color:#888;">${ALL_USERS[k].role.toUpperCase()} | ${ALL_USERS[k].exp === '999' ? 'PERM' : '30D'}</small></div>${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:1px solid red; font-size:9px; padding:2px 5px;">DEL</button>` : `<span 
+                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #111; font-size:10px;"><span>${k.toUpperCase()} (${ALL_USERS[k].role})</span><button onclick="deleteUser('${k}')" style="color:red; background:none; border:none;">[X]</button></div>`;
+                }
+            });
+        }
+
+        async function deleteUser(id) {
+            if (id === SESSION.username || ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL!');
+            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('DELETED!');
+        }
+
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
+            document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    </script>
+</body>
+</html>
+
