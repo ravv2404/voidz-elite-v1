@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | CLEAN EDITION</title>
+    <title>VOIDZ SUPREME V1 | WIFI KILLER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -39,6 +39,15 @@
         .tab-content { display: none; animation: fadeIn 0.3s forwards; }
         .active-tab { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* SWITCH TOGGLE */
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #110000; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #300; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: #222; transition: .4s; border-radius: 24px; border: 1px solid #444; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 3px; background-color: #555; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4a0000; border-color: var(--neon-red); }
+        input:checked + .slider:before { transform: translateX(26px); background-color: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 10px; font-family: 'Orbitron'; }
@@ -86,14 +95,26 @@
             </div>
 
             <div id="tabWA" class="tab-content">
-                <div style="background:var(--card); padding:20px; border-radius:10px; border:1px solid #300;">
-                    <h3 style="color:red; text-align:center; margin-bottom:15px; font-family:'Orbitron';">ATTACK UNIT</h3>
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300; margin-bottom:15px;">
+                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:12px; font-family:'Orbitron';">WA ATTACK UNIT</h3>
                     <input type="number" id="target" class="input-box" placeholder="628xxxxxxx">
                     <select id="method" class="input-box">
                         <option value="VOID_CRASH">VOID DATABASE CRASH</option>
                         <option value="IOS_UI_FREEZE">iOS UI FREEZE</option>
                     </select>
-                    <button class="btn-main" onclick="startAttack()">EXECUTE ATTACK</button>
+                    <button class="btn-main" onclick="startAttack()">EXECUTE WA</button>
+                </div>
+
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300;">
+                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:12px; font-family:'Orbitron';">WIFI KILLER UNIT</h3>
+                    <input type="text" id="wifiIp" class="input-box" placeholder="IP TARGET (192.168.x.x)">
+                    <div class="switch-container">
+                        <span style="font-size:10px; color:#888;">STATUS: <b id="wifiStatus" style="color:#555">STANDBY</b></span>
+                        <label class="switch">
+                            <input type="checkbox" id="wifiToggle" onchange="toggleWifi()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,16 +204,11 @@
             document.getElementById('uName').innerText = USER.id.toUpperCase();
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uTimeDisplay').innerText = USER.exp || 'LIFETIME';
-            
-            // LOGIC HIDE QUOTA BUAT MEMBER
             const qRow = document.getElementById('quotaRow');
-            if(USER.role === 'member') {
-                qRow.style.display = 'none';
-            } else {
+            if(USER.role === 'member') { qRow.style.display = 'none'; } else {
                 qRow.style.display = 'flex';
                 document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : (USER.quota || 0);
             }
-            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role === 'owner' || (USER.role === 'reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
             if(USER.role === 'owner') {
@@ -200,6 +216,26 @@
                 m.innerHTML += `<div class="menu-item" onclick="openLog()"><i class="fas fa-history"></i><span>LOGS</span></div>`;
             }
             m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red"></i><span>LOGOUT</span></div>`;
+        }
+
+        function toggleWifi() {
+            const ip = document.getElementById('wifiIp').value;
+            const statusText = document.getElementById('wifiStatus');
+            const isOn = document.getElementById('wifiToggle').checked;
+            if(!ip && isOn) {
+                document.getElementById('wifiToggle').checked = false;
+                return notify("INPUT IP DULU!");
+            }
+            if(isOn) {
+                statusText.innerText = "KILLING...";
+                statusText.style.color = "var(--neon-red)";
+                notify("WIFI KILLER ACTIVATED!");
+                tele(`🔥 <b>WIFI KILLER ON</b>\nTarget IP: ${ip}\nBy: ${USER.id}`);
+            } else {
+                statusText.innerText = "STANDBY";
+                statusText.style.color = "#555";
+                notify("WIFI KILLER STOPPED.");
+            }
         }
 
         function openGen() {
@@ -259,8 +295,8 @@
             if(!t) return notify("NOMOR KOSONG!");
             notify("ATTACKING...");
             if(!DB._logs) DB._logs = [];
-            DB._logs.unshift({ time: new Date().toLocaleString(), by: USER.id, action: "ATTACK", target: t });
-            await pushDB(); tele(`🚀 <b>ATTACK SENT</b>\nTarget: ${t}\nBy: ${USER.id}`);
+            DB._logs.unshift({ time: new Date().toLocaleString(), by: USER.id, action: "ATTACK WA", target: t });
+            await pushDB(); tele(`🚀 <b>WA ATTACK SENT</b>\nTarget: ${t}\nBy: ${USER.id}`);
             setTimeout(() => notify("SENT SUCCESS!"), 2000);
         }
 
@@ -268,11 +304,4 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab' + t.toUpperCase()).classList.add('active-tab');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000", "opacity": 0.1 } } });
-    </script>
-</body>
-</html>
+      
