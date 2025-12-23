@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | FIXED LOGIN</title>
+    <title>VOIDZ SUPREME V1 | FINAL STABLE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,23 +12,31 @@
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        
+        /* LOGIN */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 15px; object-fit: cover; display: block; }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 12px; outline: none; border-radius: 5px; }
         .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; }
+
+        /* APP */
         .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; }
         .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 1px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; }
         .banner-video { width: 100%; height: 100%; object-fit: cover; }
+        
         .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .info-icon { color: var(--neon-red); font-size: 14px; width: 20px; }
         .info-label { font-size: 10px; color: #666; font-weight: bold; }
         .info-val { font-size: 12px; color: #fff; display: block; }
+        
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
         .menu-item i { color: var(--neon-red); font-size: 20px; margin-bottom: 8px; }
         .menu-item span { font-size: 10px; font-family: 'Orbitron'; display: block; }
+
+        /* ATTACK UNIT */
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #110000; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #300; }
         .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -36,12 +44,15 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 3px; background-color: #555; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4a0000; border-color: var(--neon-red); }
         input:checked + .slider:before { transform: translateX(26px); background-color: var(--neon-red); }
+
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 10px; font-family: 'Orbitron'; }
         .nav-btn.active { color: var(--neon-red); }
+
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #080000; border: 1px solid var(--neon-red); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         .list-container { max-height: 200px; overflow-y: auto; margin-top: 10px; background: #000; padding: 10px; border: 1px solid #222; font-size: 11px; }
+
         #notif-box { position: fixed; top: 20px; right: 20px; z-index: 9999; width: 250px; }
         .toast { background: #111; border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 10px; font-size: 11px; animation: slideIn 0.3s; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -52,6 +63,7 @@
 <body>
     <div id="particles-js"></div>
     <div id="notif-box"></div>
+
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
@@ -62,10 +74,14 @@
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
+
         <div id="mainApp" class="container">
             <div class="banner-container">
-                <video class="banner-video" autoplay loop muted playsinline><source src="dashboard.mp4" type="video/mp4"></video>
+                <video id="homeVideo" class="banner-video" autoplay loop muted playsinline webkit-playsinline>
+                    <source src="dashboard.mp4" type="video/mp4">
+                </video>
             </div>
+
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-id-badge info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uName" class="info-val">-</span></div></div>
@@ -75,6 +91,7 @@
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
             </div>
+
             <div id="tabWA" class="tab-content">
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300; margin-bottom:15px;">
                     <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:12px; font-family:'Orbitron';">WA ATTACK UNIT</h3>
@@ -91,15 +108,33 @@
                 </div>
             </div>
         </div>
+
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('wa', this)"><i class="fab fa-whatsapp"></i><span>ATTACK</span></div>
         </nav>
     </div>
 
-    <div id="modalGen" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:15px;">CREATE ACCESS</h3><input type="text" id="gUser" class="input-box" placeholder="ID"><input type="text" id="gPass" class="input-box" placeholder="KEY"><select id="gRole" class="input-box" onchange="checkRole()"></select><select id="gTime" class="input-box"></select><div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div><button class="btn-main" onclick="doGenerate()">PUSH DATA</button><button onclick="closeModal()" style="color:#555;margin-top:10px;background:none;border:none;width:100%">CANCEL</button></div></div>
-    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:10px;">DATABASE</h3><input type="text" id="search" class="input-box" placeholder="Search..." oninput="renderDB()"><div id="dbList" class="list-container"></div><button class="btn-main" onclick="closeModal()">CLOSE</button></div></div>
-    <div id="modalLog" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:10px;">LOGS</h3><div id="logList" class="list-container"></div><button class="btn-main" onclick="closeModal()">CLOSE</button></div></div>
+    <div id="modalGen" class="modal">
+        <div class="modal-content">
+            <h3 style="color:red;margin-bottom:15px;">CREATE ACCESS</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="ID">
+            <input type="text" id="gPass" class="input-box" placeholder="KEY">
+            <select id="gRole" class="input-box" onchange="checkRole()"></select>
+            <select id="gTime" class="input-box"></select>
+            <div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div>
+            <button class="btn-main" onclick="doGenerate()">PUSH DATA</button>
+            <button onclick="closeModal()" style="color:#555;margin-top:10px;background:none;border:none;width:100%">CANCEL</button>
+        </div>
+    </div>
+
+    <div id="modalDB" class="modal">
+        <div class="modal-content">
+            <h3 style="color:red;margin-bottom:10px;">DATABASE</h3>
+            <input type="text" id="search" class="input-box" placeholder="Search..." oninput="renderDB()"><div id="dbList" class="list-container"></div>
+            <button class="btn-main" onclick="closeModal()">CLOSE</button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -119,6 +154,11 @@
                 await syncDB();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
+                    
+                    // Force Play Video
+                    const v = document.getElementById('homeVideo');
+                    if(v) { v.muted = true; v.play().catch(() => {}); }
+
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
@@ -140,10 +180,7 @@
             }
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role !== 'member') m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
-            if(USER.role === 'owner') {
-                m.innerHTML += `<div class="menu-item" onclick="openDB()"><i class="fas fa-database"></i><span>DATABASE</span></div>`;
-                m.innerHTML += `<div class="menu-item" onclick="openLog()"><i class="fas fa-history"></i><span>LOGS</span></div>`;
-            }
+            if(USER.role === 'owner') m.innerHTML += `<div class="menu-item" onclick="openDB()"><i class="fas fa-database"></i><span>DATABASE</span></div>`;
             m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><span>LOGOUT</span></div>`;
         }
 
@@ -175,6 +212,7 @@
             }
             DB[u] = { pw: p, role: r, quota: q, exp: t };
             await pushDB(); notify("PUSHED!"); closeModal(); renderHome();
+            tele(`💎 <b>NEW KEY</b>\nTarget: ${u}\nBy: ${USER.id}`);
         }
 
         function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
@@ -203,4 +241,3 @@
     </script>
 </body>
 </html>
-
