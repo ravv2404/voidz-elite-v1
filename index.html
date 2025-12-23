@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | TIME EDITION</title>
+    <title>VOIDZ SUPREME V1 | FINAL EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -81,7 +81,7 @@
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-id-badge info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uName" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-crown info-icon"></i><div><span class="info-label">ROLE</span><span id="uRole" class="info-val">-</span></div></div>
-                    <div class="info-row"><i class="fas fa-clock info-icon"></i><div><span class="info-label">EXPIRATION</span><span id="uTimeDisplay" class="info-val">-</span></div></div>
+                    <div class="info-row"><i class="fas fa-clock info-icon"></i><div><span class="info-label">STATUS</span><span id="uTimeDisplay" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-bolt info-icon"></i><div><span class="info-label">QUOTA</span><span id="uQuota" class="info-val">-</span></div></div>
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
@@ -94,7 +94,6 @@
                     <select id="method" class="input-box">
                         <option value="VOID_CRASH">VOID DATABASE CRASH</option>
                         <option value="IOS_UI_FREEZE">iOS UI FREEZE</option>
-                        <option value="GHOST_STUCK">GHOST LOG STUCK</option>
                     </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE ATTACK</button>
                 </div>
@@ -112,14 +111,8 @@
             <h3 style="color:var(--neon-red); margin-bottom:15px; font-size:14px;">CREATE ACCESS</h3>
             <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
             <input type="text" id="gPass" class="input-box" placeholder="NEW KEY">
-            <select id="gRole" class="input-box" onchange="checkRole()">
-                <option value="member">MEMBER</option>
-                <option value="reseller">RESELLER</option>
-            </select>
-            <select id="gTime" class="input-box">
-                <option value="30D">1 MONTH</option>
-                <option value="LIFETIME">LIFETIME</option>
-            </select>
+            <select id="gRole" class="input-box" onchange="checkRole()"></select>
+            <select id="gTime" class="input-box"></select>
             <div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
             <button class="btn-main" onclick="doGenerate()">PUSH DATA</button>
             <button onclick="closeModal()" style="background:none; border:none; color:#555; width:100%; margin-top:10px;">CANCEL</button>
@@ -137,7 +130,7 @@
 
     <div id="modalLog" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--neon-red); margin-bottom:10px;">LOGS</h3>
+            <h3 style="color:var(--neon-red); margin-bottom:10px;">SYSTEM LOGS</h3>
             <div id="logList" class="list-container"></div>
             <button class="btn-main" onclick="closeModal()">CLOSE</button>
         </div>
@@ -193,7 +186,6 @@
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uTimeDisplay').innerText = USER.exp || 'LIFETIME';
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : (USER.quota || 0);
-            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role === 'owner' || (USER.role === 'reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
             if(USER.role === 'owner') {
@@ -203,27 +195,28 @@
             m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red"></i><span>LOGOUT</span></div>`;
         }
 
-        function openGen() { document.getElementById('modalGen').style.display = 'flex'; }
+        function openGen() {
+            document.getElementById('modalGen').style.display = 'flex';
+            const rS = document.getElementById('gRole'); const tS = document.getElementById('gTime');
+            rS.innerHTML = (USER.role === 'owner') ? '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>' : '<option value="member">MEMBER</option>';
+            tS.innerHTML = '<option value="30D">1 MONTH</option>';
+            if (USER.role === 'owner' || USER.exp === 'LIFETIME') tS.innerHTML += '<option value="LIFETIME">LIFETIME</option>';
+            checkRole();
+        }
+
         function checkRole() { document.getElementById('resellerOnly').style.display = document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'; }
         
         async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), 
-                  p = document.getElementById('gPass').value.trim(), 
-                  r = document.getElementById('gRole').value, 
-                  t = document.getElementById('gTime').value,
-                  q = parseInt(document.getElementById('gQuota').value) || 0;
-            
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
             if(!u || !p) return notify("ISI DATA!");
-            
             if(USER.role === 'reseller') {
                 if(USER.quota <= 0) return notify("KUOTA HABIS!");
+                if(r === 'reseller' || (USER.exp === '30D' && t === 'LIFETIME')) return notify("ILLEGAL!");
                 DB[USER.id].quota -= 1; USER.quota -= 1;
             }
-            
             DB[u] = { pw: p, role: r, quota: q, exp: t };
             if(!DB._logs) DB._logs = [];
             DB._logs.unshift({ time: new Date().toLocaleString(), by: USER.id, action: `GEN ${r}`, target: u });
-            
             await pushDB(); notify("SUCCESS!"); closeModal(); renderHome();
             tele(`💎 <b>NEW KEY</b>\nBy: ${USER.id}\nTarget: ${u}\nRole: ${r}\nTime: ${t}`);
         }
@@ -235,10 +228,7 @@
                 if(!k.startsWith('_') && k.includes(s)) {
                     const isOwner = DB[k].role === 'owner';
                     l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111;">
-                        <div style="font-size:10px;">
-                            <b>${isOwner ? '👑' : ''}${k}</b> [${DB[k].role}]<br>
-                            <small style="color:#555">${DB[k].exp || 'LIFETIME'}</small>
-                        </div>
+                        <div style="font-size:10px;"><b>${isOwner?'👑':''}${k}</b> [${DB[k].role}]<br><small>${DB[k].exp||'LIFETIME'}</small></div>
                         ${isOwner ? '<i class="fas fa-shield-alt" style="color:red"></i>' : `<i class="fas fa-trash" style="color:#444" onclick="delUser('${k}')"></i>`}
                     </div>`;
                 }
@@ -258,12 +248,12 @@
         }
 
         async function startAttack() {
-            const t = document.getElementById('target').value, m = document.getElementById('method').value;
+            const t = document.getElementById('target').value;
             if(!t) return notify("NOMOR KOSONG!");
             notify("ATTACKING...");
             if(!DB._logs) DB._logs = [];
             DB._logs.unshift({ time: new Date().toLocaleString(), by: USER.id, action: "ATTACK", target: t });
-            await pushDB(); tele(`🚀 <b>ATTACK SENT</b>\nTarget: ${t}\nMethod: ${m}\nBy: ${USER.id}`);
+            await pushDB(); tele(`🚀 <b>ATTACK SENT</b>\nTarget: ${t}\nBy: ${USER.id}`);
             setTimeout(() => notify("SENT SUCCESS!"), 2000);
         }
 
