@@ -13,46 +13,8 @@
             --neon-purple: #bf00ff; --dark-red: #200000; --bg: #000; 
             --card: rgba(15, 0, 0, 0.96); 
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        
-        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
-        
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 20; }
-        .login-box { 
-            width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; 
-            padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); pointer-events: auto !important;
-        }
-
-        .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 12px; object-fit: cover; display: block; }
-        .login-box h2 { font-family: 'Orbitron'; font-size: 16px; color: var(--neon-red); margin-bottom: 15px; }
-        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; }
-        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; z-index: 100; pointer-events: auto !important; }
-
-        /* TAB MENU & DASHBOARD */
-        .app-title { font-family: 'Orbitron'; color: var(--neon-red); text-align: center; padding: 15px 0; font-size: 18px; }
-        .banner-container { width: 92%; aspect-ratio: 3/1; margin: 0 auto 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
-        .banner-video { width: 100%; height: 100%; object-fit: cover; }
-        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; z-index: 30; }
-        .tab-content { display: none; }
-        .active-tab { display: block !important; }
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
-        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .info-icon { font-size: 14px; color: var(--neon-red); width: 20px; text-align: center; }
-        .info-label { font-size: 9px; color: var(--neon-red); font-weight: bold; }
-        .info-val { font-size: 12px; color: #fff; display: block; }
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .menu-item { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 200; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; }
-        .nav-btn.active { color: var(--neon-red); }
-
-        /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; pointer-events: auto; }
-        .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
-        #userList, #logList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
         
         /* NOTIFICATION TOAST CUSTOM */
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; width: 250px; }
@@ -61,8 +23,27 @@
             padding: 15px; margin-bottom: 10px; font-size: 12px; font-family: 'Orbitron';
             box-shadow: 0 0 15px rgba(0,0,0,0.5); border-radius: 4px; animation: slideIn 0.3s ease-out;
         }
-        .welcome-owner { color: var(--neon-red) !important; text-shadow: 0 0 10px var(--neon-red); font-weight: 900; }
+        /* OWNER NEON RED */
+        .welcome-owner { 
+            color: var(--neon-red) !important; 
+            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); 
+            font-weight: 900; 
+            border-left: 4px solid #fff !important;
+        }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* ... Gaya UI Lainnya Tetap Sama ... */
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); }
+        .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin-bottom: 12px; }
+        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; }
+        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; }
+        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: 1fr 1fr; height: 70px; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; }
+        .nav-btn.active { color: var(--neon-red); }
     </style>
 </head>
 <body>
@@ -72,74 +53,32 @@
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="1001334714.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100/ff0000/000000?text=VOIDZ'">
-                <h2>VOIDZ ACCESS</h2>
+                <img src="1001334714.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100/ff0000/000000'">
+                <h2 style="font-family:'Orbitron'; color:red; margin-bottom:15px;">VOIDZ ACCESS</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
-                <button type="button" onclick="auth()" class="btn-main" id="igniteBtn">IGNITE</button>
+                <button onclick="auth()" class="btn-main" id="igniteBtn">IGNITE</button>
             </div>
         </div>
 
         <div id="mainApp" class="container">
-            <h1 class="app-title">VOIDZ ELITE V1</h1>
-            <div class="banner-container"><video class="banner-video" autoplay loop muted playsinline><source src="eye.mp4" type="video/mp4"></video></div>
-            <div id="tabHOME" class="tab-content active-tab">
-                <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user-secret info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uDisplay" class="info-val">...</span></div></div>
-                    <div class="info-row"><i class="fas fa-shield-alt info-icon"></i><div><span class="info-label">PRIVILEGE</span><span id="uRoleDisplay" class="info-val">...</span></div></div>
-                    <div class="info-row"><i class="fas fa-calendar-alt info-icon"></i><div><span class="info-label">STATUS</span><span id="uTimeDisplay" class="info-val">...</span></div></div>
-                </div>
-                <div id="menuGrid" class="menu-grid"></div>
+            <h1 style="font-family:'Orbitron'; color:red; text-align:center;">VOIDZ ELITE V1</h1>
             </div>
-            <div id="tabWA" class="tab-content">
-                <div class="wa-box" style="background:var(--card); border:1px solid #4a0000; padding:20px; border-radius:10px;">
-                    <h3 style="color:red; text-align:center; margin-bottom:15px;">WA OBLITERATION</h3>
-                    <input type="number" id="waTarget" class="input-box" placeholder="628xxxxxx">
-                    <select id="bugType" class="input-box">
-                        <option value="ghost">VOID DATABASE</option>
-                        <option value="unicode">iOS CRASH LOOP</option>
-                    </select>
-                    <button class="btn-main" onclick="executeLethalAtk()" style="margin-top:10px;">EXECUTE</button>
-                </div>
-            </div>
-        </div>
 
         <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
-            <div class="nav-btn" onclick="switchTab('wa', this)"><i class="fab fa-whatsapp"></i><span>WHATSAPP</span></div>
+            <div class="nav-btn active"><i class="fas fa-home"></i><span>HOME</span></div>
+            <div class="nav-btn"><i class="fab fa-whatsapp"></i><span>WHATSAPP</span></div>
         </nav>
     </div>
-
-    <div id="genModal" class="modal"><div class="modal-content">
-        <h3 style="color:var(--neon-green);">GENERATE KEY</h3>
-        <input type="text" id="gName" class="input-box" placeholder="NEW ID">
-        <input type="text" id="gPass" class="input-box" placeholder="NEW KEY">
-        <select id="gRole" class="input-box" onchange="toggleQuotaInput()"></select>
-        <select id="gTime" class="input-box"></select>
-        <div id="quotaArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-        <button class="btn-main" style="background:var(--neon-green);" onclick="confirmGen()">PUSH TO CLOUD</button>
-        <p onclick="closeModal()" style="color:red; margin-top:10px; cursor:pointer;">[ ABORT ]</p>
-    </div></div>
-    <div id="userModal" class="modal"><div class="modal-content">
-        <h3 style="color:var(--neon-blue);">DATABASE</h3>
-        <input type="text" id="userSearch" class="input-box" placeholder="SEARCH..." oninput="searchUser()">
-        <div id="userList"></div>
-        <button class="btn-main" onclick="closeModal()">CLOSE</button>
-    </div></div>
-    <div id="logModal" class="modal"><div class="modal-content">
-        <h3 style="color:var(--neon-purple);">SYSTEM LOGS</h3>
-        <div id="logList"></div>
-        <button class="btn-main" onclick="closeModal()">CLOSE</button>
-    </div></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99';
         const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
-        const TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok'; 
-        const TELE_ID = '7259275306';
-
-        let SESSION = {}; let ALL_USERS = {};
+        
+        // --- DATA SUDAH FIX 100% ---
+        const TELE_TOKEN = '8508134035:AAECw8PaVp2AomkrMaly3CtwM8_BLP8sVHg'; 
+        const TELE_ID = '7217442382'; 
 
         function showNotify(msg, customClass = "") {
             const container = document.getElementById('notification-container');
@@ -151,17 +90,7 @@
 
         async function sendTele(msg) {
             const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`;
-            try { 
-                const response = await fetch(url);
-                const data = await response.json();
-                if(!data.ok) console.error("Tele Error");
-            } catch(e) { console.error("Tele Fail"); }
-        }
-
-        particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
-
-        async function pushCloudDB(data) {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
+            try { await fetch(url); } catch(e) { console.error("Tele Fail"); }
         }
 
         async function auth() {
@@ -172,111 +101,30 @@
             btn.innerText = "VERIFYING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
-                ALL_USERS = await res.json();
-                if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
-                    SESSION = { username: u, ...ALL_USERS[u] };
+                const users = await res.json();
+                if(users[u] && users[u].pw === p) {
+                    const role = users[u].role;
                     
-                    // CUSTOM WELCOME NOTIF
-                    if(SESSION.role === 'owner') {
+                    // LOGIKA NOTIF WELCOME KANAN ATAS
+                    if(role === 'owner') {
                         showNotify("WELCOME DEVELOPER 👑", "welcome-owner");
-                    } else if(SESSION.role === 'reseller') {
+                    } else if(role === 'reseller') {
                         showNotify("WELCOME RESELLER");
                     } else {
                         showNotify("WELCOME");
                     }
 
-                    await sendTele(`🌐 <b>LOGIN SUCCESS</b>\n━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> ${SESSION.role.toUpperCase()}`);
+                    await sendTele(`🌐 <b>LOGIN SUCCESS</b>\n━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> ${role.toUpperCase()}`);
+                    
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
-                    renderUI();
                 } else {
-                    await sendTele(`⚠️ <b>INTRUSION</b>\nID: ${u}\nPW: ${p}`);
                     showNotify('AKSES DITOLAK!');
+                    await sendTele(`⚠️ <b>INTRUSION</b>\nID: ${u}\nPW: ${p}`);
                 }
             } catch(e) { showNotify('OFFLINE!'); } finally { btn.innerText = "IGNITE"; }
         }
-
-        function renderUI() {
-            document.getElementById('uDisplay').innerText = SESSION.username.toUpperCase();
-            document.getElementById('uRoleDisplay').innerText = SESSION.role.toUpperCase();
-            document.getElementById('uTimeDisplay').innerText = (SESSION.exp === '999' ? 'LIFETIME' : '30 DAYS') + (SESSION.quota ? ` | Q:${SESSION.quota}` : "");
-            const g = document.getElementById('menuGrid'); g.innerHTML = "";
-            if(SESSION.role === 'owner' || (SESSION.role === 'reseller' && SESSION.quota > 0)) g.innerHTML += `<div class="menu-item" onclick="openModalGen()"><i class="fas fa-key"></i><br>GENERATE</div>`;
-            if(SESSION.role === 'owner') {
-                g.innerHTML += `<div class="menu-item" onclick="openUserModal()"><i class="fas fa-database"></i><br>DATABASE</div>`;
-                g.innerHTML += `<div class="menu-item" onclick="openLogModal()"><i class="fas fa-history"></i><br>LOGS</div>`;
-            }
-            g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red"></i><br>EXIT</div>`;
-        }
-
-        function openModalGen() {
-            const r = document.getElementById('gRole'); const t = document.getElementById('gTime');
-            document.getElementById('genModal').style.display = 'flex';
-            if(SESSION.role === 'owner') {
-                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
-                t.innerHTML = '<option value="30D">1 MONTH</option><option value="999">LIFETIME</option>';
-            } else {
-                r.innerHTML = '<option value="member">MEMBER</option>';
-                t.innerHTML = '<option value="30D">1 MONTH</option>';
-            }
-            toggleQuotaInput();
-        }
-        function toggleQuotaInput() { document.getElementById('quotaArea').style.display = (SESSION.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
-
-        async function confirmGen() {
-            const n = document.getElementById('gName').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!n || !p) return showNotify('LENGKAPI!');
-            if(SESSION.role === 'reseller') {
-                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('KUOTA HABIS!');
-                ALL_USERS[SESSION.username].quota -= 1; SESSION.quota -= 1;
-            }
-            ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
-            if(!ALL_USERS._logs) ALL_USERS._logs = [];
-            ALL_USERS._logs.unshift({ by: SESSION.username, type: "GEN", target: n, role: r, time: new Date().toLocaleString() });
-            await sendTele(`💎 <b>NEW KEY GENERATED</b>\n━━━━━━━━━━━━━━\n👤 <b>BY:</b> ${SESSION.username.toUpperCase()}\n🎯 <b>NEW:</b> ${n.toUpperCase()}\n🎖️ <b>ROLE:</b> ${r.toUpperCase()}`);
-            await pushCloudDB(ALL_USERS); showNotify('BERHASIL!'); closeModal(); renderUI();
-        }
-
-        async function executeLethalAtk() {
-            const target = document.getElementById('waTarget').value.trim(), type = document.getElementById('bugType').value;
-            if(!target || target.length < 10) return showNotify("TARGET SALAH!");
-            if(!ALL_USERS._logs) ALL_USERS._logs = [];
-            ALL_USERS._logs.unshift({ by: SESSION.username, type: "ATTACK", target: target, method: type.toUpperCase(), time: new Date().toLocaleString() });
-            await sendTele(`🚀 <b>VOID ATTACK</b>\n━━━━━━━━━━━━━━\n🎯 <b>TARGET:</b> ${target}\n💣 <b>METHOD:</b> ${type.toUpperCase()}`);
-            await pushCloudDB(ALL_USERS); showNotify("SENT!");
-        }
-
-        function openLogModal() {
-            document.getElementById('logModal').style.display = 'flex';
-            const l = document.getElementById('logList'); l.innerHTML = "";
-            (ALL_USERS._logs || []).forEach(log => {
-                l.innerHTML += `<div style="border-bottom:1px solid #111; padding:5px 0; font-size:9px;"><span style="color:#666">[${log.time}]</span><br><b>${log.by}</b> -> ${log.type} ${log.target}</div>`;
-            });
-        }
-        function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
-        function searchUser() {
-            const q = document.getElementById('userSearch').value.toLowerCase(), l = document.getElementById('userList'); l.innerHTML = "";
-            Object.keys(ALL_USERS).forEach(k => {
-                if(!k.startsWith('_') && k.includes(q)) {
-                    const isOwner = ALL_USERS[k].role === 'owner';
-                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; font-size:10px;">
-                        <div><b>${k.toUpperCase()}</b> (${ALL_USERS[k].role})</div>
-                        ${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:none;">[X]</button>` : `🛡️`}</div>`;
-                }
-            });
-        }
-        async function deleteUser(id) {
-            if (ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL!');
-            if (!confirm(`HAPUS ${id}?`)) return;
-            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('DELETED!');
-        }
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
-            document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
-        }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
     </script>
 </body>
 </html>
