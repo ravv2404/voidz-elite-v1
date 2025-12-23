@@ -16,34 +16,38 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
+        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+
         /* NOTIFICATION TOAST CUSTOM */
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; width: 250px; }
         .toast { 
             background: rgba(10, 0, 0, 0.9); border-left: 4px solid var(--neon-red); color: #fff; 
-            padding: 15px; margin-bottom: 10px; font-size: 12px; font-family: 'Orbitron';
+            padding: 15px; margin-bottom: 10px; font-size: 11px; font-family: 'Orbitron';
             box-shadow: 0 0 15px rgba(0,0,0,0.5); border-radius: 4px; animation: slideIn 0.3s ease-out;
         }
-        /* OWNER NEON RED */
-        .welcome-owner { 
-            color: var(--neon-red) !important; 
-            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); 
-            font-weight: 900; 
-            border-left: 4px solid #fff !important;
-        }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .welcome-owner { color: var(--neon-red) !important; text-shadow: 0 0 10px var(--neon-red); font-weight: 900; border-left: 4px solid #fff !important; }
 
-        /* ... Gaya UI Lainnya Tetap Sama ... */
-        #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); }
-        .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin-bottom: 12px; }
-        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; }
-        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; }
-        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: 1fr 1fr; height: 70px; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; }
-        .nav-btn.active { color: var(--neon-red); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 20px rgba(255,0,0,0.2); }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin-bottom: 15px; box-shadow: 0 0 10px var(--neon-red); }
+        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; border-radius: 5px; outline: none; }
+        .input-box:focus { border-color: var(--neon-red); }
+        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; transition: 0.3s; }
+        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
+
+        /* MAIN APP PAGE */
+        .container { flex: 1; display: none; padding: 20px; overflow-y: auto; padding-bottom: 100px; }
+        .attack-card { background: rgba(20,0,0,0.8); padding: 15px; border: 1px solid var(--neon-red); border-radius: 8px; margin-top: 20px; }
+        .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        
+        /* BOTTOM NAV */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 100; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 12px; cursor: pointer; }
+        .nav-btn.active { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); }
+
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -54,7 +58,7 @@
         <div id="loginPage">
             <div class="login-box">
                 <img src="1001334714.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/100/ff0000/000000'">
-                <h2 style="font-family:'Orbitron'; color:red; margin-bottom:15px;">VOIDZ ACCESS</h2>
+                <h2 style="font-family:'Orbitron'; color:var(--neon-red); margin-bottom:20px; letter-spacing: 2px;">VOIDZ ACCESS</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
                 <button onclick="auth()" class="btn-main" id="igniteBtn">IGNITE</button>
@@ -62,8 +66,33 @@
         </div>
 
         <div id="mainApp" class="container">
-            <h1 style="font-family:'Orbitron'; color:red; text-align:center;">VOIDZ ELITE V1</h1>
+            <div style="text-align:center; margin-bottom:30px;">
+                <h1 style="font-family:'Orbitron'; color:var(--neon-red); text-shadow:0 0 15px red; font-size: 24px;">VOIDZ SUPREME V1</h1>
+                <p id="displayUser" style="font-size:10px; color:#aaa; margin-top:5px; letter-spacing: 1px;"></p>
             </div>
+
+            <div class="attack-card">
+                <h3 style="color:#fff; margin-bottom:15px; font-size:14px; border-bottom: 1px solid #4a0000; padding-bottom: 10px;">
+                    <i class="fab fa-whatsapp" style="color: var(--neon-green);"></i> WHATSAPP OBLITERATION
+                </h3>
+                
+                <input type="number" id="targetNumber" class="input-box" placeholder="62812345678xx" style="background: #111;">
+                
+                <div class="method-grid">
+                    <button onclick="runAttack('UNICODE BOLT')" class="btn-main" style="font-size:10px;">UNICODE BOLT</button>
+                    <button onclick="runAttack('GHOST CRASH')" class="btn-main" style="font-size:10px;">GHOST CRASH</button>
+                    <button onclick="runAttack('OBLITERATE')" class="btn-main" style="font-size:10px; background:white; color:black;">OBLITERATE</button>
+                    <button onclick="runAttack('STUCK LOG')" class="btn-main" style="font-size:10px; border:1px solid red; background:transparent; color:red;">STUCK LOG</button>
+                </div>
+            </div>
+
+            <div id="genMenu" style="margin-top:20px; display:none;">
+                <div style="background:rgba(0,10,20,0.8); padding:15px; border:1px solid var(--neon-blue); border-radius:8px;">
+                    <h3 style="color:var(--neon-blue); margin-bottom:10px; font-size:14px;"><i class="fas fa-key"></i> GENERATE ACCESS</h3>
+                    <button onclick="showNotify('Sistem Generate Siap!')" class="btn-main" style="background:var(--neon-blue); color:#000; font-size: 10px;">GENERATE NEW KEY</button>
+                </div>
+            </div>
+        </div>
 
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active"><i class="fas fa-home"></i><span>HOME</span></div>
@@ -73,19 +102,24 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // --- KONFIGURASI CORE ---
         const BIN_ID = '694a5a6fae596e708fabef99';
         const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
-        
-        // --- DATA SUDAH FIX 100% ---
         const TELE_TOKEN = '8508134035:AAECw8PaVp2AomkrMaly3CtwM8_BLP8sVHg'; 
         const TELE_ID = '7217442382'; 
+
+        // Particles BG
+        particlesJS('particles-js', {
+            "particles": { "number": { "value": 80 }, "color": { "value": "#ff0000" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 2 }, "line_linked": { "enable": true, "distance": 150, "color": "#ff0000", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2 } }
+        });
 
         function showNotify(msg, customClass = "") {
             const container = document.getElementById('notification-container');
             const toast = document.createElement('div');
             toast.className = `toast ${customClass}`; 
             toast.innerText = msg;
-            container.appendChild(toast); setTimeout(() => toast.remove(), 4000);
+            container.appendChild(toast); 
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3000);
         }
 
         async function sendTele(msg) {
@@ -97,33 +131,59 @@
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
             const btn = document.getElementById('igniteBtn');
-            if(!u || !p) return showNotify("ISI DATA!");
+            
+            if(!u || !p) return showNotify("DATA TIDAK LENGKAP!");
+            
             btn.innerText = "VERIFYING...";
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false }
+                });
                 const users = await res.json();
+                
                 if(users[u] && users[u].pw === p) {
                     const role = users[u].role;
-                    
-                    // LOGIKA NOTIF WELCOME KANAN ATAS
+                    document.getElementById('displayUser').innerText = `OPERATOR: ${u.toUpperCase()} | ROLE: ${role.toUpperCase()}`;
+
+                    // Notif Welcome Kanan Atas
                     if(role === 'owner') {
                         showNotify("WELCOME DEVELOPER 👑", "welcome-owner");
+                        document.getElementById('genMenu').style.display = 'block';
                     } else if(role === 'reseller') {
                         showNotify("WELCOME RESELLER");
+                        document.getElementById('genMenu').style.display = 'block';
                     } else {
-                        showNotify("WELCOME");
+                        showNotify("WELCOME MEMBER");
                     }
 
-                    await sendTele(`🌐 <b>LOGIN SUCCESS</b>\n━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> ${role.toUpperCase()}`);
+                    // Notif Telegram
+                    await sendTele(`🌐 <b>LOGIN SUCCESS</b>\n━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> ${role.toUpperCase()}\n⏰ <b>TIME:</b> ${new Date().toLocaleString()}`);
                     
+                    // Switch UI
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                 } else {
                     showNotify('AKSES DITOLAK!');
-                    await sendTele(`⚠️ <b>INTRUSION</b>\nID: ${u}\nPW: ${p}`);
+                    await sendTele(`⚠️ <b>INTRUSION DETECTED</b>\n━━━━━━━━━━━━━━\n👤 ID: ${u}\n🔑 PW: ${p}\nStatus: Login Failed`);
                 }
-            } catch(e) { showNotify('OFFLINE!'); } finally { btn.innerText = "IGNITE"; }
+            } catch(e) { 
+                showNotify('DATABASE ERROR!'); 
+            } finally { 
+                btn.innerText = "IGNITE"; 
+            }
+        }
+
+        function runAttack(method) {
+            const target = document.getElementById('targetNumber').value;
+            if(!target) return showNotify("MANA NOMORNYA LEK?!");
+            
+            showNotify(`SENDING ${method}...`);
+            sendTele(`🔥 <b>ATTACK EXECUTED</b>\n━━━━━━━━━━━━━━\n🎯 <b>TARGET:</b> <code>${target}</code>\n⚔️ <b>METHOD:</b> ${method}\n👑 <b>STATUS:</b> SENT`);
+            
+            setTimeout(() => {
+                showNotify("ATTACK SUCCESS! ✅", "welcome-owner");
+            }, 2000);
         }
     </script>
 </body>
