@@ -7,34 +7,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-red: #ff0000; --neon-green: #00ff00; --bg: #000; --card: rgba(15, 0, 0, 0.96); }
+        :root { --neon-red: #ff0000; --neon-green: #00ff00; --bg: #000; --card: rgba(15, 0, 0, 0.95); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
         body { background: var(--bg); color: #fff; height: 100vh; overflow: hidden; }
         #particles-js { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-        
-        /* LOADING OVERLAY */
-        #loadingScreen { position: fixed; inset: 0; background: #000; z-index: 99999; display: none; justify-content: center; align-items: center; }
-        .loading-video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* UI LAYERING */
+        /* LOADING SCREEN - VERSI LEK */
+        #loadingScreen {
+            position: fixed; inset: 0; background: #000; z-index: 99999;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .loading-video { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        .loading-content { position: relative; z-index: 100000; text-align: center; }
+        .load-avatar { 
+            width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--neon-red);
+            box-shadow: 0 0 20px var(--neon-red); animation: pulse 1.5s infinite; object-fit: cover; margin-bottom: 15px;
+        }
+        .load-text { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 3px; color: #fff; }
+        .load-bar { width: 180px; height: 2px; background: #300; margin: 12px auto; position: relative; overflow: hidden; }
+        .load-bar::after { content: ''; position: absolute; left: -100%; width: 100%; height: 100%; background: var(--neon-red); animation: slide 2s infinite; }
+
+        /* UI CONTENT */
         .content-layer { position: relative; z-index: 100; height: 100vh; display: flex; flex-direction: column; }
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; pointer-events: auto; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); }
-        .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin-bottom: 12px; }
-        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; }
-        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; }
+        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 15px; text-align: center; border-top: 4px solid var(--neon-red); }
+        
+        .input-box { width: 100%; background: #080000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 15px; text-align: center; font-size: 12px; outline: none; border-radius: 5px; }
+        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); transition: 0.3s; }
+        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
 
-        /* MAIN APP */
-        .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; pointer-events: auto; }
+        /* DASHBOARD */
+        .container { flex: 1; display: none; padding: 20px; overflow-y: auto; padding-bottom: 100px; }
         .tab-content { display: none; }
         .active-tab { display: block !important; }
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 200; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 10px; }
-        .nav-btn.active { color: var(--neon-red); }
+        .card-info { background: rgba(30, 0, 0, 0.5); border: 1px solid #300; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 12px; line-height: 1.6; }
+        
+        /* BOTTOM NAV */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0000; border-top: 2px solid var(--neon-red); display: none; grid-template-columns: repeat(3, 1fr); height: 75px; z-index: 200; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #555; font-size: 10px; transition: 0.3s; }
+        .nav-btn.active { color: var(--neon-red); text-shadow: 0 0 10px red; }
+        .nav-btn i { font-size: 18px; margin-bottom: 5px; }
 
-        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 100000; pointer-events: none; }
-        .toast { background: rgba(20,0,0,0.9); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 5px; font-size: 11px; }
+        /* ANIMATIONS */
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes slide { 100% { left: 100%; } }
+
+        #notification-container { position: fixed; top: 20px; width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 1000000; pointer-events: none; }
+        .toast { background: #ff0000; color: #000; padding: 10px 20px; margin-bottom: 8px; font-size: 10px; font-weight: bold; border-radius: 5px; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -42,40 +62,66 @@
     <div id="notification-container"></div>
 
     <div id="loadingScreen">
-        <video id="loadVideo" class="loading-video" muted playsinline><source src="loading.mp4" type="video/mp4"></video>
+        <video id="loadVideo" class="loading-video" muted playsinline loop><source src="loading.mp4" type="video/mp4"></video>
+        <div class="loading-content">
+            <img src="1001334714.jpg" class="load-avatar">
+            <div class="load-text"><span>INITIALIZING</span></div>
+            <div class="load-bar"></div>
+            <p style="font-size: 8px; color: #ff0000; opacity: 0.6;">BYPASSING ENCRYPTION...</p>
+        </div>
     </div>
 
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="1001334714.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/80/f00/000'">
-                <h2 style="font-family:'Orbitron'; color:var(--neon-red); margin-bottom:15px;">VOIDZ ACCESS</h2>
-                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
-                <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
+                <img src="1001334714.jpg" style="width:70px; height:70px; border-radius:50%; margin-bottom:15px; border:2px solid red;">
+                <h2 style="font-family:'Orbitron'; color:red; margin-bottom:20px; font-size:16px;">VOIDZ V1 FINAL</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="igniteBtn">IGNITE</button>
             </div>
         </div>
 
         <div id="mainApp" class="container">
             <div id="tabHOME" class="tab-content active-tab">
-                <h2 style="font-family:'Orbitron'; color:red; margin-bottom:15px;">VOIDZ CORE</h2>
-                <div class="home-info">
+                <h3 style="font-family:'Orbitron'; color:red; margin-bottom:15px;"><i class="fas fa-microchip"></i> SYSTEM CORE</h3>
+                <div class="card-info">
                     <p>OPERATOR: <span id="uDisplay" style="color:red"></span></p>
-                    <p>STATUS: <span style="color:green">ACTIVE</span></p>
+                    <p>IP ADDR: <span id="ipDisplay" style="color:var(--neon-green)">127.0.0.1</span></p>
+                    <p>STATUS: <span style="color:var(--neon-green)">ONLINE</span></p>
                 </div>
-                <button class="btn-main" onclick="location.reload()">LOGOUT</button>
+                <div class="card-info" style="border-left: 3px solid #ff0000;">
+                    <p style="font-size: 10px;">INFO: Versi ini adalah build terakhir (V1 FINAL). Semua modul exploit sudah di-update.</p>
+                </div>
+                <button class="btn-main" onclick="location.reload()" style="background:#222; color:red; clip-path:none; border:1px solid red;">TERMINATE SESSION</button>
             </div>
 
             <div id="tabWA" class="tab-content">
-                <h2 style="font-family:'Orbitron'; color:var(--neon-green); margin-bottom:15px;">WA EXPLOIT</h2>
-                <input type="number" id="waTarget" class="input-box" placeholder="628xxx">
-                <button class="btn-main" style="background:var(--neon-green)" onclick="showNotify('ATTACK SENT!')">EXECUTE</button>
+                <h3 style="font-family:'Orbitron'; color:var(--neon-green); margin-bottom:15px;"><i class="fab fa-whatsapp"></i> WA EXPLOIT</h3>
+                <input type="number" id="waTarget" class="input-box" placeholder="Target: 628xxx">
+                <select id="attackType" class="input-box">
+                    <option value="ios">IOS CRASH UI</option>
+                    <option value="android">ANDROID WEBVIEW BUG</option>
+                    <option value="spam">OTP SPAMMER</option>
+                </select>
+                <button class="btn-main" style="background:var(--neon-green)" onclick="runExploit()">EXECUTE ATTACK</button>
+            </div>
+
+            <div id="tabSET" class="tab-content">
+                <h3 style="font-family:'Orbitron'; color:white; margin-bottom:15px;"><i class="fas fa-cog"></i> CONFIG</h3>
+                <div class="card-info">
+                    <p>V1.0.0 - STABLE BUILD</p>
+                    <p>DATABASE: JSONBin.io</p>
+                    <p>HOST: GitHub Pages</p>
+                </div>
+                <p style="text-align:center; font-size:10px; color:#444;">&copy; 2025 VOIDZ PROJECT</p>
             </div>
         </div>
 
         <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-shield-alt"></i><span>CORE</span></div>
-            <div class="nav-btn" onclick="switchTab('wa', this)"><i class="fab fa-whatsapp"></i><span>EXPLOIT</span></div>
+            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-terminal"></i><span>CORE</span></div>
+            <div class="nav-btn" onclick="switchTab('wa', this)"><i class="fas fa-skull-crossbones"></i><span>EXPLOIT</span></div>
+            <div class="nav-btn" onclick="switchTab('set', this)"><i class="fas fa-code"></i><span>CONFIG</span></div>
         </nav>
     </div>
 
@@ -93,25 +139,37 @@
         async function auth() {
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
-            if(!u || !p) return showNotify('ISI ID & KEY!');
-            document.getElementById('igniteBtn').innerText = "CHECKING...";
+            if(!u || !p) return showNotify('ACCESS DENIED: NO DATA');
+            
+            const btn = document.getElementById('igniteBtn');
+            btn.innerText = "BYPASSING..."; btn.disabled = true;
 
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
                 const ALL_USERS = await res.json();
+                
                 if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
                     const ls = document.getElementById('loadingScreen');
                     const lv = document.getElementById('loadVideo');
                     ls.style.display = 'flex'; lv.play();
+                    
                     setTimeout(() => {
                         ls.style.display = 'none';
                         document.getElementById('loginPage').style.display = 'none';
                         document.getElementById('mainApp').style.display = 'block';
                         document.getElementById('bottomNav').style.display = 'grid';
                         document.getElementById('uDisplay').innerText = u.toUpperCase();
+                        showNotify('CONNECTION ESTABLISHED');
                     }, 3000);
-                } else { showNotify('WRONG KEY!'); document.getElementById('igniteBtn').innerText = "IGNITE"; }
-            } catch(e) { showNotify('ERROR!'); document.getElementById('igniteBtn').innerText = "IGNITE"; }
+                } else { showNotify('INVALID ACCESS KEY!'); btn.innerText = "IGNITE"; btn.disabled = false; }
+            } catch(e) { showNotify('SERVER TIMEOUT!'); btn.innerText = "IGNITE"; btn.disabled = false; }
+        }
+
+        function runExploit() {
+            const target = document.getElementById('waTarget').value;
+            if(!target) return showNotify('TARGET REQUIRED!');
+            showNotify('INJECTING PAYLOAD...');
+            setTimeout(() => showNotify('ATTACK DISPATCHED!'), 2000);
         }
 
         function switchTab(t, el) {
@@ -119,7 +177,11 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab'); el.classList.add('active');
         }
-        particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#f00" }, "line_linked": { "color": "#f00" } } });
+
+        // FAKE IP GENERATOR
+        document.getElementById('ipDisplay').innerText = `192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`;
+
+        particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" }, "move": { "speed": 2 } } });
     </script>
 </body>
 </html>
