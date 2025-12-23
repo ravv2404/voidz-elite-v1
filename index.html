@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | FINAL BOSS</title>
+    <title>VOIDZ SUPREME V1 | ULTIMATE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,51 +11,50 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* PARTIKEL API */
-        #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; }
+        #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* WELCOME KANAN ATAS */
-        #welcomeDisplay {
-            position: fixed; top: 15px; right: 15px; z-index: 9999;
-            font-family: 'Orbitron'; font-size: 11px; font-weight: 900;
-            text-align: right; pointer-events: none; display: none;
+        /* WELCOME ANIMATION */
+        @keyframes slideInOut {
+            0% { transform: translateX(120%); opacity: 0; }
+            10% { transform: translateX(0); opacity: 1; }
+            90% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(120%); opacity: 0; }
         }
+        #welcomeDisplay {
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+            font-family: 'Orbitron'; font-size: 11px; font-weight: 900;
+            padding: 10px 15px; border-radius: 5px; background: rgba(0,0,0,0.8);
+            border-right: 4px solid var(--fire); display: none;
+        }
+        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000; animation: slideInOut 5s forwards; }
+        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff; animation: slideInOut 5s forwards; }
+        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff; animation: slideInOut 5s forwards; }
 
-        /* NEON COLORS */
-        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
-        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff; }
-        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff; }
-
-        /* LOGIN */
+        /* UI COMPONENTS */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 25px rgba(255, 69, 0, 0.3); }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--fire); margin: 0 auto 15px; object-fit: cover; display: block; background: #111; }
-        
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 20px rgba(255, 69, 0, 0.2); }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; text-transform: uppercase; box-shadow: 0 0 10px var(--fire); }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; text-transform: uppercase; }
+        .btn-main:disabled { background: #333; color: #666; cursor: not-allowed; }
 
-        /* DASHBOARD */
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 10px; border-radius: 8px; border-left: 3px solid var(--fire); margin-bottom: 10px; margin-top: 10px; }
-        .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-        .info-label { font-size: 8px; color: #888; font-weight: bold; }
-        .info-val { font-size: 11px; color: #fff; font-weight: 700; text-transform: uppercase; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; margin: 40px 0 10px; background: #000; }
+        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 12px; border-radius: 8px; border-left: 3px solid var(--fire); margin-bottom: 10px; }
+        .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; font-size: 11px; font-weight: 700; }
+        .info-row i { color: var(--fire); width: 15px; }
 
-        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 10px; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; background: #000; margin-top: 30px; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .menu-item { background: var(--card); border: 1px solid #300; padding: 12px; border-radius: 8px; text-align: center; }
-        .menu-item i { color: var(--fire); font-size: 16px; margin-bottom: 4px; }
-        .menu-item span { font-size: 8px; font-family: 'Orbitron'; display: block; }
+        .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; font-size: 9px; cursor: pointer; }
+        .menu-item i { color: var(--fire); font-size: 18px; margin-bottom: 5px; }
 
-        /* NAV */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
         
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
+        .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; box-shadow: 0 0 30px var(--fire); }
         #notif-box { position: fixed; top: 15px; left: 15px; z-index: 9999; }
-        .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; }
+        .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; box-shadow: 5px 5px 15px rgba(0,0,0,0.5); }
         .tab-content { display: none; }
         .active-tab { display: block; }
     </style>
@@ -68,10 +67,10 @@
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:15px; font-size: 14px;">VOIDZ ACCESS</h2>
-                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
-                <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
+                <img src="login.jpg" style="width:70px; height:70px; border-radius:50%; margin-bottom:15px; border:2px solid var(--fire)" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
+                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:15px; font-size:14px;">VOIDZ LOGIN</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
@@ -83,24 +82,34 @@
 
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire); font-size:10px;"></i><div><span class="info-label">OPERATOR</span><br><span id="uName" class="info-val">-</span></div></div>
-                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire); font-size:10px;"></i><div><span class="info-label">ROLE</span><br><span id="uRole" class="info-val">-</span></div></div>
-                    <div class="info-row"><i class="fas fa-clock" style="color:var(--fire); font-size:10px;"></i><div><span class="info-label">EXP</span><br><span id="uExp" class="info-val">-</span></div></div>
-                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire); font-size:10px;"></i><div><span class="info-label">QUOTA</span><br><span id="uQuota" class="info-val">-</span></div></div>
+                    <div class="info-row"><i class="fas fa-user"></i><span id="uName">...</span></div>
+                    <div class="info-row"><i class="fas fa-crown"></i><span id="uRole">...</span></div>
+                    <div class="info-row"><i class="fas fa-clock"></i><span id="uExp">...</span></div>
+                    <div class="info-row"><i class="fas fa-bolt"></i><span id="uQuota">...</span></div>
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #333;">
-                    <h3 style="color:var(--fire); text-align:center; font-size:12px; margin-bottom:10px;">ATTACK UNIT</h3>
-                    <input type="number" id="target" class="input-box" placeholder="628xxxx">
-                    <button class="btn-main" onclick="startAttack()">EXECUTE</button>
+                    <h3 style="color:var(--fire); text-align:center; font-size:12px; margin-bottom:15px;">VOIDZ ATTACK SYSTEM</h3>
+                    <input type="text" id="target" class="input-box" placeholder="Target 628xxx / IP / URL">
+                    <label style="font-size:8px; color:#555;">METHOD BUG SELECTOR:</label>
+                    <select id="bugType" class="input-box">
+                        <option value="ANDROID_FREEZE_V2">ANDROID IP KILLER (FREEZE)</option>
+                        <option value="WA_CRASH_ULTIMATE">WHATSAPP CRASH SEDUNIA</option>
+                        <option value="WIFI_SIGNAL_JAMMER">WIFI KILLER (JAMMER)</option>
+                        <option value="RAM_EATER_BUG">BUG RAM OVERLOAD</option>
+                    </select>
+                    <button class="btn-main" onclick="startAttack()">EXECUTE BUG</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div id="logContent" style="font-size:9px;"></div>
+                <div style="font-size:9px; background:rgba(20,0,0,0.8); padding:15px; border:1px solid #444; border-radius:5px;">
+                    <h3 style="color:var(--fire); margin-bottom:10px;">SYSTEM ACTIVITY LOGS</h3>
+                    <div id="logContent">Monitoring started...</div>
+                </div>
             </div>
         </div>
 
@@ -113,18 +122,21 @@
 
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:13px; margin-bottom:10px;">CREATE UNIT</h3>
+            <h3 style="color:var(--fire); font-size:13px; margin-bottom:15px;">GENERATE NEW UNIT</h3>
             <input type="text" id="gUser" class="input-box" placeholder="ID">
-            <input type="text" id="gPass" class="input-box" placeholder="KEY">
+            <div style="display:flex; gap:5px; margin-bottom:10px;">
+                <input type="text" id="gPass" class="input-box" placeholder="KEY" style="margin-bottom:0">
+                <button onclick="genRandomKey()" style="background:var(--fire); border:none; padding:0 15px; border-radius:5px; font-weight:900;">GEN</button>
+            </div>
             <select id="gRole" class="input-box" onchange="checkGenView()"></select>
             <select id="gTime" class="input-box"></select>
             <div id="quotaArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()">PUSH</button>
-            <button onclick="closeModal()" style="color:#555; width:100%; border:none; background:none; margin-top:10px; font-size:10px;">CANCEL</button>
+            <button class="btn-main" onclick="doGenerate()">PUSH TO DATABASE</button>
+            <button onclick="closeModal()" style="color:#555; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
         </div>
     </div>
 
-    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:var(--fire); font-size:13px;">DATABASE</h3><div id="dbList" style="max-height:200px; overflow-y:auto; margin-top:10px;"></div><button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button></div></div>
+    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:var(--fire); font-size:13px;">UNIT DATABASE</h3><div id="dbList" style="max-height:300px; overflow-y:auto; margin-top:10px;"></div><button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button></div></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -136,50 +148,57 @@
         let USER = {}, DB = {};
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
-        async function tele(m) { fetch(`https://api.telegram.org/bot${T_TOKEN}/sendMessage?chat_id=${T_ID}&text=${encodeURIComponent('<b>〔 VOIDZ 〕</b>\n'+m)}&parse_mode=html`, {mode:'no-cors'}); }
+        
+        async function tele(header, details) {
+            const msg = `<b>〔 ${header} 〕</b>\n` + details;
+            fetch(`https://api.telegram.org/bot${T_TOKEN}/sendMessage?chat_id=${T_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`, {mode:'no-cors'});
+        }
         
         async function syncDB() { 
-            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
-            DB = await res.json(); return true;
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
+                DB = await res.json(); return true;
+            } catch(e) { return false; }
         }
 
-        async function pushDB() { 
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); 
-        }
+        async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
+
+        function genRandomKey() { document.getElementById('gPass').value = "VZ-" + Math.random().toString(36).substring(2, 8).toUpperCase(); }
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             if(!u || !p) return notify("ISI DATA!");
-            btn.innerText = "SYNCING..."; btn.disabled = true;
-            try {
-                await syncDB();
-                if(DB[u] && DB[u].pw === p) {
-                    USER = { id: u, ...DB[u] };
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    document.getElementById('bottomNav').style.display = 'flex';
-                    
-                    const w = document.getElementById('welcomeDisplay');
-                    const rText = document.getElementById('uRole');
-                    w.style.display = 'block';
+            btn.innerText = "CONNECTING..."; btn.disabled = true;
+            
+            const ok = await syncDB();
+            if(!ok) { notify("SYNC ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; return; }
 
-                    if(USER.role === 'owner') {
-                        w.innerHTML = "Welcome Developer 👑"; w.className = "neon-red";
-                        rText.className = "info-val neon-red"; // ROLE JADI MERAH NEON
-                        document.getElementById('navLogs').style.display = 'flex';
-                    } else if(USER.role === 'reseller') {
-                        w.innerHTML = "Welcome Reseller"; w.className = "neon-blue";
-                        rText.className = "info-val neon-blue";
-                    } else {
-                        w.innerHTML = "Welcome Member"; w.className = "neon-white";
-                        rText.className = "info-val";
-                    }
+            if(DB[u] && DB[u].pw === p) {
+                USER = { id: u, ...DB[u] };
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                document.getElementById('bottomNav').style.display = 'flex';
+                
+                const w = document.getElementById('welcomeDisplay');
+                const rT = document.getElementById('uRole');
+                w.style.display = 'block';
 
-                    renderHome();
-                    tele(`👤 <b>LOGIN</b>\n<b>User:</b> ${u}`);
-                    document.getElementById('homeVideo').play();
-                } else { notify("KEY SALAH!"); btn.innerText = "IGNITE"; btn.disabled = false; }
-            } catch(e) { notify("DB ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; }
+                if(USER.role === 'owner') {
+                    w.innerHTML = "Welcome Developer 👑"; w.className = "neon-red";
+                    rT.className = "info-val neon-red";
+                    document.getElementById('navLogs').style.display = 'flex';
+                } else if(USER.role === 'reseller') {
+                    w.innerHTML = "Welcome Reseller"; w.className = "neon-blue";
+                    rT.className = "info-val neon-blue";
+                } else {
+                    w.innerHTML = "Welcome Member"; w.className = "neon-white";
+                    rT.className = "info-val";
+                }
+
+                renderHome();
+                tele("SYSTEM ACCESS", `<b>User:</b> <code>${u}</code>\n<b>Role:</b> ${USER.role.toUpperCase()}\n<b>Status:</b> ONLINE ✅`);
+                document.getElementById('homeVideo').play();
+            } else { notify("WRONG KEY!"); btn.innerText = "IGNITE"; btn.disabled = false; }
         }
 
         function renderHome() {
@@ -196,8 +215,13 @@
         function openGen() {
             document.getElementById('modalGen').style.display = 'flex';
             const r = document.getElementById('gRole'), t = document.getElementById('gTime');
-            r.innerHTML = USER.role === 'owner' ? '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>' : '<option value="member">MEMBER</option>';
-            t.innerHTML = (USER.role === 'reseller' && USER.exp === '1 MONTH') ? '<option value="1 MONTH">1 MONTH</option>' : '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            if(USER.role === 'owner') {
+                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
+                t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            } else {
+                r.innerHTML = '<option value="member">MEMBER</option>';
+                t.innerHTML = (USER.exp === '1 MONTH') ? '<option value="1 MONTH">1 MONTH</option>' : '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            }
             checkGenView();
         }
 
@@ -205,31 +229,36 @@
         
         async function doGenerate() {
             const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return notify("KOSONG!");
+            if(!u || !p) return notify("LENGKAPI DATA!");
             if(USER.role === 'reseller') { if(USER.quota <= 0) return notify("QUOTA HABIS!"); DB[USER.id].quota--; USER.quota--; }
             DB[u] = { pw: p, role: r, exp: t, quota: (r === 'reseller' ? q : 0) };
-            await pushDB(); notify("PUSHED!"); closeModal(); renderHome();
+            await pushDB(); notify("UNIT PUSHED!"); closeModal(); renderHome();
+            tele("NEW UNIT CREATED", `<b>ID:</b> <code>${u}</code>\n<b>Key:</b> <code>${p}</code>\n<b>Role:</b> ${r.toUpperCase()}\n<b>Exp:</b> ${t}\n<b>By:</b> ${USER.id}`);
         }
 
         function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
         function renderDB() {
             const l = document.getElementById('dbList'); l.innerHTML = "";
-            Object.keys(DB).forEach(k => { if(!k.startsWith('_')) l.innerHTML += `<div style="padding:8px;border-bottom:1px solid #222;display:flex;justify-content:space-between;font-size:10px;"><span>${k} (${DB[k].role})</span><i class="fas fa-trash" onclick="delU('${k}')"></i></div>`; });
+            Object.keys(DB).forEach(k => { if(!k.startsWith('_')) {
+                const isOwner = DB[k].role === 'owner';
+                l.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:10px;"><b>${k}</b> <span style="color:#555;">(${DB[k].role})</span></div>
+                    ${isOwner ? '👑' : `<i class="fas fa-trash" style="color:#444;" onclick="delU('${k}')"></i>`}
+                </div>`;
+            }});
         }
-        async function delU(k) { if(confirm('Delete?')) { delete DB[k]; await pushDB(); renderDB(); } }
+        async function delU(k) { if(confirm('Delete?')) { delete DB[k]; await pushDB(); renderDB(); tele("UNIT REMOVED", `<b>Target:</b> <code>${k}</code>\n<b>Operator:</b> ${USER.id}`); } }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function switchTab(t, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
         }
-
-        function initApp() {
-            particlesJS("particles-js", {
-                "particles": { "number": { "value": 80 }, "color": { "value": "#ff4500" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 2 }, "move": { "enable": true, "speed": 4, "direction": "top", "out_mode": "out" } }
-            });
+        function startAttack() { 
+            const t = document.getElementById('target').value, b = document.getElementById('bugType').value; if(!t) return notify("TARGET KOSONG!");
+            tele("ATTACK EXECUTED", `<b>Target:</b> <code>${t}</code>\n<b>Bug:</b> ${b}\n<b>Status:</b> SUCESS 🚀`); notify("BUG SENT!"); 
         }
-        function startAttack() { const t = document.getElementById('target').value; if(t) { tele(`🚀 <b>ATTACK</b>\n<b>Target:</b> ${t}`); notify("EXECUTED!"); } }
+        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 80 }, "color": { "value": "#ff4500" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 4, "direction": "top" } } }); }
     </script>
 </body>
 </html>
