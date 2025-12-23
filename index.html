@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --fire: #ff4500; --ash: #444; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
+        :root { --fire: #ff4500; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+        /* PARTIKEL ABU TERBANG - CLEAN VERSION */
+        #ash-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* LOGIN PAGE GACOR */
+        /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 2px solid var(--fire); box-shadow: 0 0 30px rgba(0,0,0,1); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 10px 30px rgba(0,0,0,1); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); }
         
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; }
-        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
+        /* TOMBOL IGNITE ANTI ERROR */
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.2s; position: relative; overflow: hidden; }
+        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
+        
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
 
-        /* DASHBOARD INFO GEDE & NEON */
+        /* DASHBOARD NEON */
         .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
         .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
@@ -31,24 +35,22 @@
         .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
         .neon-white { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
 
-        /* ATTACK CARDS TERPISAH */
-        .attack-card { background: var(--card); padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; border-top: 2px solid var(--fire); }
+        /* TAB & NAV */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 40px; padding-bottom: 80px; }
         .active-tab { display: block; }
-
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 8px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
 
-        /* MODAL DB */
+        /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #080808; padding: 20px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 10px; }
         .db-scroll { max-height: 250px; overflow-y: auto; border: 1px solid #222; margin-top: 10px; }
         .db-item { padding: 10px; border-bottom: 1px solid #111; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
     </style>
 </head>
-<body onload="initApp()">
-    <div id="particles-js"></div>
+<body>
+    <canvas id="ash-canvas"></canvas>
     <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:9999;"></div>
 
     <div class="content-layer">
@@ -76,29 +78,22 @@
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div class="attack-card" style="border-top-color: #00e5ff;">
-                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:15px; font-family:'Orbitron'"><i class="fas fa-wifi"></i> WIFI KILLER</h3>
-                    <input type="text" id="wifiIP" class="input-box" readonly style="color:#00e5ff; border-color:#004455">
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; margin-bottom:15px; border-top:2px solid #00e5ff">
+                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:10px; font-family:'Orbitron'">WIFI KILLER</h3>
+                    <input type="text" id="wifiIP" class="input-box" readonly style="color:#00e5ff">
                     <input type="text" id="targetWiFi" class="input-box" placeholder="Target IP / Gateway">
                     <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">KILL NETWORK</button>
                 </div>
-
-                <div class="attack-card">
-                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:'Orbitron'"><i class="fas fa-skull"></i> BUG SELECTOR</h3>
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire)">
+                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px; font-family:'Orbitron'">BUG SELECTOR</h3>
                     <input type="text" id="targetBug" class="input-box" placeholder="Target WA / Android ID">
-                    <select id="bugType" class="input-box">
-                        <option value="WA_CRASH">WA CRASH OVERLOAD</option>
-                        <option value="ANDROID_FREEZE">ANDROID SYSTEM FREEZE</option>
-                    </select>
-                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE BUG</button>
+                    <select id="bugType" class="input-box"><option value="WA_CRASH">WA CRASH</option><option value="IP_FREEZE">IP FREEZE</option></select>
+                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div style="background:rgba(0,0,0,0.9); padding:15px; border:1px solid #222; height:100%; overflow-y:auto;">
-                    <h3 style="color:var(--fire); font-size:10px; margin-bottom:10px; font-family:'Orbitron'">SYSTEM LOGS</h3>
-                    <div id="logContent" style="font-size:9px; color:#0f0;"></div>
-                </div>
+                <div style="background:#050505; padding:15px; border:1px solid #222; height:100%; overflow-y:auto; font-size:9px; color:#0f0;" id="logContent"></div>
             </div>
         </div>
 
@@ -109,94 +104,125 @@
         </nav>
     </div>
 
-    <div id="modalDB" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px;">USER DATABASE</h3>
-            <input type="text" id="dbSearch" class="input-box" placeholder="Search ID..." oninput="renderDB()" style="margin-top:10px;">
-            <div id="dbList" class="db-scroll"></div>
-            <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
-        </div>
-    </div>
-
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:10px;">
-            <input type="text" id="gPass" class="input-box" placeholder="NEW KEY">
-            <select id="gRole" class="input-box"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>
-            <input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA">
+            <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
+            <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
+            <select id="gRole" class="input-box" onchange="toggleQArea()"></select>
+            <select id="gTime" class="input-box"></select>
+            <div id="qArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
             <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
             <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <div id="modalDB" class="modal">
+        <div class="modal-content">
+            <h3 style="color:var(--fire); font-size:12px;">DATABASE</h3>
+            <input type="text" id="dbSearch" class="input-box" placeholder="Search..." oninput="renderDB()">
+            <div id="dbList" class="db-scroll"></div>
+            <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
+        </div>
+    </div>
+
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOGS = [];
 
-        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:8px; font-size:10px; width:180px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
-        async function syncDB() { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); }
-        async function saveDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
-        
-        function addLog(a, d) { LOGS.unshift(`[${new Date().toLocaleTimeString()}] ${a}: ${d}`); const c = document.getElementById('logContent'); if(c) c.innerHTML = LOGS.map(l => `<div>> ${l}</div>`).join(''); }
+        // --- PARTIKEL ABU TERBANG SANGAR ---
+        const canvas = document.getElementById('ash-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initParticles() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            for(let i=0; i<50; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, d: Math.random()*0.5 + 0.2 });
+        }
+        function drawParticles() {
+            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(150,150,150,0.5)";
+            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            requestAnimationFrame(drawParticles);
+        }
+        initParticles(); drawParticles();
 
+        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:180px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
+        async function sync() { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); }
+        async function save() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
+
+        // --- AUTH & LOGIN ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            btn.disabled = true; btn.innerText = "SYNCING...";
-            await syncDB();
-            if(DB[u] && DB[u].pw === p) {
-                USER = { id: u, ...DB[u] };
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'flex';
-                const rT = document.getElementById('uRole');
-                rT.className = USER.role === 'owner' ? "info-val neon-red" : (USER.role === 'reseller' ? "info-val neon-blue" : "info-val neon-white");
-                renderHome(); getIP(); addLog("AUTH", `${u} Logged In`);
-                document.getElementById('homeVideo').play();
-            } else { notify("WRONG KEY!"); btn.disabled = false; btn.innerText = "IGNITE"; }
+            if(!u || !p) return notify("FILL ALL!");
+            btn.disabled = true; btn.innerText = "IGNITING...";
+            try {
+                await sync();
+                if(DB[u] && DB[u].pw === p) {
+                    USER = { id: u, ...DB[u] };
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('bottomNav').style.display = 'flex';
+                    renderHome(); addLog("LOGIN", `${u} Connected`);
+                    document.getElementById('homeVideo').play();
+                } else { throw "WRONG"; }
+            } catch(e) { notify("ACCESS DENIED!"); btn.disabled = false; btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
+            const rC = document.getElementById('uRole');
+            rC.className = USER.role === 'owner' ? "info-val neon-red" : (USER.role === 'reseller' ? "info-val neon-blue" : "info-val neon-white");
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openModal('modalGen')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-key" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             if(USER.role === 'owner') m.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-database" style="color:var(--fire)"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-power-off" style="color:var(--fire)"></i><br><span style="font-size:9px;">EXIT</span></div>`;
+            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-power-off" style="color:var(--fire)"></i><br><span style="font-size:9px;">LOGOUT</span></div>`;
         }
 
+        // --- GENERATE HIERARCHY ---
+        function openGen() {
+            const r = document.getElementById('gRole'), t = document.getElementById('gTime');
+            openModal('modalGen');
+            if(USER.role === 'owner') {
+                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
+                t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            } else {
+                r.innerHTML = '<option value="member">MEMBER</option>';
+                t.innerHTML = USER.exp === '1 MONTH' ? '<option value="1 MONTH">1 MONTH</option>' : '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            }
+            toggleQArea();
+        }
+
+        function toggleQArea() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' && USER.role === 'owner') ? 'block' : 'none'; }
+
         async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, q = parseInt(document.getElementById('gQuota').value) || 0;
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
             if(!u || !p) return notify("DATA NULL!");
-            document.getElementById('btnPush').innerText = "PUSHING...";
-            await syncDB(); DB[u] = { pw: p, role: r, quota: q, exp: "LIFETIME" };
-            await saveDB(); addLog("GEN", `Operator ${u} created`);
-            notify("UNIT SYNCED!"); closeModal();
+            if(USER.role === 'reseller' && USER.quota <= 0) return notify("NO QUOTA!");
+            document.getElementById('btnPush').disabled = true;
+            await sync();
+            DB[u] = { pw: p, role: r, exp: t, quota: q };
+            if(USER.role === 'reseller') { DB[USER.id].quota--; USER.quota--; }
+            await save(); notify("PUSHED!"); closeModal(); renderHome(); addLog("GEN", `Created ${u} (${r})`);
+            document.getElementById('btnPush').disabled = false;
         }
 
         function openDB() { openModal('modalDB'); renderDB(); }
         function renderDB() {
-            const list = document.getElementById('dbList'), search = document.getElementById('dbSearch').value.toLowerCase();
+            const list = document.getElementById('dbList'), s = document.getElementById('dbSearch').value.toLowerCase();
             list.innerHTML = "";
             Object.keys(DB).forEach(k => {
-                if(k.toLowerCase().includes(search)) {
-                    list.innerHTML += `<div class="db-item">
-                        <div><b>${k}</b> <br><small>${DB[k].role} | ${DB[k].pw}</small></div>
-                        ${DB[k].role === 'owner' ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}
-                    </div>`;
+                if(k.toLowerCase().includes(s)) {
+                    list.innerHTML += `<div class="db-item"><div><b>${k}</b><br><small>${DB[k].role} | ${DB[k].pw}</small></div>${DB[k].role === 'owner' ? '👑' : `<i class="fas fa-trash" onclick="delU('${k}')"></i>`}</div>`;
                 }
             });
         }
-
-        async function delU(k) { if(confirm(`Hapus ${k}?`)) { delete DB[k]; await saveDB(); renderDB(); addLog("DEL", `${k} wiped`); } }
-        function startAttack(m) { const t = m === 'BUG' ? document.getElementById('targetBug').value : document.getElementById('targetWiFi').value; if(!t) return notify("TARGET NULL!"); addLog("STRIKE", `Sent ${m} to ${t}`); notify("EXECUTED!"); }
-        async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'attack') getIP(); }
+        async function delU(k) { if(confirm(`Del ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", k); } }
+        function addLog(a, d) { LOGS.unshift(`> [${new Date().toLocaleTimeString()}] ${a}: ${d}`); document.getElementById('logContent').innerHTML = LOGS.join('<br>'); }
+        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#444" }, "move": { "enable": true, "speed": 1, "direction": "top" } } }); }
+        function startAttack(m) { notify("EXECUTING..."); addLog("STRIKE", m); }
     </script>
 </body>
 </html>
