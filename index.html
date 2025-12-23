@@ -87,14 +87,6 @@
                     <div class="info-row"><i class="fas fa-shield-alt info-icon"></i><div><span class="info-label">PRIVILEGE</span><span id="uRoleDisplay" class="info-val">...</span></div></div>
                     <div class="info-row"><i class="fas fa-calendar-alt info-icon"></i><div><span class="info-label">STATUS / EXPIRED</span><span id="uTimeDisplay" class="info-val">...</span></div></div>
                 </div>
-                
-                <div id="wifiBox" style="display:none; background:var(--card); border:1px solid var(--neon-purple); padding:20px; margin-bottom:20px;">
-                    <h3 style="color:var(--neon-purple); text-align:center;">WIFI JAMMER</h3>
-                    <input type="text" id="myIp" class="input-box" disabled>
-                    <input type="text" id="wifiTarget" class="input-box" placeholder="TARGET IP">
-                    <button class="btn-main" id="wifiBtn" onclick="toggleWifiKiller()" style="background:var(--neon-purple);">START JAMMING</button>
-                    <button onclick="closeWifi()" style="color:red; margin-top:10px; background:none; border:none; width:100%;">[ CLOSE ]</button>
-                </div>
                 <div id="menuGrid" class="menu-grid"></div>
             </div>
 
@@ -130,12 +122,11 @@
 
     <div id="userModal" class="modal"><div class="modal-content"><h3>DATABASE</h3><input type="text" id="userSearch" class="input-box" placeholder="SEARCH..." oninput="searchUser()"><div id="userList"></div><button class="btn-main" onclick="closeModal()">CLOSE</button></div></div>
 
-    <div id="logModal" class="modal"><div class="modal-content"><h3>SYSTEM LOGS</h3><div id="logContent"></div><button class="btn-main" onclick="clearLogs()" style="background:red;">CLEAR</button><button class="btn-main" onclick="closeModal()" style="margin-top:5px;">CLOSE</button></div></div>
-
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '69490f98ae596e708fa9f916';
-        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        // BIN BARU LU LEK
+        const BIN_ID = '694a5a6fae596e708fabef99';
+        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW'; 
         let SESSION = {}; let ALL_USERS = {};
 
         function showNotify(msg) {
@@ -147,21 +138,33 @@
         particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
 
         async function pushCloudDB(data) {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { 
+                method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) 
+            });
         }
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
-            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
-            ALL_USERS = await res.json();
-            if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
-                SESSION = { username: u, ...ALL_USERS[u] };
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'grid';
-                renderUI();
-            } else { showNotify('KEY SALAH!'); }
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
+                ALL_USERS = await res.json();
+                
+                // IF BIN IS EMPTY, AUTO CREATE OWNER
+                if (Object.keys(ALL_USERS).length === 0) {
+                    ALL_USERS = { [u]: { pw: p, role: "owner", exp: "999", quota: 999 } };
+                    await pushCloudDB(ALL_USERS);
+                    showNotify("BIN INITIALIZED AS OWNER!");
+                }
+
+                if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
+                    SESSION = { username: u, ...ALL_USERS[u] };
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('bottomNav').style.display = 'grid';
+                    renderUI();
+                } else { showNotify('KEY SALAH!'); }
+            } catch(e) { showNotify('DATABASE ERROR / INVALID JSON!'); }
         }
 
         function renderUI() {
@@ -174,80 +177,60 @@
             }
             if(SESSION.role === 'owner') {
                 g.innerHTML += `<div class="menu-item" onclick="openUserModal()"><i class="fas fa-database"></i><br>DATABASE</div>`;
-                g.innerHTML += `<div class="menu-item" onclick="openLogModal()"><i class="fas fa-history"></i><br>LOGS</div>`;
             }
-            g.innerHTML += `<div class="menu-item" onclick="openWifiKiller()"><i class="fas fa-wifi"></i><br>JAMMER</div>`;
             g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><br>EXIT</div>`;
         }
 
-        // --- HIERARCHY LOGIC ---
         function openModalGen() {
-            const r = document.getElementById('gRole');
-            const t = document.getElementById('gTime');
+            const r = document.getElementById('gRole'); const t = document.getElementById('gTime');
             document.getElementById('genModal').style.display = 'flex';
-            
             if(SESSION.role === 'owner') {
                 r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
-                t.innerHTML = '<option value="30D">1 MONTH (30D)</option><option value="999">LIFETIME (PERM)</option>';
+                t.innerHTML = '<option value="30D">1 MONTH</option><option value="999">LIFETIME</option>';
             } else {
                 r.innerHTML = '<option value="member">MEMBER</option>';
-                if(SESSION.exp === '30D') {
-                    t.innerHTML = '<option value="30D">1 MONTH (30D)</option>';
-                } else {
-                    t.innerHTML = '<option value="30D">1 MONTH (30D)</option><option value="999">LIFETIME (PERM)</option>';
-                }
+                t.innerHTML = (SESSION.exp === '30D') ? '<option value="30D">1 MONTH</option>' : '<option value="30D">1 MONTH</option><option value="999">LIFETIME</option>';
             }
             toggleQuotaInput();
         }
 
-        function toggleQuotaInput() {
-            const isOwner = SESSION.role === 'owner';
-            const isTargetReseller = document.getElementById('gRole').value === 'reseller';
-            document.getElementById('quotaArea').style.display = (isOwner && isTargetReseller) ? 'block' : 'none';
-        }
+        function toggleQuotaInput() { document.getElementById('quotaArea').style.display = (SESSION.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
 
         async function confirmGen() {
-            const n = document.getElementById('gName').value.trim();
-            const p = document.getElementById('gPass').value.trim();
-            const r = document.getElementById('gRole').value;
-            const t = document.getElementById('gTime').value;
-            const q = parseInt(document.getElementById('gQuota').value) || 0;
-
+            const n = document.getElementById('gName').value.trim(); const p = document.getElementById('gPass').value.trim();
             if(!n || !p) return showNotify('LENGKAPI DATA!');
-
             if(SESSION.role === 'reseller') {
-                if(SESSION.quota <= 0) return showNotify('KUOTA HABIS!');
-                ALL_USERS[SESSION.username].quota -= 1;
-                SESSION.quota -= 1;
+                ALL_USERS[SESSION.username].quota -= 1; SESSION.quota -= 1;
             }
+            ALL_USERS[n] = { pw: p, role: document.getElementById('gRole').value, exp: document.getElementById('gTime').value, quota: parseInt(document.getElementById('gQuota').value) || 0 };
+            await pushCloudDB(ALL_USERS); showNotify('KEY AKTIF!'); closeModal(); renderUI();
+        }
 
-            ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
-            
-            showNotify('UPLOADING...');
-            await pushCloudDB(ALL_USERS);
-            showNotify('KEY AKTIF!');
-            closeModal(); renderUI();
+        function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
+        function searchUser() {
+            const q = document.getElementById('userSearch').value.toLowerCase(); const l = document.getElementById('userList'); l.innerHTML = "";
+            Object.keys(ALL_USERS).forEach(k => {
+                if(!k.startsWith('_') && k.includes(q)) {
+                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111;">
+                        <span>${k} [${ALL_USERS[k].role}]</span>
+                        <span onclick="deleteUser('${k}')" style="color:red; cursor:pointer;">DEL</span>
+                    </div>`;
+                }
+            });
+        }
+
+        async function deleteUser(id) {
+            if (id === SESSION.username) return showNotify('ANTI SELF-DESTRUCT ACTIVE!');
+            if (ALL_USERS[id].role === 'owner') return showNotify('OWNER IS IMMORTAL!');
+            if (!confirm(`HAPUS ${id.toUpperCase()}?`)) return;
+            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('ERASED!');
         }
 
         function switchTab(t, el) { 
             document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
             document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
         }
-
-        function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
-        function searchUser() {
-            const q = document.getElementById('userSearch').value.toLowerCase();
-            const l = document.getElementById('userList'); l.innerHTML = "";
-            Object.keys(ALL_USERS).forEach(k => {
-                if(!k.startsWith('_') && k.includes(q)) l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #111;">${k} [${ALL_USERS[k].role}] <span onclick="deleteUser('${k}')" style="color:red;">DEL</span></div>`;
-            });
-        }
-        async function deleteUser(id) { delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); }
-        function openLogModal() { document.getElementById('logModal').style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function openWifiKiller() { document.getElementById('wifiBox').style.display = 'block'; }
-        function closeWifi() { document.getElementById('wifiBox').style.display = 'none'; }
-        function toggleWifiKiller() { showNotify("JAMMING STARTED..."); }
         function executeLethalAtk() { showNotify("ATTACK SENT!"); }
     </script>
 </body>
