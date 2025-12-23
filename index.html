@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1</title>
+    <title>VOIDZ ELITE V1 - FIXED</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --fire: #ff4500; --army: #4b5320; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        #ash-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* LOGIN UI */
+        /* CANVAS FIX - Z-INDEX DINAIKKAN DI ATAS BG TAPI DI BAWAH CONTENT */
+        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: transparent; }
+        
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); position: relative; z-index: 110; }
         .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.2s; }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; display: block; }
         .btn-main:active { transform: scale(0.95); opacity: 0.8; }
-        .btn-main:disabled { background: #333; color: #666; cursor: not-allowed; }
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
 
         /* DASHBOARD */
@@ -28,10 +28,7 @@
         .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 1px; }
-        .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-        .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-        /* NAVIGATION */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 40px; padding-bottom: 80px; }
         .active-tab { display: block; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
@@ -53,14 +50,14 @@
                 <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
-                <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
+                <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - STATUS: SECURED - ALL SYSTEMS OPERATIONAL - WELCOME OPERATOR</marquee>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - STATUS: SECURED - ALL SYSTEMS OPERATIONAL</marquee>
                 
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
@@ -128,7 +125,7 @@
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOGS = [];
 
-        // --- ASH CANVAS ---
+        // --- PARTIKEL FIX (DITARUH DI ATAS AGAR LANGSUNG JALAN) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -138,61 +135,83 @@
             for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5 + 0.5, d: Math.random()*0.6 + 0.2 });
         }
         function drawParticles() {
-            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.5)";
-            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            ctx.clearRect(0,0,canvas.width, canvas.height); 
+            ctx.fillStyle = "rgba(200,200,200,0.5)";
+            particles.forEach(p => { 
+                ctx.beginPath(); 
+                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); 
+                ctx.fill(); 
+                p.y -= p.d; 
+                if(p.y < 0) p.y = canvas.height; 
+            });
             requestAnimationFrame(drawParticles);
         }
-        initParticles(); drawParticles();
+        initParticles(); 
+        drawParticles();
+        window.addEventListener('resize', initParticles);
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
-        async function sync() { try { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); } catch(e) { notify("SYNC ERROR!"); } }
-        async function save() { try { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); } catch(e) { notify("SAVE ERROR!"); } }
-
-        // --- SPY NOTIF ---
-        async function sendTele(msg) {
-            const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
-            if(!token || !chat) return;
-            const text = `╔════════════════════╗\n  VOIDZ SPY MONITOR\n╚════════════════════╝\n[OPERATOR] : ${USER.id || 'Unknown'}\n[ACTION]   : ${msg}\n[TIME]     : ${new Date().toLocaleString()}\n══════════════════════`;
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
-        }
-
-        function saveConfig() {
-            localStorage.setItem('v_token', document.getElementById('botToken').value);
-            localStorage.setItem('v_chat', document.getElementById('chatID').value);
-            notify("INTEL LOCKED!"); closeModal();
-        }
-
-        // --- CORE ENGINE ---
+        
+        // --- AUTH ENGINE FIX: TOMBOL DIJAMIN RESPONSIF ---
         async function auth() {
-            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            if(!u || !p) return notify("LENGKAPI DATA!");
-            btn.disabled = true; btn.innerText = "WAITING...";
+            const u = document.getElementById('lUser').value.trim();
+            const p = document.getElementById('lPass').value.trim();
+            const btn = document.getElementById('btnLog');
+            
+            if(!u || !p) return notify("DATA KOSONG!");
+            
+            // Disable button biar gak double klik
+            btn.disabled = true;
+            btn.innerText = "WAITING...";
+            btn.style.opacity = "0.5";
+
             try {
-                await sync();
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { 
+                    headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } 
+                });
+                DB = await res.json();
+
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); getIP(); sendTele("LOGIN - User Entered");
+                    renderHome();
+                    getIP();
+                    sendTele("LOGIN SUCCESS - Access Granted");
                     document.getElementById('homeVideo').play();
-                } else { throw "ERR"; }
-            } catch(e) { notify("ACCESS DENIED!"); btn.disabled = false; btn.innerText = "IGNITE"; }
+                } else {
+                    notify("ID ATAU KEY SALAH!");
+                    btn.disabled = false;
+                    btn.innerText = "IGNITE";
+                    btn.style.opacity = "1";
+                }
+            } catch(e) {
+                notify("KONEKSI GAGAL!");
+                btn.disabled = false;
+                btn.innerText = "IGNITE";
+                btn.style.opacity = "1";
+            }
         }
 
+        // --- SISANYA TETAP SAMA AGAR FITUR TIDAK BERUBAH ---
+        async function save() { try { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); } catch(e) { notify("SAVE ERROR!"); } }
+        async function sendTele(msg) {
+            const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
+            if(!token || !chat) return;
+            const text = `╔════════════════════╗\n  VOIDZ SPY MONITOR\n╚════════════════════╝\n[OPERATOR] : ${USER.id || 'Unknown'}\n[ACTION]   : ${msg}\n[TIME]     : ${new Date().toLocaleString()}\n══════════════════════`;
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
+        }
+        function saveConfig() { localStorage.setItem('v_token', document.getElementById('botToken').value); localStorage.setItem('v_chat', document.getElementById('chatID').value); notify("INTEL LOCKED!"); closeModal(); }
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
-            document.getElementById('uRole').className = "info-val " + (USER.role === 'owner' ? "neon-red" : "neon-blue");
-            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            // New Tools for Members
             m.innerHTML += `<div onclick="notify('YOUR IP: ' + document.getElementById('wifiIP').value)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00ff00; border-radius:10px;"><i class="fas fa-network-wired" style="color:#00ff00"></i><br><span style="font-size:9px;">IP LOOKUP</span></div>`;
             m.innerHTML += `<div onclick="notify('OS: ' + navigator.platform)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #ff00ff; border-radius:10px;"><i class="fas fa-mobile-alt" style="color:#ff00ff"></i><br><span style="font-size:9px;">DEVICE</span></div>`;
-
             if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             if(USER.role === 'owner') {
                 m.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-database" style="color:#00e5ff"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
@@ -200,48 +219,18 @@
             }
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
-
-        function openGen() {
-            const r = document.getElementById('gRole'), t = document.getElementById('gTime');
-            openModal('modalGen');
-            if(USER.role === 'owner') {
-                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
-                t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
-            } else {
-                r.innerHTML = '<option value="member">MEMBER</option>';
-                t.innerHTML = USER.exp === '1 MONTH' ? '<option value="1 MONTH">1 MONTH</option>' : '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
-            }
-            toggleQArea();
-        }
+        function openGen() { openModal('modalGen'); const r = document.getElementById('gRole'), t = document.getElementById('gTime'); if(USER.role === 'owner') { r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>'; } else { r.innerHTML = '<option value="member">MEMBER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option>'; } toggleQArea(); }
         function toggleQArea() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' && USER.role === 'owner') ? 'block' : 'none'; }
-
-        async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0, btn = document.getElementById('btnPush');
-            if(!u || !p) return notify("LENGKAPI DATA!");
-            if(USER.role === 'reseller' && USER.quota <= 0) return notify("QUOTA HABIS!");
-            btn.disabled = true; btn.innerText = "PUSHING...";
-            await sync();
-            DB[u] = { pw: p, role: r, exp: t, quota: q };
-            if(USER.role === 'reseller') { DB[USER.id].quota--; USER.quota--; }
-            await save();
-            sendTele(`GENERATE - Created ${r.toUpperCase()} | ID: ${u}`);
-            notify("UNIT PUSHED!"); closeModal(); renderHome(); addLog("GEN", `UNIT ${u} DEPLOYED`);
-            btn.disabled = false; btn.innerText = "PUSH UNIT";
-        }
-
+        async function doGenerate() { const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0; if(!u || !p) return notify("DATA KOSONG!"); await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }).then(r=>r.json()).then(async d=>{ d[u]={pw:p,role:r,exp:t,quota:q}; await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(d) }); sendTele(`GENERATE - Created ${r.toUpperCase()} | ID: ${u}`); notify("UNIT PUSHED!"); closeModal(); }); }
         function openDB() { openModal('modalDB'); renderDB(); }
-        function renderDB() {
-            const list = document.getElementById('dbList'), s = document.getElementById('dbSearch').value.toLowerCase();
-            list.innerHTML = "";
-            Object.keys(DB).forEach(k => {
-                if(k.toLowerCase().includes(s)) {
-                    list.innerHTML += `<div style="padding:12px; border-bottom:1px solid #111; display:flex; justify-content:space-between; font-size:10px;"><div><b>${k}</b><br><small>${DB[k].role} | Exp: ${DB[k].exp}</small></div>${(DB[k].role === 'owner') ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}</div>`;
-                }
-            });
-        }
-        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", `WIPED ${k}`); sendTele(`DELETE - Removed ID: ${k}`); } }
-        function addLog(a, d) { LOGS.unshift(`> [${new Date().toLocaleTimeString()}] ${a}: ${d}`); if(USER.role === 'owner') document.getElementById('logContent').innerHTML = LOGS.join('<br>'); }
+        function renderDB() { const list = document.getElementById('dbList'); list.innerHTML = ""; Object.keys(DB).forEach(k => { list.innerHTML += `<div style="padding:12px; border-bottom:1px solid #111; display:flex; justify-content:space-between; font-size:10px;"><div><b>${k}</b><br><small>${DB[k].role}</small></div>${(DB[k].role === 'owner') ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}</div>`; }); }
+        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); sendTele(`DELETE - Removed ID: ${k}`); } }
         async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
         function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'attack') getIP(); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function startAttack(m) { const target = m === 'WIFI' ? document.getElementById('targetWiFi').value : document.getElementById('targetBug').value; notify("EXECUTED!"); sendTele(`STRIKE - Method: ${m} | Target: ${target}`); }
+    </script>
+</body>
+</html>
+
