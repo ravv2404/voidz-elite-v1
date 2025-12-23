@@ -20,6 +20,9 @@
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
         .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
+        /* JUDUL RAHASIA - Kursor Default (Anti Curiga) */
+        .judul-secret { font-size: 16px; margin-bottom: 20px; cursor: default; user-select: none; }
+
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; margin-top: 5px; }
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; transition: 0.3s; }
         .input-box:focus { border-color: var(--fire); }
@@ -38,7 +41,7 @@
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
         .nav-btn.active { color: var(--fire); }
 
-        /* LOGS & MODAL */
+        /* MODAL & LOGS */
         #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; }
         .log-entry { margin-bottom: 8px; border-left: 2px solid var(--fire); padding-left: 8px; text-align: left; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
@@ -54,7 +57,7 @@
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
                 
-                <h2 class="neon-red" onclick="setupAPI()" style="font-size: 16px; margin-bottom: 20px; cursor: default; user-select: none;">VOIDZ ELITE V1</h2>
+                <h2 class="neon-red judul-secret" onclick="setupAPI()">VOIDZ ELITE V1</h2>
                 
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
@@ -64,7 +67,7 @@
                     <a href="https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U" target="_blank" style="text-decoration: none; color: #25d366; font-size: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;">
                         <i class="fab fa-whatsapp"></i> JOIN SALURAN WHATSAPP
                     </a>
-                    <a href="https://wa.me/6285718242306?text=Halo+Admin+Voidz+Elite,+saya+ingin+beli+key" target="_blank" style="text-decoration: none; color: #00e5ff; font-size: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                    <a href="https://wa.me/6285718241306?text=Halo+Admin+Voidz+Elite,+saya+ingin+beli+key" target="_blank" style="text-decoration: none; color: #00e5ff; font-size: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;">
                         <i class="fas fa-user-shield"></i> CONTACT ADMIN (PURCHASE)
                     </a>
                 </div>
@@ -160,7 +163,7 @@
         }
         drawP();
 
-        // CORE SYSTEM
+        // CORE LOGIC
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
         
         function setupAPI() {
@@ -171,24 +174,17 @@
                 if (k && b) {
                     localStorage.setItem('JB_KEY', k.trim());
                     localStorage.setItem('JB_BIN', b.trim());
-                    alert("SYSTEM SECURED & RELOADING...");
+                    alert("DATABASE LINKED SUCCESSFULLY!");
                     location.reload();
                 }
             } else if (adminPass !== null) {
-                alert("ACCESS DENIED!");
+                alert("ACCESS DENIED: WRONG PIN");
             }
         }
 
         async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function toggleQInput() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'); }
-
-        async function addLog(action, user) {
-            if(!DB._logs) DB._logs = [];
-            DB._logs.push({ time: new Date().toLocaleTimeString(), action, user });
-            if(DB._logs.length > 50) DB._logs.shift();
-            await syncDB();
-        }
 
         async function auth() {
             if(!JB_KEY || !JB_BIN) return alert("KLIK JUDUL 'VOIDZ ELITE' UNTUK SETUP DATABASE!");
@@ -203,10 +199,10 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); addLog("LOGIN SUCCESS", u);
+                    renderHome(); 
                     document.getElementById('homeVideo').play();
                 } else { alert("ACCESS DENIED!"); btn.innerText = "IGNITE"; }
-            } catch(e) { alert("DATABASE ERROR!"); btn.innerText = "IGNITE"; }
+            } catch(e) { alert("DATABASE CONNECTION ERROR!"); btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
@@ -217,7 +213,7 @@
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             if(USER.role === 'owner') m.innerHTML += `<div onclick="openManage()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-users-cog" style="color:#00e5ff"></i><br><span style="font-size:9px;">MANAGE</span></div>`;
-            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718242306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
+            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718241306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
@@ -230,7 +226,6 @@
             navigator.clipboard.writeText(p);
             notify("PAYLOAD COPIED!");
             window.open(`https://wa.me/${tc}?text=${encodeURIComponent("VOIDZ ATTACK:\n" + p.substring(0,50))}`, '_blank');
-            addLog(`STRIKE_TO_${tc}`, USER.id);
         }
 
         function openGen() { 
@@ -274,4 +269,6 @@
 
         function renderLogs() {
             const area = document.getElementById('logContent');
-            area.innerHTML = (DB._logs || []).rever
+            area.innerHTML = (DB._logs || []).reverse().map(l => `<div class="log-entry"><b>[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
+        }
+        async function clearLogs() { if(confirm("Clear All Logs?")) { DB._logs = []; await syncDB(); renderLogs(
