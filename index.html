@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - SUPREME FINAL</title>
+    <title>VOIDZ ELITE V1 - FINAL SUPREME</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -38,13 +38,11 @@
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
         .nav-btn.active { color: var(--fire); }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; max-height: 80vh; overflow-y: auto; }
-
-        /* LOGS AREA */
+        /* LOGS & MODAL */
         #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; }
         .log-entry { margin-bottom: 8px; border-left: 2px solid var(--fire); padding-left: 8px; text-align: left; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -55,19 +53,33 @@
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 class="neon-red" style="font-size: 16px; margin-bottom: 10px;">VOIDZ ELITE V1</h2>
+                
+                <h2 class="neon-red" onclick="setupAPI()" style="font-size: 16px; margin-bottom: 20px; cursor: default; user-select: none;">VOIDZ ELITE V1</h2>
+                
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
-                <button onclick="setupAPI()" style="background:none; border:none; color:#111; font-size:8px; margin-top:20px; cursor:pointer; width: 100%;">[ SET API ]</button>
+
+                <div style="margin-top: 20px; border-top: 1px solid #222; padding-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                    <a href="https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U" target="_blank" style="text-decoration: none; color: #25d366; font-size: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                        <i class="fab fa-whatsapp"></i> JOIN SALURAN WHATSAPP
+                    </a>
+                    <a href="https://wa.me/6285718242306?text=Halo+Admin+Voidz+Elite,+saya+ingin+beli+key" target="_blank" style="text-decoration: none; color: #00e5ff; font-size: 9px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                        <i class="fas fa-user-shield"></i> CONTACT ADMIN (PURCHASE)
+                    </a>
+                </div>
             </div>
         </div>
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="header-title neon-red">VOIDZ ELITE</div>
-                <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
+                <div class="banner-container">
+                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+                        <source src="dashboard.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <marquee style="color:var(--fire); font-size:9px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
                 
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
@@ -108,38 +120,34 @@
         </nav>
     </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
-            <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-            <select id="gRole" class="input-box" onchange="toggleQInput()">
-                <option value="member">ROLE: MEMBER</option>
-                <option value="reseller" id="resOption">ROLE: RESELLER</option>
-            </select>
-            <select id="gTime" class="input-box">
-                <option value="30">TIME: 1 MONTH</option>
-                <option value="lifetime" id="lifeOption">TIME: LIFETIME</option>
-            </select>
-            <div id="qArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
-            <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
-        </div>
-    </div>
+    <div id="modalGen" class="modal"><div class="modal-content">
+        <h3 class="neon-red" style="font-size:12px;">GENERATE UNIT</h3>
+        <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
+        <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
+        <select id="gRole" class="input-box" onchange="toggleQInput()">
+            <option value="member">ROLE: MEMBER</option>
+            <option value="reseller" id="resOption">ROLE: RESELLER</option>
+        </select>
+        <select id="gTime" class="input-box">
+            <option value="30">TIME: 1 MONTH</option>
+            <option value="lifetime" id="lifeOption">TIME: LIFETIME</option>
+        </select>
+        <div id="qArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
+        <button onclick="closeModal()" style="color:#444; width:100%; background:none; margin-top:10px; font-size:9px; border:none;">CANCEL</button>
+    </div></div>
 
-    <div id="modalManage" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px;">MANAGE UNITS</h3>
-            <input type="text" id="searchInp" class="input-box" placeholder="Cari ID..." onkeyup="searchUnit()">
-            <div id="unitListArea" style="max-height: 250px; overflow-y: auto;"></div>
-            <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:15px;">BACK</button>
-        </div>
-    </div>
+    <div id="modalManage" class="modal"><div class="modal-content">
+        <h3 class="neon-red" style="font-size:12px;">MANAGE UNITS</h3>
+        <input type="text" id="searchInp" class="input-box" placeholder="Cari ID..." onkeyup="searchUnit()">
+        <div id="unitListArea" style="max-height: 250px; overflow-y: auto;"></div>
+        <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:15px;">BACK</button>
+    </div></div>
 
     <script>
         let JB_KEY = localStorage.getItem('JB_KEY'), JB_BIN = localStorage.getItem('JB_BIN'), DB = {}, USER = {};
 
-        // --- PARTICLE ENGINE ---
+        // ENGINE ABU ROKOK
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -152,12 +160,28 @@
         }
         drawP();
 
-        // --- SYSTEM ---
+        // CORE SYSTEM
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
-        function setupAPI() { let k=prompt("Master Key:"), b=prompt("Bin ID:"); if(k&&b){localStorage.setItem('JB_KEY',k.trim()); localStorage.setItem('JB_BIN',b.trim()); location.reload();} }
+        
+        function setupAPI() {
+            let adminPass = prompt("ADMIN VERIFICATION:");
+            if (adminPass === "2404") {
+                let k = prompt("Master Key:");
+                let b = prompt("Bin ID:");
+                if (k && b) {
+                    localStorage.setItem('JB_KEY', k.trim());
+                    localStorage.setItem('JB_BIN', b.trim());
+                    alert("SYSTEM SECURED & RELOADING...");
+                    location.reload();
+                }
+            } else if (adminPass !== null) {
+                alert("ACCESS DENIED!");
+            }
+        }
+
+        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function toggleQInput() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'); }
-        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
 
         async function addLog(action, user) {
             if(!DB._logs) DB._logs = [];
@@ -167,8 +191,9 @@
         }
 
         async function auth() {
-            if(!JB_KEY || !JB_BIN) return alert("PENCET [ SET API ] DULU!");
+            if(!JB_KEY || !JB_BIN) return alert("KLIK JUDUL 'VOIDZ ELITE' UNTUK SETUP DATABASE!");
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
+            const btn = document.getElementById('btnLog'); btn.innerText = "IGNITING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers: { 'X-Master-Key': JB_KEY, 'X-Bin-Meta': false } });
                 DB = await res.json();
@@ -180,8 +205,8 @@
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
                     renderHome(); addLog("LOGIN SUCCESS", u);
                     document.getElementById('homeVideo').play();
-                } else { alert("ACCESS DENIED!"); }
-            } catch(e) { alert("DATABASE ERROR!"); }
+                } else { alert("ACCESS DENIED!"); btn.innerText = "IGNITE"; }
+            } catch(e) { alert("DATABASE ERROR!"); btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
@@ -189,20 +214,11 @@
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uQuota').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? 'PERMANEN' : new Date(USER.exp).toLocaleDateString();
-            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
             if(USER.role === 'owner') m.innerHTML += `<div onclick="openManage()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-users-cog" style="color:#00e5ff"></i><br><span style="font-size:9px;">MANAGE</span></div>`;
-            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718241306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
+            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718242306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
-        }
-
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
-            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
-            el.classList.add('active'); 
-            if(t === 'logs') renderLogs();
         }
 
         function startAttack() {
@@ -217,8 +233,8 @@
             addLog(`STRIKE_TO_${tc}`, USER.id);
         }
 
-        function openGen() {
-            document.getElementById('modalGen').style.display = 'flex';
+        function openGen() { 
+            document.getElementById('modalGen').style.display = 'flex'; 
             document.getElementById('resOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
             document.getElementById('lifeOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
         }
@@ -236,20 +252,26 @@
         function renderUnits() {
             const area = document.getElementById('unitListArea'); area.innerHTML = "";
             Object.keys(DB).filter(k=>!k.startsWith('_')).forEach(id => {
-                area.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
+                area.innerHTML += `<div class="unit-card" style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
                     <span>${id} [${DB[id].role.toUpperCase()}]</span>
                     ${DB[id].role!=='owner' ? `<i class="fas fa-trash" style="color:#f00" onclick="delUnit('${id}')"></i>` : '<i class="fas fa-shield-alt" style="color:#0f0"></i>'}
                 </div>`;
             });
         }
         async function delUnit(id) { if(confirm(`Hapus ${id}?`)) { delete DB[id]; await syncDB(); renderUnits(); } }
-        function searchUnit() { let q = document.getElementById('searchInp').value.toLowerCase(); }
+        function searchUnit() { 
+            let q = document.getElementById('searchInp').value.toLowerCase(); 
+            document.querySelectorAll('.unit-card').forEach(d => d.style.display = d.innerText.toLowerCase().includes(q) ? 'flex' : 'none');
+        }
+
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            if(t === 'logs') renderLogs();
+        }
 
         function renderLogs() {
             const area = document.getElementById('logContent');
-            area.innerHTML = (DB._logs || []).reverse().map(l => `<div class="log-entry"><b>[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
-        }
-        async function clearLogs() { if(confirm("Clear?")) { DB._logs = []; await syncDB(); renderLogs(); } }
-    </script>
-</body>
-</html>
+            area.innerHTML = (DB._logs || []).rever
