@@ -34,7 +34,6 @@
 
         .app-title { font-family: 'Orbitron'; color: var(--neon-red); text-align: center; padding: 15px 0; font-size: 18px; }
         
-        /* BANNER STYLE */
         .banner-container { width: 92%; aspect-ratio: 3/1; margin: 0 auto 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
         .banner-video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -80,12 +79,7 @@
 
         <div id="mainApp" class="container">
             <h1 class="app-title">VOIDZ ELITE V1</h1>
-            
-            <div class="banner-container">
-                <video class="banner-video" autoplay loop muted playsinline>
-                    <source src="eye.mp4" type="video/mp4">
-                </video>
-            </div>
+            <div class="banner-container"><video class="banner-video" autoplay loop muted playsinline><source src="eye.mp4" type="video/mp4"></video></div>
 
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
@@ -112,9 +106,6 @@
                         <option value="ghost">VOID DATABASE</option>
                         <option value="unicode">iOS CRASH LOOP</option>
                     </select>
-                    <div id="waConsole" style="display:none; background:#000; height:80px; padding:10px; font-size:8px; color:#0f0; overflow-y:auto; border:1px solid #111; margin-top:10px;">
-                        <div id="consoleLines"></div>
-                    </div>
                     <button class="btn-main" onclick="executeLethalAtk()" style="margin-top:10px;">EXECUTE</button>
                 </div>
             </div>
@@ -126,7 +117,16 @@
         </nav>
     </div>
 
-    <div id="genModal" class="modal"><div class="modal-content"><h3>GENERATE KEY</h3><input type="text" id="gName" class="input-box" placeholder="ID"><input type="text" id="gPass" class="input-box" placeholder="KEY"><select id="gRole" class="input-box"></select><select id="gTime" class="input-box"></select><div id="quotaArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div><button class="btn-main" style="background:var(--neon-green);" onclick="confirmGen()">PUSH</button><p onclick="closeModal()" style="color:red; margin-top:10px;">[ ABORT ]</p></div></div>
+    <div id="genModal" class="modal"><div class="modal-content">
+        <h3 style="color:var(--neon-green);">GENERATE KEY</h3>
+        <input type="text" id="gName" class="input-box" placeholder="NEW ID">
+        <input type="text" id="gPass" class="input-box" placeholder="NEW KEY">
+        <select id="gRole" class="input-box" onchange="toggleQuotaInput()"></select>
+        <select id="gTime" class="input-box"></select>
+        <div id="quotaArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+        <button class="btn-main" style="background:var(--neon-green);" onclick="confirmGen()">PUSH TO CLOUD</button>
+        <p onclick="closeModal()" style="color:red; margin-top:10px; cursor:pointer;">[ ABORT ]</p>
+    </div></div>
 
     <div id="userModal" class="modal"><div class="modal-content"><h3>DATABASE</h3><input type="text" id="userSearch" class="input-box" placeholder="SEARCH..." oninput="searchUser()"><div id="userList"></div><button class="btn-main" onclick="closeModal()">CLOSE</button></div></div>
 
@@ -146,6 +146,10 @@
 
         particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
 
+        async function pushCloudDB(data) {
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
+        }
+
         async function auth() {
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
@@ -163,9 +167,11 @@
         function renderUI() {
             document.getElementById('uDisplay').innerText = SESSION.username.toUpperCase();
             document.getElementById('uRoleDisplay').innerText = SESSION.role.toUpperCase();
-            document.getElementById('uTimeDisplay').innerText = SESSION.exp + (SESSION.quota ? ` | Q:${SESSION.quota}` : "");
+            document.getElementById('uTimeDisplay').innerText = (SESSION.exp === '999' ? 'LIFETIME' : '30 DAYS') + (SESSION.quota ? ` | Q:${SESSION.quota}` : "");
             const g = document.getElementById('menuGrid'); g.innerHTML = "";
-            if(SESSION.role === 'owner' || SESSION.role === 'reseller') g.innerHTML += `<div class="menu-item" onclick="openModalGen()"><i class="fas fa-key"></i><br>GENERATE</div>`;
+            if(SESSION.role === 'owner' || (SESSION.role === 'reseller' && SESSION.quota > 0)) {
+                g.innerHTML += `<div class="menu-item" onclick="openModalGen()"><i class="fas fa-key"></i><br>GENERATE</div>`;
+            }
             if(SESSION.role === 'owner') {
                 g.innerHTML += `<div class="menu-item" onclick="openUserModal()"><i class="fas fa-database"></i><br>DATABASE</div>`;
                 g.innerHTML += `<div class="menu-item" onclick="openLogModal()"><i class="fas fa-history"></i><br>LOGS</div>`;
@@ -174,18 +180,75 @@
             g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><br>EXIT</div>`;
         }
 
+        // --- HIERARCHY LOGIC ---
+        function openModalGen() {
+            const r = document.getElementById('gRole');
+            const t = document.getElementById('gTime');
+            document.getElementById('genModal').style.display = 'flex';
+            
+            if(SESSION.role === 'owner') {
+                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
+                t.innerHTML = '<option value="30D">1 MONTH (30D)</option><option value="999">LIFETIME (PERM)</option>';
+            } else {
+                r.innerHTML = '<option value="member">MEMBER</option>';
+                if(SESSION.exp === '30D') {
+                    t.innerHTML = '<option value="30D">1 MONTH (30D)</option>';
+                } else {
+                    t.innerHTML = '<option value="30D">1 MONTH (30D)</option><option value="999">LIFETIME (PERM)</option>';
+                }
+            }
+            toggleQuotaInput();
+        }
+
+        function toggleQuotaInput() {
+            const isOwner = SESSION.role === 'owner';
+            const isTargetReseller = document.getElementById('gRole').value === 'reseller';
+            document.getElementById('quotaArea').style.display = (isOwner && isTargetReseller) ? 'block' : 'none';
+        }
+
+        async function confirmGen() {
+            const n = document.getElementById('gName').value.trim();
+            const p = document.getElementById('gPass').value.trim();
+            const r = document.getElementById('gRole').value;
+            const t = document.getElementById('gTime').value;
+            const q = parseInt(document.getElementById('gQuota').value) || 0;
+
+            if(!n || !p) return showNotify('LENGKAPI DATA!');
+
+            if(SESSION.role === 'reseller') {
+                if(SESSION.quota <= 0) return showNotify('KUOTA HABIS!');
+                ALL_USERS[SESSION.username].quota -= 1;
+                SESSION.quota -= 1;
+            }
+
+            ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
+            
+            showNotify('UPLOADING...');
+            await pushCloudDB(ALL_USERS);
+            showNotify('KEY AKTIF!');
+            closeModal(); renderUI();
+        }
+
         function switchTab(t, el) { 
             document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
             document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
         }
 
-        function openModalGen() { document.getElementById('genModal').style.display = 'flex'; }
-        function openUserModal() { document.getElementById('userModal').style.display = 'flex'; }
+        function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
+        function searchUser() {
+            const q = document.getElementById('userSearch').value.toLowerCase();
+            const l = document.getElementById('userList'); l.innerHTML = "";
+            Object.keys(ALL_USERS).forEach(k => {
+                if(!k.startsWith('_') && k.includes(q)) l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #111;">${k} [${ALL_USERS[k].role}] <span onclick="deleteUser('${k}')" style="color:red;">DEL</span></div>`;
+            });
+        }
+        async function deleteUser(id) { delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); }
         function openLogModal() { document.getElementById('logModal').style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function openWifiKiller() { document.getElementById('wifiBox').style.display = 'block'; }
         function closeWifi() { document.getElementById('wifiBox').style.display = 'none'; }
+        function toggleWifiKiller() { showNotify("JAMMING STARTED..."); }
+        function executeLethalAtk() { showNotify("ATTACK SENT!"); }
     </script>
 </body>
-                                                                                      </html>
-
+</html>
