@@ -3,61 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - FINAL SUPREME</title>
+    <title>VOIDZ ELITE V1 - SUPREME FINAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --fire: #ff4500; --neon-red: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
+        
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        /* Background Partikel - Tidak mengganggu klik */
+        #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
         /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .login-box { 
+            width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; 
+            padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire);
+            pointer-events: auto; /* Pastikan tombol di dalam bisa diklik */
+        }
+        
         .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
-        /* JUDUL RAHASIA - Kursor Default (Anti Curiga) */
-        .judul-secret { font-size: 16px; margin-bottom: 20px; cursor: default; user-select: none; }
-
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; margin-top: 5px; }
-        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; transition: 0.3s; }
-        .input-box:focus { border-color: var(--fire); }
+        .btn-main { 
+            width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; 
+            font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; 
+            margin-top: 5px; pointer-events: auto;
+        }
+        
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
 
         /* DASHBOARD */
-        .header-title { text-align: center; margin-top: 45px; font-size: 18px; letter-spacing: 2px; }
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0 5px; background: #000; }
-        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
-        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-        .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
-
-        /* TAB SYSTEM */
-        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 10px; padding-bottom: 80px; }
+        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 80px; }
         .active-tab { display: block; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
         .nav-btn.active { color: var(--fire); }
-
-        /* MODAL & LOGS */
-        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; }
-        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--fire); padding-left: 8px; text-align: left; }
+        
+        /* MODAL */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; }
     </style>
 </head>
 <body>
     <canvas id="ash-canvas"></canvas>
-    <div id="notif-box" style="position:fixed; top:15px; right:15px; z-index:9999;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
                 
-                <h2 class="neon-red judul-secret" onclick="setupAPI()">VOIDZ ELITE V1</h2>
+                <h2 class="neon-red" onclick="setupAPI()" style="font-size: 16px; margin-bottom: 20px; cursor: default; user-select: none;">VOIDZ ELITE V1</h2>
                 
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
@@ -76,199 +75,143 @@
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="header-title neon-red">VOIDZ ELITE</div>
-                <div class="banner-container">
-                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
-                        <source src="dashboard.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <marquee style="color:var(--fire); font-size:9px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
-                
-                <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-calendar-alt" style="color:#0f0"></i><span id="uExp" class="info-val" style="color:#0f0;">...</span></div>
-                </div>
-
-                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
-                <button class="btn-main" style="background:#111; color:#333; margin-top:20px; font-size:9px;" onclick="location.reload()">TERMINATE SESSION</button>
+                <h2 class="neon-red" style="text-align:center; margin-top:40px;">VOIDZ DASHBOARD</h2>
+                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:30px;"></div>
+                <button class="btn-main" style="background:#111; color:#333; margin-top:30px;" onclick="location.reload()">TERMINATE SESSION</button>
             </div>
-
+            
             <div id="tabATTACK" class="tab-content">
-                <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
-                <div style="background:var(--card); padding:20px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
-                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:'Orbitron'">BUG SELECTOR</h3>
+                <h2 class="neon-red" style="text-align:center; margin-top:40px;">STRIKE CENTER</h2>
+                <div style="margin-top:30px; background:#050505; padding:20px; border-radius:10px; border:1px solid #222;">
                     <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
-                    <select id="bugType" class="input-box">
-                        <option value="LITE">WA CRASH (LITE)</option>
-                        <option value="FREEZE">IP FREEZE (MEDIUM)</option>
-                        <option value="SUPREME">SUPREME (HARD)</option>
-                    </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
                 </div>
-            </div>
-
-            <div id="tabLOGS" class="tab-content">
-                <div class="header-title neon-red" style="margin-top:20px; margin-bottom:15px;">SYSTEM LOGS</div>
-                <div id="logContent"></div>
-                <button class="btn-main" onclick="clearLogs()" style="margin-top:10px; background:#222; color:#f00; font-size:9px;">CLEAR LOGS</button>
             </div>
         </div>
 
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div id="navLogs" class="nav-btn" onclick="switchTab('logs', this)" style="display:none;"><i class="fas fa-terminal"></i><span>LOGS</span></div>
         </nav>
     </div>
 
-    <div id="modalGen" class="modal"><div class="modal-content">
-        <h3 class="neon-red" style="font-size:12px;">GENERATE UNIT</h3>
-        <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
-        <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-        <select id="gRole" class="input-box" onchange="toggleQInput()">
-            <option value="member">ROLE: MEMBER</option>
-            <option value="reseller" id="resOption">ROLE: RESELLER</option>
-        </select>
-        <select id="gTime" class="input-box">
-            <option value="30">TIME: 1 MONTH</option>
-            <option value="lifetime" id="lifeOption">TIME: LIFETIME</option>
-        </select>
-        <div id="qArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
-        <button onclick="closeModal()" style="color:#444; width:100%; background:none; margin-top:10px; font-size:9px; border:none;">CANCEL</button>
-    </div></div>
-
-    <div id="modalManage" class="modal"><div class="modal-content">
-        <h3 class="neon-red" style="font-size:12px;">MANAGE UNITS</h3>
-        <input type="text" id="searchInp" class="input-box" placeholder="Cari ID..." onkeyup="searchUnit()">
-        <div id="unitListArea" style="max-height: 250px; overflow-y: auto;"></div>
-        <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:15px;">BACK</button>
-    </div></div>
-
     <script>
-        let JB_KEY = localStorage.getItem('JB_KEY'), JB_BIN = localStorage.getItem('JB_BIN'), DB = {}, USER = {};
-
-        // ENGINE ABU ROKOK
+        // --- 1. ENGINE ABU ROKOK (FIXED) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = [];
-        for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5+0.5, d: Math.random()*0.5+0.2 });
-        function drawP() {
-            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(200,200,200,0.3)";
-            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
-            requestAnimationFrame(drawP);
-        }
-        drawP();
 
-        // CORE LOGIC
-        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
-        
-        function setupAPI() {
-            let adminPass = prompt("ADMIN VERIFICATION:");
-            if (adminPass === "2404") {
-                let k = prompt("Master Key:");
-                let b = prompt("Bin ID:");
-                if (k && b) {
-                    localStorage.setItem('JB_KEY', k.trim());
-                    localStorage.setItem('JB_BIN', b.trim());
-                    alert("DATABASE LINKED SUCCESSFULLY!");
-                    location.reload();
-                }
-            } else if (adminPass !== null) {
-                alert("ACCESS DENIED: WRONG PIN");
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    s: Math.random() * 2,
+                    d: Math.random() * 0.5 + 0.2
+                });
             }
         }
 
-        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function toggleQInput() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'); }
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(200, 200, 200, 0.3)";
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+                ctx.fill();
+                p.y -= p.d;
+                if(p.y < 0) p.y = canvas.height;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawParticles();
+
+        // --- 2. DATABASE & AUTH ---
+        let JB_KEY = localStorage.getItem('JB_KEY');
+        let JB_BIN = localStorage.getItem('JB_BIN');
+        let DB = {};
+
+        function setupAPI() {
+            let pw = prompt("ADMIN PIN:");
+            if(pw === "2404") {
+                let k = prompt("Master Key:");
+                let b = prompt("Bin ID:");
+                if(k && b) {
+                    localStorage.setItem('JB_KEY', k.trim());
+                    localStorage.setItem('JB_BIN', b.trim());
+                    alert("DATABASE LINKED!"); location.reload();
+                }
+            } else if(pw) alert("ACCESS DENIED!");
+        }
 
         async function auth() {
-            if(!JB_KEY || !JB_BIN) return alert("KLIK JUDUL 'VOIDZ ELITE' UNTUK SETUP DATABASE!");
-            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
-            const btn = document.getElementById('btnLog'); btn.innerText = "IGNITING...";
+            if(!JB_KEY || !JB_BIN) return alert("PENCET JUDUL VOIDZ ELITE UNTUK SETUP API!");
+            const u = document.getElementById('lUser').value.trim();
+            const p = document.getElementById('lPass').value.trim();
+            const btn = document.getElementById('btnLog');
+            
+            if(!u || !p) return alert("ISI ID & KEY!");
+            
+            btn.innerText = "IGNITING...";
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers: { 'X-Master-Key': JB_KEY, 'X-Bin-Meta': false } });
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, {
+                    headers: { 'X-Master-Key': JB_KEY, 'X-Bin-Meta': false }
+                });
+                if(!res.ok) throw new Error();
                 DB = await res.json();
+                
                 if(DB[u] && DB[u].pw === p) {
-                    USER = { id: u, ...DB[u] };
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
-                    if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); 
-                    document.getElementById('homeVideo').play();
-                } else { alert("ACCESS DENIED!"); btn.innerText = "IGNITE"; }
-            } catch(e) { alert("DATABASE CONNECTION ERROR!"); btn.innerText = "IGNITE"; }
+                    renderHome(u, DB[u]);
+                } else {
+                    alert("ID/KEY SALAH!");
+                    btn.innerText = "IGNITE";
+                }
+            } catch(e) {
+                alert("KONEKSI DATABASE ERROR!");
+                btn.innerText = "IGNITE";
+            }
         }
 
-        function renderHome() {
-            document.getElementById('uName').innerText = USER.id;
-            document.getElementById('uRole').innerText = USER.role.toUpperCase();
-            document.getElementById('uQuota').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? '∞' : USER.quota;
-            document.getElementById('uExp').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? 'PERMANEN' : new Date(USER.exp).toLocaleDateString();
-            const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div onclick="openManage()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-users-cog" style="color:#00e5ff"></i><br><span style="font-size:9px;">MANAGE</span></div>`;
-            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718241306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
+        function renderHome(id, data) {
+            const m = document.getElementById('menuContainer');
+            m.innerHTML = `
+                <div style="background:#080808; padding:15px; border-radius:10px; border-left:4px solid var(--fire); grid-column: span 2;">
+                    <div style="font-size:10px; color:#555;">OPERATOR</div>
+                    <div style="font-weight:900; color:var(--fire);">${id.toUpperCase()}</div>
+                </div>
+                <div style="background:#080808; padding:15px; border-radius:10px; border:1px solid #222; text-align:center;">
+                    <div style="font-size:10px; color:#555;">ROLE</div>
+                    <div style="font-size:12px;">${data.role.toUpperCase()}</div>
+                </div>
+                <div style="background:#080808; padding:15px; border-radius:10px; border:1px solid #222; text-align:center;">
+                    <div style="font-size:10px; color:#555;">QUOTA</div>
+                    <div style="font-size:12px;">${data.quota || '∞'}</div>
+                </div>
+            `;
+        }
+
+        function switchTab(t, el) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
         }
 
         function startAttack() {
-            const t = document.getElementById('targetBug').value.trim();
+            const t = document.getElementById('targetBug').value;
             if(!t) return alert("TARGET KOSONG!");
-            let tc = t.replace(/\D/g, ''); if(tc.startsWith('0')) tc = '62' + tc.slice(1);
-            const type = document.getElementById('bugType').value;
-            let p = (type==='LITE') ? "LITE ".repeat(100) : (type==='FREEZE') ? "FREEZE ".repeat(500) : "SUPREME ".repeat(1000);
-            navigator.clipboard.writeText(p);
-            notify("PAYLOAD COPIED!");
-            window.open(`https://wa.me/${tc}?text=${encodeURIComponent("VOIDZ ATTACK:\n" + p.substring(0,50))}`, '_blank');
+            alert("STRIKE SENT TO " + t);
         }
+    </script>
+</body>
+</html>
 
-        function openGen() { 
-            document.getElementById('modalGen').style.display = 'flex'; 
-            document.getElementById('resOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
-            document.getElementById('lifeOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
-        }
-
-        async function doGenerate() {
-            const u=document.getElementById('gUser').value.trim(), p=document.getElementById('gPass').value.trim(), r=document.getElementById('gRole').value, t=document.getElementById('gTime').value;
-            if(!u || !p) return alert("DATA TIDAK LENGKAP!");
-            if(USER.role==='reseller'){ if(USER.quota<=0)return alert("QUOTA HABIS!"); DB[USER.id].quota-=1; }
-            let ex = (t === 'lifetime') ? 'lifetime' : new Date().getTime() + (30*86400000);
-            DB[u] = { pw:p, role:r, exp:ex, quota:parseInt(document.getElementById('gQuota').value)||0 };
-            await syncDB(); alert("UNIT CREATED!"); location.reload();
-        }
-
-        function openManage() { renderUnits(); document.getElementById('modalManage').style.display = 'flex'; }
-        function renderUnits() {
-            const area = document.getElementById('unitListArea'); area.innerHTML = "";
-            Object.keys(DB).filter(k=>!k.startsWith('_')).forEach(id => {
-                area.innerHTML += `<div class="unit-card" style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
-                    <span>${id} [${DB[id].role.toUpperCase()}]</span>
-                    ${DB[id].role!=='owner' ? `<i class="fas fa-trash" style="color:#f00" onclick="delUnit('${id}')"></i>` : '<i class="fas fa-shield-alt" style="color:#0f0"></i>'}
-                </div>`;
-            });
-        }
-        async function delUnit(id) { if(confirm(`Hapus ${id}?`)) { delete DB[id]; await syncDB(); renderUnits(); } }
-        function searchUnit() { 
-            let q = document.getElementById('searchInp').value.toLowerCase(); 
-            document.querySelectorAll('.unit-card').forEach(d => d.style.display = d.innerText.toLowerCase().includes(q) ? 'flex' : 'none');
-        }
-
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
-            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
-            el.classList.add('active'); 
-            if(t === 'logs') renderLogs();
-        }
-
-        function renderLogs() {
-            const area = document.getElementById('logContent');
-            area.innerHTML = (DB._logs || []).reverse().map(l => `<div class="log-entry"><b>[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
-        }
-        async function clearLogs() { if(confirm("Clear All Logs?")) { DB._logs = []; await syncDB(); renderLogs(
