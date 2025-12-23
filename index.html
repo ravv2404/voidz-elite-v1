@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - MILITARY GRADE</title>
+    <title>VOIDZ ELITE V1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,16 +11,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* CANVAS PARTIKEL ABU TAJAM */
+        /* ASH PARTICLES - SHARP CANVAS */
         #ash-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* LOGIN PAGE */
+        /* LOGIN UI */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 10px 40px rgba(0,0,0,1); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
         .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
-        /* BUTTONS & INPUTS */
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.2s; }
         .btn-main:active { transform: scale(0.95); opacity: 0.8; }
         .btn-main:disabled { background: #333; color: #666; cursor: not-allowed; }
@@ -34,16 +33,15 @@
         .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
         .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-        /* NAV & TAB */
+        /* NAVIGATION */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 40px; padding-bottom: 80px; }
         .active-tab { display: block; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; }
         .nav-btn.active { color: var(--fire); }
 
-        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; box-shadow: 0 0 30px rgba(255, 69, 0, 0.2); }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -54,7 +52,7 @@
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px; letter-spacing:2px;">VOIDZ ELITE V1</h2>
+                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
@@ -63,14 +61,12 @@
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="banner-container">
-                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
-                </div>
+                <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
                     <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
                     <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-calendar-alt" style="color:#0f0"></i><span id="uExp" class="info-val" style="color:#0f0; text-shadow:0 0 5px #0f0;">...</span></div>
+                    <div class="info-row"><i class="fas fa-calendar-alt" style="color:#0f0"></i><span id="uExp" class="info-val" style="color:#0f0;">...</span></div>
                 </div>
                 <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             </div>
@@ -117,10 +113,10 @@
 
     <div id="modalDB" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">USER DATABASE</h3>
+            <h3 style="color:var(--fire); font-size:12px;">USER DATABASE</h3>
             <input type="text" id="dbSearch" class="input-box" placeholder="Search..." oninput="renderDB()">
             <div id="dbList" style="max-height:250px; overflow-y:auto; border:1px solid #222; margin-top:10px;"></div>
-            <button class="btn-main" onclick="closeModal()" style="margin-top:15px;">CLOSE</button>
+            <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
         </div>
     </div>
 
@@ -138,7 +134,7 @@
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOGS = [];
 
-        // --- ASH PARTICLES (SHARP & SMOOTH) ---
+        // --- ASH CANVAS (STABLE) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -152,18 +148,17 @@
             particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
             requestAnimationFrame(drawParticles);
         }
-        window.addEventListener('resize', initParticles);
         initParticles(); drawParticles();
 
-        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px; box-shadow: 0 5px 10px rgba(0,0,0,0.5);"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
+        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
         async function sync() { try { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); } catch(e) { notify("SYNC ERROR!"); } }
         async function save() { try { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); } catch(e) { notify("SAVE ERROR!"); } }
 
-        // --- MILITARY TELE NOTIF ---
+        // --- MILITARY SPY TELEGRAM ---
         async function sendTele(msg) {
             const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
             if(!token || !chat) return;
-            const text = `╔════════════════════╗\n  MILITARY INTEL REPORT\n╚════════════════════╝\n[STATUS] : SUCCESS\n[LOGS]   : ${msg}\n[TIME]   : ${new Date().toLocaleString()}\n══════════════════════`;
+            const text = `╔════════════════════╗\n  VOIDZ SPY MONITOR\n╚════════════════════╝\n[OPERATOR] : ${USER.id || 'Unknown'}\n[ACTION]   : ${msg}\n[TIME]     : ${new Date().toLocaleString()}\n══════════════════════`;
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
         }
 
@@ -173,7 +168,7 @@
             notify("INTEL LOCKED!"); closeModal();
         }
 
-        // --- AUTH & CORE ---
+        // --- AUTH & ENGINE ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             if(!u || !p) return notify("DATA KOSONG!");
@@ -186,7 +181,7 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); getIP(); addLog("AUTH", `${u} CONNECTED`);
+                    renderHome(); getIP(); sendTele("LOGIN DETECTED - Dashboard Accessed");
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("ACCESS DENIED!"); btn.disabled = false; btn.innerText = "IGNITE"; }
@@ -219,7 +214,6 @@
             }
             toggleQArea();
         }
-
         function toggleQArea() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' && USER.role === 'owner') ? 'block' : 'none'; }
 
         async function doGenerate() {
@@ -231,7 +225,7 @@
             DB[u] = { pw: p, role: r, exp: t, quota: q };
             if(USER.role === 'reseller') { DB[USER.id].quota--; USER.quota--; }
             await save();
-            sendTele(`NEW DEPLOYMENT\nID: ${u}\nROLE: ${r.toUpperCase()}\nEXP: ${t}`);
+            sendTele(`GENERATE UNIT - Created ${r.toUpperCase()} | ID: ${u}`);
             notify("UNIT PUSHED!"); closeModal(); renderHome(); addLog("GEN", `UNIT ${u} DEPLOYED`);
             btn.disabled = false; btn.innerText = "PUSH UNIT";
         }
@@ -242,17 +236,23 @@
             list.innerHTML = "";
             Object.keys(DB).forEach(k => {
                 if(k.toLowerCase().includes(s)) {
-                    list.innerHTML += `<div style="padding:12px; border-bottom:1px solid #111; display:flex; justify-content:space-between; align-items:center; font-size:10px;"><div><b>${k}</b><br><small>${DB[k].role} | Exp: ${DB[k].exp}</small></div>${(DB[k].role === 'owner') ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}</div>`;
+                    list.innerHTML += `<div style="padding:12px; border-bottom:1px solid #111; display:flex; justify-content:space-between; font-size:10px;"><div><b>${k}</b><br><small>${DB[k].role} | Exp: ${DB[k].exp}</small></div>${(DB[k].role === 'owner') ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}</div>`;
                 }
             });
         }
-        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", `WIPED ${k}`); } }
+        async function delU(k) { if(confirm(`WIPE ${k}?`)) { delete DB[k]; await save(); renderDB(); addLog("DEL", `WIPED ${k}`); sendTele(`DELETE ACTION - Removed ID: ${k}`); } }
         function addLog(a, d) { LOGS.unshift(`> [${new Date().toLocaleTimeString()}] ${a}: ${d}`); if(USER.role === 'owner') document.getElementById('logContent').innerHTML = LOGS.join('<br>'); }
         async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'attack') getIP(); }
+        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function startAttack(m) { notify("STRIKE EXECUTED!"); addLog("STRIKE", m); }
+        
+        function startAttack(m) { 
+            const target = m === 'WIFI' ? document.getElementById('targetWiFi').value : document.getElementById('targetBug').value;
+            notify("STRIKE EXECUTED!"); 
+            addLog("STRIKE", m); 
+            sendTele(`STRIKE LAUNCHED - Method: ${m} | Target: ${target}`);
+        }
     </script>
 </body>
 </html>
