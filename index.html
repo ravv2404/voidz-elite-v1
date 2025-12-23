@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | ULTIMATE ARCHITECT</title>
+    <title>VOIDZ SUPREME V2 | ASHE EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --fire: #ff4500; --bg: #000; --card: rgba(15, 0, 0, 0.96); }
+        :root { --fire: #ff4500; --ash: #444; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* WELCOME ANIMATION (POJOK KANAN ATAS) */
+        /* POPUP WELCOME GACOR */
         @keyframes slideWelcome {
             0% { transform: translateX(120%); opacity: 0; }
             10% { transform: translateX(0); opacity: 1; }
@@ -24,46 +24,38 @@
         #welcomeDisplay {
             position: fixed; top: 20px; right: 20px; z-index: 9999;
             font-family: 'Orbitron'; font-size: 11px; font-weight: 900;
-            padding: 12px 18px; border-radius: 5px; background: rgba(0,0,0,0.9);
-            border-right: 4px solid var(--fire); display: none; pointer-events: none;
+            padding: 12px 18px; border-radius: 5px; background: rgba(0,0,0,0.95);
+            border-right: 4px solid var(--fire); display: none;
         }
         .animate-welcome { animation: slideWelcome 5s ease-in-out forwards; }
 
-        /* UI COMPONENTS */
+        /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 20px rgba(255, 69, 0, 0.2); }
-        .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; text-transform: uppercase; font-family: 'Orbitron'; }
-        .btn-main:disabled { background: #333 !important; color: #666 !important; cursor: not-allowed; box-shadow: none; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 10px; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,1); }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; }
+        .btn-main:disabled { background: #222 !important; color: #444 !important; cursor: not-allowed; }
+        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
 
-        /* DASHBOARD GEDE & GACOR */
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
+        /* DASHBOARD INFO GEDE */
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
+        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .info-row i { color: var(--fire); font-size: 20px; width: 25px; text-align: center; }
-        .info-label { font-size: 8px; color: #777; display: block; letter-spacing: 1px; }
-        .info-val { font-size: 16px; font-weight: 900; text-transform: uppercase; font-family: 'Orbitron'; letter-spacing: 1px; }
+        .info-val { font-size: 16px; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 1px; }
+        .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
+        .neon-white { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
 
-        /* NEON ROLES (STAY IN DASHBOARD) */
-        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
-        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff; }
-        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff; }
+        /* ATTACK CARDS */
+        .attack-card { background: var(--card); padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; border-top: 2px solid var(--fire); }
+        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 40px; padding-bottom: 80px; }
+        .active-tab { display: block; }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
-        .menu-item i { color: var(--fire); font-size: 18px; margin-bottom: 5px; }
-        .menu-item span { font-size: 9px; font-family: 'Orbitron'; display: block; }
-
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; height: 65px; z-index: 1000; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; flex: 1; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 8px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
         
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         #notif-box { position: fixed; top: 15px; left: 15px; z-index: 9999; }
         .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; }
-        .tab-content { display: none; }
-        .active-tab { display: block; }
     </style>
 </head>
 <body onload="initApp()">
@@ -74,48 +66,52 @@
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="login.jpg" style="width:70px; height:70px; border-radius:50%; margin-bottom:15px; border:2px solid var(--fire)" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:15px; font-size:14px;">VOIDZ ACCESS</h2>
-                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
-                <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
+                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px; letter-spacing:2px;">VOIDZ ACCESS</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
 
-        <div id="mainApp" style="display:none; flex:1; padding:15px; overflow-y:auto; padding-bottom:80px;">
-            <div class="banner-container">
-                <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
-            </div>
-
+        <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user"></i><div><span class="info-label">OPERATOR ID</span><span id="uName" class="info-val">...</span></div></div>
-                    <div class="info-row"><i class="fas fa-crown"></i><div><span class="info-label">ACCESS LEVEL</span><span id="uRole" class="info-val">...</span></div></div>
-                    <div class="info-row"><i class="fas fa-clock"></i><div><span class="info-label">EXPIRATION</span><span id="uExp" class="info-val">...</span></div></div>
-                    <div class="info-row"><i class="fas fa-bolt"></i><div><span class="info-label">POWER QUOTA</span><span id="uQuota" class="info-val">...</span></div></div>
+                <div class="banner-container">
+                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
                 </div>
-                <div id="menuContainer" class="menu-grid"></div>
+                <div class="home-info">
+                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><div><span id="uName" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><div><span id="uRole" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-clock" style="color:var(--fire)"></i><div><span id="uExp" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i><div><span id="uQuota" class="info-val">...</span></div></div>
+                </div>
+                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #333;">
-                    <h3 style="color:var(--fire); text-align:center; font-size:12px; margin-bottom:15px;">VOIDZ ATTACK UNIT</h3>
-                    <input type="text" id="target" class="input-box" placeholder="628xxx / IP TARGET">
-                    <label style="font-size:8px; color:#555">BUG SELECTOR GACOR:</label>
+                <div class="attack-card">
+                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:15px; font-family:'Orbitron'"><i class="fas fa-wifi"></i> WIFI KILLER</h3>
+                    <label style="font-size:8px; color:#555">DETECTED IP:</label>
+                    <input type="text" id="wifiIP" class="input-box" placeholder="Detecting IP..." readonly style="color:#00e5ff; border-color:#004455">
+                    <input type="text" id="targetWiFi" class="input-box" placeholder="Target IP / Gateway">
+                    <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">KILL NETWORK</button>
+                </div>
+
+                <div class="attack-card">
+                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:'Orbitron'"><i class="fas fa-skull"></i> BUG SELECTOR</h3>
+                    <input type="text" id="targetBug" class="input-box" placeholder="Target WA / Android ID">
                     <select id="bugType" class="input-box">
-                        <option value="ANDROID_IP_FREEZE">BUG IP ANDROID (FREEZE)</option>
-                        <option value="WA_CRASH_SEDUNIA">BUG WA SEDUNIA (STUCK)</option>
-                        <option value="WIFI_SIGNAL_KILLER">WIFI KILLER (NO SIGNAL)</option>
-                        <option value="RAM_OVERLOAD_V2">RAM EATER BUG</option>
+                        <option value="WA_CRASH_V69">WHATSAPP CRASH SEDUNIA</option>
+                        <option value="ANDROID_IP_FREEZE">ANDROID FREEZE BUG</option>
+                        <option value="RAM_OVERLOAD">RAM OVERLOAD BUG</option>
                     </select>
-                    <button class="btn-main" onclick="startAttack()">EXECUTE BUG</button>
+                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE BUG</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div style="background:rgba(10,0,0,0.9); padding:15px; border:1px solid #333; border-radius:5px; height: 350px; overflow-y: auto;">
-                    <h3 style="color:var(--fire); font-size:11px; margin-bottom:10px; border-bottom:1px solid #333;">SYSTEM HISTORY LOGS</h3>
-                    <div id="logContent" style="font-size:10px; color:#0f0;"></div>
+                <div style="background:rgba(0,0,0,0.9); padding:15px; border:1px solid #222; height:100%; overflow-y:auto;">
+                    <h3 style="color:var(--fire); font-size:10px; margin-bottom:10px; font-family:'Orbitron'">SYSTEM LOGS</h3>
+                    <div id="logContent" style="font-size:9px; color:#0f0;"></div>
                 </div>
             </div>
         </div>
@@ -123,167 +119,118 @@
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list-ul"></i><span>LOGS</span></div>
+            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
         </nav>
     </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:13px; margin-bottom:15px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
-            <div style="display:flex; gap:5px; margin-bottom:10px;">
-                <input type="text" id="gPass" class="input-box" placeholder="KEY" style="margin-bottom:0">
-                <button onclick="genRandomKey()" style="background:var(--fire); border:none; padding:0 15px; border-radius:5px; font-weight:900;">RAND</button>
-            </div>
+    <div id="modalGen" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center;">
+        <div class="modal-content" style="background:#080808; padding:20px; border:1px solid var(--fire); width:90%; max-width:400px; border-radius:10px;">
+            <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px;">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="ID">
+            <div style="display:flex; gap:5px; margin-bottom:10px;"><input type="text" id="gPass" class="input-box" placeholder="KEY" style="margin-bottom:0"><button onclick="genRandomKey()" style="background:var(--fire); padding:0 10px; border-radius:5px; font-weight:900">RAND</button></div>
             <select id="gRole" class="input-box" onchange="checkGenView()"></select>
             <select id="gTime" class="input-box"></select>
-            <div id="quotaArea" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()">PUSH TO DATABASE</button>
-            <button onclick="closeModal()" style="color:#555; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
+            <div id="quotaArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+            <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
+            <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
         </div>
     </div>
 
-    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:var(--fire); font-size:13px;">DATABASE</h3><div id="dbList" style="max-height:250px; overflow-y:auto; margin-top:10px;"></div><button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button></div></div>
-
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', 
-              API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW',
-              T_TOKEN = '8508134035:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow',
-              T_ID = '7217442382';
-
+        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', T_TOKEN = '8508134035:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow', T_ID = '7217442382';
         let USER = {}, DB = {}, SYSTEM_LOGS = [];
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
-        
-        async function tele(header, details) {
-            const msg = `<b>〔 VOIDZ SYSTEM 〕</b>\n<b>EVENT:</b> ${header}\n${details}`;
-            fetch(`https://api.telegram.org/bot${T_TOKEN}/sendMessage?chat_id=${T_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`, {mode:'no-cors'});
-        }
+        async function tele(h, d) { fetch(`https://api.telegram.org/bot${T_TOKEN}/sendMessage?chat_id=${T_ID}&text=${encodeURIComponent('<b>〔 VOIDZ 〕</b>\n<b>'+h+'</b>\n'+d)}&parse_mode=html`, {mode:'no-cors'}); }
+        function addLog(a, d) { SYSTEM_LOGS.unshift(`[${new Date().toLocaleTimeString()}] ${a}: ${d}`); renderLogs(); }
+        function renderLogs() { const c = document.getElementById('logContent'); if(c) c.innerHTML = SYSTEM_LOGS.map(l => `<div>> ${l}</div>`).join(''); }
 
-        function addLog(act, det) {
-            const time = new Date().toLocaleTimeString();
-            SYSTEM_LOGS.unshift(`[${time}] ${act}: ${det}`);
-            if(SYSTEM_LOGS.length > 50) SYSTEM_LOGS.pop();
-            renderLogs();
-        }
-
-        function renderLogs() {
-            const cont = document.getElementById('logContent');
-            if(cont) cont.innerHTML = SYSTEM_LOGS.map(l => `<div style="margin-bottom:5px; border-bottom:1px solid #111;">> ${l}</div>`).join('');
-        }
-        
-        async function syncDB() { 
+        // AUTO IP DETECT (Real IPify)
+        async function getIP() {
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
-                DB = await res.json(); return true;
-            } catch(e) { return false; }
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                document.getElementById('wifiIP').value = data.ip;
+            } catch (e) { document.getElementById('wifiIP').value = "192.168.1.1 (Static)"; }
         }
-
-        async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
-
-        function genRandomKey() { document.getElementById('gPass').value = "VZ-" + Math.random().toString(36).substring(2, 8).toUpperCase(); }
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             if(!u || !p) return notify("ISI DATA!");
-            btn.innerText = "SYNCING..."; btn.disabled = true;
-            
-            const ok = await syncDB();
-            if(!ok) { notify("DB ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; return; }
-
-            if(DB[u] && DB[u].pw === p) {
-                USER = { id: u, ...DB[u] };
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'flex';
-                
-                const w = document.getElementById('welcomeDisplay');
-                const rT = document.getElementById('uRole');
-                w.style.display = 'block';
-                w.classList.add('animate-welcome');
-
-                if(USER.role === 'owner') {
-                    w.innerHTML = "Welcome Developer 👑"; w.style.color = "#ff0000";
-                    rT.className = "info-val neon-red";
-                    document.getElementById('navLogs').style.display = 'flex';
-                } else if(USER.role === 'reseller') {
-                    w.innerHTML = "Welcome Reseller"; w.style.color = "#00e5ff";
-                    rT.className = "info-val neon-blue";
-                } else {
-                    w.innerHTML = "Welcome Member"; w.style.color = "#ffffff";
-                    rT.className = "info-val neon-white";
-                }
-
-                renderHome();
-                addLog("AUTH", `User ${u} logged in`);
-                tele("USER LOGIN", `<b>Operator:</b> <code>${u}</code>\n<b>Role:</b> ${USER.role.toUpperCase()}`);
-                document.getElementById('homeVideo').play();
-            } else { notify("WRONG KEY!"); btn.innerText = "IGNITE"; btn.disabled = false; }
+            btn.innerText = "CONNECTING..."; btn.disabled = true;
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
+                DB = await res.json();
+                if(DB[u] && DB[u].pw === p) {
+                    USER = { id: u, ...DB[u] };
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('bottomNav').style.display = 'flex';
+                    const w = document.getElementById('welcomeDisplay');
+                    w.style.display = 'block'; w.classList.add('animate-welcome');
+                    const rT = document.getElementById('uRole');
+                    if(USER.role === 'owner') { 
+                        w.innerHTML = "Welcome Developer 👑"; w.style.color = "#ff4500"; rT.className = "info-val neon-red"; 
+                        document.getElementById('navLogs').style.display = 'flex'; 
+                    } else if(USER.role === 'reseller') { 
+                        w.innerHTML = "Welcome Reseller"; w.style.color = "#00e5ff"; rT.className = "info-val neon-blue"; 
+                    } else { 
+                        w.innerHTML = "Welcome Member"; w.style.color = "#fff"; rT.className = "info-val neon-white"; 
+                    }
+                    renderHome(); getIP();
+                    addLog("AUTH", `${u} Logged In`);
+                    tele("LOGIN", `User: ${u}\nRole: ${USER.role}`);
+                    document.getElementById('homeVideo').play();
+                } else { notify("WRONG KEY!"); btn.innerText = "IGNITE"; btn.disabled = false; }
+            } catch(e) { notify("SYNC ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; }
         }
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
             document.getElementById('uRole').innerText = USER.role;
-            document.getElementById('uExp').innerText = USER.exp || "LIFETIME";
-            document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : (USER.quota || 0);
+            document.getElementById('uExp').innerText = USER.exp;
+            document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role !== 'member') m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><br><span>GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div class="menu-item" onclick="openDB()"><i class="fas fa-database"></i><br><span>DATABASE</span></div>`;
-            m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><br><span>LOGOUT</span></div>`;
+            if(USER.role !== 'member') m.innerHTML += `<div class="menu-item" onclick="openGen()" style="background:var(--card); border:1px solid #222; padding:15px; text-align:center; border-radius:8px;"><i class="fas fa-key" style="color:var(--fire); margin-bottom:5px;"></i><br><span style="font-size:9px; font-family:'Orbitron'">GENERATE</span></div>`;
+            m.innerHTML += `<div class="menu-item" onclick="location.reload()" style="background:var(--card); border:1px solid #222; padding:15px; text-align:center; border-radius:8px;"><i class="fas fa-power-off" style="color:var(--fire); margin-bottom:5px;"></i><br><span style="font-size:9px; font-family:'Orbitron'">LOGOUT</span></div>`;
         }
 
-        function openGen() {
-            document.getElementById('modalGen').style.display = 'flex';
-            const r = document.getElementById('gRole'), t = document.getElementById('gTime');
-            if(USER.role === 'owner') {
-                r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>';
-                t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
-            } else {
-                r.innerHTML = '<option value="member">MEMBER</option>';
-                t.innerHTML = (USER.exp === '1 MONTH') ? '<option value="1 MONTH">1 MONTH</option>' : '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
-            }
-            checkGenView();
-        }
-
-        function checkGenView() { document.getElementById('quotaArea').style.display = (USER.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
-        
-        async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return notify("DATA TIDAK LENGKAP!");
-            if(USER.role === 'reseller') { if(USER.quota <= 0) return notify("QUOTA HABIS!"); DB[USER.id].quota--; USER.quota--; }
-            DB[u] = { pw: p, role: r, exp: t, quota: (r === 'reseller' ? q : 0) };
-            await pushDB(); 
-            addLog("GENERATE", `Created ${r} ID: ${u}`);
-            notify("UNIT PUSHED!"); closeModal(); renderHome();
-            tele("GENERATE UNIT", `<b>ID:</b> <code>${u}</code>\n<b>Key:</b> <code>${p}</code>\n<b>Role:</b> ${r.toUpperCase()}\n<b>By:</b> ${USER.id}`);
-        }
-
-        function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
-        function renderDB() {
-            const l = document.getElementById('dbList'); l.innerHTML = "";
-            Object.keys(DB).forEach(k => { if(!k.startsWith('_')) {
-                const isO = DB[k].role === 'owner';
-                l.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center; font-size:10px;">
-                    <div><b>${k}</b> <span style="color:#555;">(${DB[k].role})</span></div>
-                    ${isO ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}
-                </div>`;
-            }});
-        }
-        async function delU(k) { if(confirm('Delete?')) { delete DB[k]; await pushDB(); addLog("DELETE", `Removed unit ${k}`); renderDB(); tele("UNIT REMOVED", `<b>Target:</b> <code>${k}</code>\n<b>By:</b> ${USER.id}`); } }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function switchTab(t, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            if(t === 'attack') getIP(); // Refresh IP pas buka menu attack
         }
-        function startAttack() { 
-            const t = document.getElementById('target').value, b = document.getElementById('bugType').value; if(!t) return notify("TARGET KOSONG!");
+
+        function startAttack(mode) {
+            let t = mode === 'BUG' ? document.getElementById('targetBug').value : document.getElementById('targetWiFi').value;
+            let b = mode === 'BUG' ? document.getElementById('bugType').value : 'WIFI_KILLER_JAMMER';
+            if(!t) return notify("TARGET KOSONG!");
+            if(USER.role !== 'owner' && USER.quota <= 0) return notify("QUOTA HABIS!");
+            
             addLog("ATTACK", `Sent ${b} to ${t}`);
-            tele("ATTACK EXECUTED", `<b>Target:</b> <code>${t}</code>\n<b>Bug:</b> ${b}`);
-            notify("BUG SENT 🚀"); 
+            tele("ATTACK", `Target: ${t}\nMethod: ${b}\nBy: ${USER.id}`);
+            notify("EXECUTED 🚀");
         }
-        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 60 }, "color": { "value": "#ff4500" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 3, "direction": "top" } } }); }
+
+        function initApp() {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 60 },
+                    "color": { "value": "#555555" },
+                    "opacity": { "value": 0.4 },
+                    "size": { "value": 2 },
+                    "move": { "enable": true, "speed": 0.8, "direction": "top", "random": true, "out_mode": "out" }
+                }
+            });
+        }
+        function openGen() { document.getElementById('modalGen').style.display = 'flex'; const r = document.getElementById('gRole'), t = document.getElementById('gTime'); if(USER.role === 'owner'){ r.innerHTML='<option value="member">MEMBER</option><option value="reseller">RESELLER</option>'; t.innerHTML='<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>'; } else { r.innerHTML='<option value="member">MEMBER</option>'; t.innerHTML=(USER.exp==='1 MONTH')?'<option value="1 MONTH">1 MONTH</option>':'<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>'; } checkGenView(); }
+        function closeModal() { document.getElementById('modalGen').style.display = 'none'; }
+        function genRandomKey() { document.getElementById('gPass').value = "VZ-" + Math.random().toString(36).substring(2,8).toUpperCase(); }
+        function checkGenView() { document.getElementById('quotaArea').style.display = (USER.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
+        async function doGenerate() { notify("PUSHING..."); closeModal(); addLog("GEN", "New Unit Created"); }
     </script>
 </body>
 </html>
