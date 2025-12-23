@@ -199,13 +199,29 @@
         function toggleQuotaInput() { document.getElementById('quotaArea').style.display = (SESSION.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
 
         async function confirmGen() {
-            const n = document.getElementById('gName').value.trim(); const p = document.getElementById('gPass').value.trim();
+            const n = document.getElementById('gName').value.trim(); 
+            const p = document.getElementById('gPass').value.trim();
+            const r = document.getElementById('gRole').value;
+            const t = document.getElementById('gTime').value;
+            const q = parseInt(document.getElementById('gQuota').value) || 0;
+
             if(!n || !p) return showNotify('LENGKAPI DATA!');
+
+            // LOCK QUOTA RESELLER
             if(SESSION.role === 'reseller') {
-                ALL_USERS[SESSION.username].quota -= 1; SESSION.quota -= 1;
+                if(!SESSION.quota || SESSION.quota <= 0) return showNotify('GAGAL: KUOTA ANDA HABIS!');
+                ALL_USERS[SESSION.username].quota -= 1;
+                SESSION.quota -= 1;
             }
-            ALL_USERS[n] = { pw: p, role: document.getElementById('gRole').value, exp: document.getElementById('gTime').value, quota: parseInt(document.getElementById('gQuota').value) || 0 };
-            await pushCloudDB(ALL_USERS); showNotify('KEY AKTIF!'); closeModal(); renderUI();
+
+            ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
+            
+            showNotify('UPLOADING...');
+            try {
+                await pushCloudDB(ALL_USERS);
+                showNotify('KEY AKTIF!');
+                closeModal(); renderUI();
+            } catch(e) { showNotify('SERVER ERROR!'); }
         }
 
         function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
