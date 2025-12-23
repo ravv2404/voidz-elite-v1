@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | GOD MODE</title>
+    <title>VOIDZ SUPREME V1 | FINAL GOD MODE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,40 +12,58 @@
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        
+        /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 15px; object-fit: cover; display: block; }
+        
+        /* INPUT & BUTTONS */
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
         .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; text-transform: uppercase; }
+
+        /* APP CONTAINER */
         .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; }
         .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; }
         .banner-video { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* WELCOME NEON STYLES */
+        .welcome-msg { text-align: center; font-family: 'Orbitron'; font-size: 16px; font-weight: 900; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+        .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff; }
+        .neon-white { color: #ffffff; text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff; }
+
+        /* DASHBOARD INFO */
         .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .info-icon { color: var(--neon-red); font-size: 14px; width: 20px; }
         .info-label { font-size: 10px; color: #666; font-weight: bold; }
         .info-val { font-size: 15px; color: #fff; display: block; font-weight: 900; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
         .menu-item i { color: var(--neon-red); font-size: 20px; margin-bottom: 8px; }
         .menu-item span { font-size: 10px; font-family: 'Orbitron'; display: block; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; grid-template-columns: 1fr 1fr 1fr; height: 70px; z-index: 1000; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; font-family: 'Orbitron'; }
+
+        /* NAV & MODAL */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; height: 70px; z-index: 1000; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; font-family: 'Orbitron'; cursor: pointer; }
         .nav-btn.active { color: var(--neon-red); }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #080000; border: 1px solid var(--neon-red); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
+        
         #notif-box { position: fixed; top: 20px; right: 20px; z-index: 9999; width: 250px; }
         .toast { background: #111; border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 10px; font-size: 11px; animation: slideIn 0.3s; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
         .tab-content { display: none; }
         .active-tab { display: block; }
-        .log-item { padding: 10px; border-bottom: 1px solid #200; font-size: 10px; }
-        .log-time { color: #555; font-size: 8px; }
+        .log-item { padding: 8px; border-bottom: 1px solid #111; font-size: 10px; }
     </style>
 </head>
 <body onload="forceStart()">
     <div id="particles-js"></div>
     <div id="notif-box"></div>
+
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
@@ -58,6 +76,8 @@
         </div>
 
         <div id="mainApp" class="container">
+            <div id="welcomeDisplay" class="welcome-msg"></div>
+            
             <div class="banner-container">
                 <video id="homeVideo" class="banner-video" preload="auto" autoplay loop muted playsinline webkit-playsinline>
                     <source src="dashboard.mp4" type="video/mp4">
@@ -89,12 +109,12 @@
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300;">
                     <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:11px; font-family:'Orbitron';">WIFI KILLER UNIT</h3>
                     <input type="text" id="wifiIp" class="input-box" placeholder="IP TARGET">
-                    <button class="btn-main" onclick="toggleWifi()" id="wifiBtn">ACTIVATE KILLER</button>
+                    <button class="btn-main" onclick="toggleWifi()">ACTIVATE KILLER</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300; min-height: 200px;">
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300;">
                     <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:11px; font-family:'Orbitron';">ACTIVITY LOGS</h3>
                     <div id="logContent"></div>
                 </div>
@@ -104,31 +124,37 @@
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div class="nav-btn" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
+            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
         </nav>
     </div>
 
     <div id="modalGen" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:15px;">CREATE ACCESS</h3><input type="text" id="gUser" class="input-box" placeholder="ID"><input type="text" id="gPass" class="input-box" placeholder="KEY"><select id="gRole" class="input-box" onchange="checkRole()"></select><select id="gTime" class="input-box"></select><div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div><button class="btn-main" onclick="doGenerate()">PUSH DATA</button><button onclick="closeModal()" style="color:#555;margin-top:10px;background:none;border:none;width:100%">CANCEL</button></div></div>
-
+    
     <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:10px;font-family:'Orbitron';">USER DATABASE</h3><input type="text" id="search" class="input-box" placeholder="Search..." oninput="renderDB()"><div id="dbList" style="max-height:200px; overflow-y:auto; background:#000; border:1px solid #222;"></div><button class="btn-main" style="margin-top:15px;" onclick="closeModal()">CLOSE</button></div></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', TELE_ID = '7217442382';
+        const BIN_ID = '694a5a6fae596e708fabef99', 
+              API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', 
+              TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', // <-- Ganti kalau sudah dapat yang baru
+              TELE_ID = '7217442382';
+
         let USER = {}, DB = {};
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
+        
         async function tele(m) { 
             const finalMsg = "<b>〔 VOIDZ SUPREME V1 〕</b>\n" + m + "\n━━━━━━━━━━━━━━━";
             const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(finalMsg)}&parse_mode=html`;
-            new Image().src = url;
+            const xhr = new XMLHttpRequest(); xhr.open("GET", url, true); xhr.send();
         }
 
         async function syncDB() { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); if(!DB._logs) DB._logs = []; }
         async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
 
         function addLog(act) {
-            const entry = { u: USER.id, a: act, t: new Date().toLocaleString() };
+            if(!DB._logs) DB._logs = [];
+            const entry = { u: USER.id || "System", a: act, t: new Date().toLocaleString('id-ID') };
             DB._logs.unshift(entry); if(DB._logs.length > 50) DB._logs.pop();
             pushDB();
         }
@@ -140,26 +166,45 @@
                 await syncDB();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
+                    
+                    // Welcome Neon Logic
+                    const wBox = document.getElementById('welcomeDisplay');
+                    if(USER.role === 'owner') { wBox.innerHTML = "Welcome Developer 👑"; wBox.className = "welcome-msg neon-red"; }
+                    else if(USER.role === 'reseller') { wBox.innerHTML = "Welcome Reseller"; wBox.className = "welcome-msg neon-blue"; }
+                    else { wBox.innerHTML = "Welcome"; wBox.className = "welcome-msg neon-white"; }
+
+                    // UI Adjustment
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
+                    
+                    if(USER.role === 'owner') {
+                        document.getElementById('navLogs').style.display = 'flex';
+                        document.getElementById('bottomNav').style.gridTemplateColumns = '1fr 1fr 1fr';
+                    } else {
+                        document.getElementById('bottomNav').style.gridTemplateColumns = '1fr 1fr';
+                    }
+
                     renderHome();
-                    addLog("Logged In");
+                    addLog("System Online");
                     tele(`👤 <b>LOGIN</b>\n<b>User:</b> <code>${u}</code>\n<b>Role:</b> <code>${USER.role}</code>`);
-                } else notify("WRONG KEY!");
-            } catch(e) { notify("ERROR!"); }
+                    forceStart();
+                } else notify("ACCESS DENIED!");
+            } catch(e) { notify("SYNC ERROR!"); }
         }
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id.toUpperCase();
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             const immortal = (USER.role === 'owner' || USER.exp === 'LIFETIME');
-            document.getElementById('uTimeDisplay').innerHTML = immortal ? '∞' : USER.exp;
+            document.getElementById('uTimeDisplay').innerHTML = immortal ? '<span style="font-size:22px;">∞</span>' : USER.exp;
+            
             if(USER.role === 'member') document.getElementById('quotaRow').style.display = 'none';
             else {
                 document.getElementById('quotaRow').style.display = 'flex';
-                document.getElementById('uQuota').innerHTML = (USER.role === 'owner') ? '∞' : USER.quota;
+                document.getElementById('uQuota').innerHTML = (USER.role === 'owner') ? '<span style="font-size:22px;">∞</span>' : (USER.quota || 0);
             }
+
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role !== 'member') m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
             if(USER.role === 'owner') m.innerHTML += `<div class="menu-item" onclick="openDB()"><i class="fas fa-database"></i><span>DATABASE</span></div>`;
@@ -182,7 +227,7 @@
 
         async function doGenerate() {
             const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return notify("LENGKAPI!");
+            if(!u || !p) return notify("DATA KOSONG!");
             if(USER.role === 'reseller') { if(USER.quota <= 0) return notify("NO QUOTA!"); DB[USER.id].quota--; USER.quota--; }
             DB[u] = { pw: p, role: r, quota: (r === 'reseller' ? q : 0), exp: t };
             await pushDB(); addLog(`Created ${r} ${u}`); notify("PUSHED!"); closeModal(); renderHome();
@@ -190,10 +235,9 @@
         }
 
         function startAttack() {
-            const t = document.getElementById('target').value, b = document.getElementById('bugType').value;
-            if(!t) return notify("TARGET?");
-            addLog(`Attack ${t} (${b})`);
-            tele(`🚀 <b>WA ATTACK</b>\n<b>Target:</b> ${t}\n<b>Bug:</b> ${b}\n<b>By:</b> ${USER.id}`);
+            const t = document.getElementById('target').value; if(!t) return notify("TARGET?");
+            addLog(`Attack ${t}`);
+            tele(`🚀 <b>ATTACK</b>\n<b>Target:</b> ${t}\n<b>By:</b> ${USER.id}`);
             notify("BUG SENT!");
         }
 
@@ -206,13 +250,9 @@
 
         function renderLogs() {
             const container = document.getElementById('logContent'); container.innerHTML = "";
+            if(!DB._logs) return;
             DB._logs.forEach(l => {
-                if(USER.role === 'owner' || l.u === USER.id) {
-                    container.innerHTML += `<div class="log-item">
-                        <span style="color:red">[${l.u}]</span> ${l.a}<br>
-                        <span class="log-time">${l.t}</span>
-                    </div>`;
-                }
+                container.innerHTML += `<div class="log-item"><b style="color:red">[${l.u ? l.u.toUpperCase() : 'VOIDZ'}]</b> <span style="color:#ccc">${l.a}</span><br><small style="color:#444">${l.t}</small></div>`;
             });
         }
 
@@ -222,7 +262,7 @@
             Object.keys(DB).forEach(k => {
                 if(!k.startsWith('_') && k.includes(s)) {
                     const isO = DB[k].role === 'owner';
-                    l.innerHTML += `<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #222;align-items:center;font-size:10px;">
+                    l.innerHTML += `<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #111;align-items:center;font-size:10px;">
                         <div><b>${isO?'👑 ':''}${k}</b><br><small>${DB[k].role} | ${DB[k].exp}</small></div>
                         ${isO?'':`<i class="fas fa-trash" onclick="delUser('${k}')"></i>`}
                     </div>`;
@@ -238,8 +278,4 @@
             el.classList.add('active');
             if(t === 'logs') renderLogs();
         }
-        function forceStart() { const v = document.getElementById('homeVideo'); if(v) { v.muted = true; v.play().catch(() => {}); } }
-        particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000", "opacity": 0.1 } } });
-    </script>
-</body>
-</html>
+        function forceStart(
