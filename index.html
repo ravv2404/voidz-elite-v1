@@ -14,7 +14,7 @@
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* POPUP WELCOME GACOR */
+        /* POPUP WELCOME */
         @keyframes slideWelcome {
             0% { transform: translateX(120%); opacity: 0; }
             10% { transform: translateX(0); opacity: 1; }
@@ -29,9 +29,11 @@
         }
         .animate-welcome { animation: slideWelcome 5s ease-in-out forwards; }
 
-        /* LOGIN PAGE */
+        /* LOGIN PAGE DENGAN PICTURE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 25px; border-radius: 10px; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,1); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px 25px; border-radius: 15px; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,1); border-top: 2px solid var(--fire); }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); }
+        
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; }
         .btn-main:disabled { background: #222 !important; color: #444 !important; cursor: not-allowed; }
         .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
@@ -66,6 +68,7 @@
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
+                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
                 <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px; letter-spacing:2px;">VOIDZ ACCESS</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
@@ -90,7 +93,7 @@
             <div id="tabATTACK" class="tab-content">
                 <div class="attack-card">
                     <h3 style="color:#00e5ff; font-size:12px; margin-bottom:15px; font-family:'Orbitron'"><i class="fas fa-wifi"></i> WIFI KILLER</h3>
-                    <label style="font-size:8px; color:#555">DETECTED IP:</label>
+                    <label style="font-size:8px; color:#555">YOUR IP ADDRESS:</label>
                     <input type="text" id="wifiIP" class="input-box" placeholder="Detecting IP..." readonly style="color:#00e5ff; border-color:#004455">
                     <input type="text" id="targetWiFi" class="input-box" placeholder="Target IP / Gateway">
                     <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">KILL NETWORK</button>
@@ -146,7 +149,7 @@
         function addLog(a, d) { SYSTEM_LOGS.unshift(`[${new Date().toLocaleTimeString()}] ${a}: ${d}`); renderLogs(); }
         function renderLogs() { const c = document.getElementById('logContent'); if(c) c.innerHTML = SYSTEM_LOGS.map(l => `<div>> ${l}</div>`).join(''); }
 
-        // AUTO IP DETECT (Real IPify)
+        // AUTO IP DETECT
         async function getIP() {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
@@ -157,7 +160,7 @@
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            if(!u || !p) return notify("ISI DATA!");
+            if(!u || !p) return notify("LENGKAPI DATA!");
             btn.innerText = "CONNECTING..."; btn.disabled = true;
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
@@ -201,15 +204,13 @@
             document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            if(t === 'attack') getIP(); // Refresh IP pas buka menu attack
+            if(t === 'attack') getIP();
         }
 
         function startAttack(mode) {
             let t = mode === 'BUG' ? document.getElementById('targetBug').value : document.getElementById('targetWiFi').value;
             let b = mode === 'BUG' ? document.getElementById('bugType').value : 'WIFI_KILLER_JAMMER';
             if(!t) return notify("TARGET KOSONG!");
-            if(USER.role !== 'owner' && USER.quota <= 0) return notify("QUOTA HABIS!");
-            
             addLog("ATTACK", `Sent ${b} to ${t}`);
             tele("ATTACK", `Target: ${t}\nMethod: ${b}\nBy: ${USER.id}`);
             notify("EXECUTED 🚀");
@@ -218,9 +219,9 @@
         function initApp() {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": { "value": 60 },
-                    "color": { "value": "#555555" },
-                    "opacity": { "value": 0.4 },
+                    "number": { "value": 50 },
+                    "color": { "value": "#444444" },
+                    "opacity": { "value": 0.5 },
                     "size": { "value": 2 },
                     "move": { "enable": true, "speed": 0.8, "direction": "top", "random": true, "out_mode": "out" }
                 }
