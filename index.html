@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | ULTIMATE FIXED</title>
+    <title>VOIDZ SUPREME V1 | TIME EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -38,22 +38,18 @@
         .menu-item i { color: var(--neon-red); font-size: 20px; margin-bottom: 8px; }
         .menu-item span { font-size: 10px; font-family: 'Orbitron'; display: block; }
 
-        /* TABS */
         .tab-content { display: none; animation: fadeIn 0.3s forwards; }
         .active-tab { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTTOM NAV */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 10px; font-family: 'Orbitron'; }
         .nav-btn.active { color: var(--neon-red); }
 
-        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #080000; border: 1px solid var(--neon-red); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         .list-container { max-height: 200px; overflow-y: auto; margin-top: 10px; background: #000; padding: 10px; border: 1px solid #222; font-size: 11px; }
 
-        /* NOTIF */
         #notif-box { position: fixed; top: 20px; right: 20px; z-index: 9999; width: 250px; }
         .toast { background: #111; border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 10px; font-size: 11px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); animation: slideIn 0.3s; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -85,6 +81,7 @@
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-id-badge info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uName" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-crown info-icon"></i><div><span class="info-label">ROLE</span><span id="uRole" class="info-val">-</span></div></div>
+                    <div class="info-row"><i class="fas fa-clock info-icon"></i><div><span class="info-label">EXPIRATION</span><span id="uTimeDisplay" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-bolt info-icon"></i><div><span class="info-label">QUOTA</span><span id="uQuota" class="info-val">-</span></div></div>
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
@@ -112,12 +109,16 @@
 
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--neon-red); margin-bottom:15px;">CREATE ACCESS</h3>
+            <h3 style="color:var(--neon-red); margin-bottom:15px; font-size:14px;">CREATE ACCESS</h3>
             <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
             <input type="text" id="gPass" class="input-box" placeholder="NEW KEY">
             <select id="gRole" class="input-box" onchange="checkRole()">
                 <option value="member">MEMBER</option>
                 <option value="reseller">RESELLER</option>
+            </select>
+            <select id="gTime" class="input-box">
+                <option value="30D">1 MONTH</option>
+                <option value="LIFETIME">LIFETIME</option>
             </select>
             <div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
             <button class="btn-main" onclick="doGenerate()">PUSH DATA</button>
@@ -190,7 +191,9 @@
         function renderHome() {
             document.getElementById('uName').innerText = USER.id.toUpperCase();
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
+            document.getElementById('uTimeDisplay').innerText = USER.exp || 'LIFETIME';
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : (USER.quota || 0);
+            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role === 'owner' || (USER.role === 'reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
             if(USER.role === 'owner') {
@@ -204,17 +207,25 @@
         function checkRole() { document.getElementById('resellerOnly').style.display = document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'; }
         
         async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, q = parseInt(document.getElementById('gQuota').value) || 0;
+            const u = document.getElementById('gUser').value.trim(), 
+                  p = document.getElementById('gPass').value.trim(), 
+                  r = document.getElementById('gRole').value, 
+                  t = document.getElementById('gTime').value,
+                  q = parseInt(document.getElementById('gQuota').value) || 0;
+            
             if(!u || !p) return notify("ISI DATA!");
+            
             if(USER.role === 'reseller') {
                 if(USER.quota <= 0) return notify("KUOTA HABIS!");
                 DB[USER.id].quota -= 1; USER.quota -= 1;
             }
-            DB[u] = { pw: p, role: r, quota: q };
+            
+            DB[u] = { pw: p, role: r, quota: q, exp: t };
             if(!DB._logs) DB._logs = [];
             DB._logs.unshift({ time: new Date().toLocaleString(), by: USER.id, action: `GEN ${r}`, target: u });
+            
             await pushDB(); notify("SUCCESS!"); closeModal(); renderHome();
-            tele(`💎 <b>NEW KEY</b>\nBy: ${USER.id}\nTarget: ${u}\nRole: ${r}`);
+            tele(`💎 <b>NEW KEY</b>\nBy: ${USER.id}\nTarget: ${u}\nRole: ${r}\nTime: ${t}`);
         }
 
         function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
@@ -224,7 +235,10 @@
                 if(!k.startsWith('_') && k.includes(s)) {
                     const isOwner = DB[k].role === 'owner';
                     l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111;">
-                        <span>${isOwner ? '👑' : ''}${k} [${DB[k].role}]</span>
+                        <div style="font-size:10px;">
+                            <b>${isOwner ? '👑' : ''}${k}</b> [${DB[k].role}]<br>
+                            <small style="color:#555">${DB[k].exp || 'LIFETIME'}</small>
+                        </div>
                         ${isOwner ? '<i class="fas fa-shield-alt" style="color:red"></i>' : `<i class="fas fa-trash" style="color:#444" onclick="delUser('${k}')"></i>`}
                     </div>`;
                 }
