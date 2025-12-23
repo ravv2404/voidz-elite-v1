@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | FINAL STABLE</title>
+    <title>VOIDZ SUPREME V1 | MOTION FIXED</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -13,17 +13,15 @@
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
-        /* LOGIN */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 15px; object-fit: cover; display: block; }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 12px; outline: none; border-radius: 5px; }
         .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; }
 
-        /* APP */
         .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; }
-        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 1px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; }
-        .banner-video { width: 100%; height: 100%; object-fit: cover; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; position: relative; }
+        .banner-video { width: 100%; height: 100%; object-fit: cover; display: block; }
         
         .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
@@ -36,7 +34,6 @@
         .menu-item i { color: var(--neon-red); font-size: 20px; margin-bottom: 8px; }
         .menu-item span { font-size: 10px; font-family: 'Orbitron'; display: block; }
 
-        /* ATTACK UNIT */
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #110000; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #300; }
         .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -60,7 +57,7 @@
         .active-tab { display: block; }
     </style>
 </head>
-<body>
+<body onload="forceStart()">
     <div id="particles-js"></div>
     <div id="notif-box"></div>
 
@@ -77,8 +74,9 @@
 
         <div id="mainApp" class="container">
             <div class="banner-container">
-                <video id="homeVideo" class="banner-video" autoplay loop muted playsinline webkit-playsinline>
+                <video id="homeVideo" class="banner-video" preload="auto" autoplay loop muted playsinline webkit-playsinline>
                     <source src="dashboard.mp4" type="video/mp4">
+                    Browser lu kaga support video lek!
                 </video>
             </div>
 
@@ -138,26 +136,48 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', TELE_ID = '7259275306';
+        const BIN_ID = '694a5a6fae596e708fabef99', 
+              API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', 
+              TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', 
+              TELE_ID = '7259275306';
         let USER = {}, DB = {};
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
         async function tele(m) { fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(m)}&parse_mode=html`); }
-        async function syncDB() { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); }
-        async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
+        
+        function forceStart() {
+            const v = document.getElementById('homeVideo');
+            if(v) {
+                v.muted = true;
+                v.play().catch(() => { console.log("Video butuh klik user"); });
+            }
+        }
+
+        async function syncDB() { 
+            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
+            DB = await res.json(); 
+        }
+
+        async function pushDB() { 
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); 
+        }
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
             if(!u || !p) return notify("ISI DATA!");
             document.getElementById('btnLog').innerText = "WAIT...";
+            
             try {
                 await syncDB();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
                     
-                    // Force Play Video
+                    // Maksa video jalan pas login sukses
                     const v = document.getElementById('homeVideo');
-                    if(v) { v.muted = true; v.play().catch(() => {}); }
+                    if(v) { 
+                        v.muted = true; 
+                        v.play().catch(() => {}); 
+                    }
 
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
@@ -230,12 +250,17 @@
         }
 
         async function delUser(k) { if(confirm(`Hapus ${k}?`)) { delete DB[k]; await pushDB(); renderDB(); } }
+        
         function switchTab(t, el) { 
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab' + t.toUpperCase()).classList.add('active-tab');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
+            
+            // Re-trigger video pas pindah tab
+            if(t === 'home') forceStart();
         }
+        
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000", "opacity": 0.1 } } });
     </script>
