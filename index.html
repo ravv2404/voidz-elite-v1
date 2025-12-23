@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | FINAL EDITION</title>
+    <title>VOIDZ SUPREME V1 | CLEAN EDITION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -15,14 +15,12 @@
         #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
-        /* LOGIN */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 15px; object-fit: cover; display: block; }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 12px; outline: none; border-radius: 5px; }
         .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; }
 
-        /* DASHBOARD */
         .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; }
         .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 1px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; }
         .banner-video { width: 100%; height: 100%; object-fit: cover; }
@@ -82,7 +80,7 @@
                     <div class="info-row"><i class="fas fa-id-badge info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uName" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-crown info-icon"></i><div><span class="info-label">ROLE</span><span id="uRole" class="info-val">-</span></div></div>
                     <div class="info-row"><i class="fas fa-clock info-icon"></i><div><span class="info-label">STATUS</span><span id="uTimeDisplay" class="info-val">-</span></div></div>
-                    <div class="info-row"><i class="fas fa-bolt info-icon"></i><div><span class="info-label">QUOTA</span><span id="uQuota" class="info-val">-</span></div></div>
+                    <div class="info-row" id="quotaRow"><i class="fas fa-bolt info-icon"></i><div><span class="info-label">QUOTA</span><span id="uQuota" class="info-val">-</span></div></div>
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
             </div>
@@ -185,7 +183,16 @@
             document.getElementById('uName').innerText = USER.id.toUpperCase();
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
             document.getElementById('uTimeDisplay').innerText = USER.exp || 'LIFETIME';
-            document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : (USER.quota || 0);
+            
+            // LOGIC HIDE QUOTA BUAT MEMBER
+            const qRow = document.getElementById('quotaRow');
+            if(USER.role === 'member') {
+                qRow.style.display = 'none';
+            } else {
+                qRow.style.display = 'flex';
+                document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INFINITY' : (USER.quota || 0);
+            }
+            
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role === 'owner' || (USER.role === 'reseller' && USER.quota > 0)) m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
             if(USER.role === 'owner') {
