@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOIDZ | HELLFIRE RED</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #ff0000; --bg: #000; --card: rgba(20, 0, 0, 0.9); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; }
+        body { background: var(--bg); color: #fff; height: 100vh; overflow: hidden; }
+        #particles-js { position: fixed; inset: 0; z-index: 1; background: radial-gradient(circle at center, #250000 0%, #000 100%); }
+        .content-layer { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        .login-box { width: 320px; background: var(--card); border: 1px solid #500; border-top: 3px solid var(--neon); padding: 30px; border-radius: 10px; text-align: center; backdrop-filter: blur(10px); }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon); margin-bottom: 15px; box-shadow: 0 0 15px var(--neon); }
+        .input-box { width: 100%; background: #000; border: 1px solid #500; padding: 12px; color: #fff; margin-bottom: 15px; text-align: center; outline: none; font-size: 11px; }
+        .btn-main { width: 100%; background: var(--neon); color: #000; border: none; padding: 15px; font-family: 'Orbitron'; font-weight: 900; cursor: pointer; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+
+        .container { display: none; width: 100%; max-width: 450px; padding: 20px; overflow-y: auto; height: 100vh; }
+        header { background: var(--card); padding: 20px; border: 1px solid #500; border-left: 5px solid var(--neon); margin-bottom: 15px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .menu-item { background: var(--card); border: 1px solid #500; padding: 20px; text-align: center; cursor: pointer; border-radius: 5px; }
+        .menu-item i { display: block; font-size: 24px; color: var(--neon); margin-bottom: 10px; }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: #100; border: 1px solid var(--neon); padding: 25px; width: 350px; text-align: center; }
+
+        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        .toast { background: #200; border-left: 4px solid var(--neon); padding: 15px; margin-bottom: 10px; font-size: 11px; animation: slide 0.3s ease; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        @keyframes slide { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="notification-container"></div>
+
+    <div class="content-layer">
+        <div id="loginPage">
+            <div class="login-box">
+                <img src="1001334714.jpg" class="profile-img" onerror="this.src='https://via.placeholder.com/80/ff0000/000000?text=VOIDZ'">
+                <h2 style="font-family: 'Orbitron'; color: var(--neon); margin-bottom: 20px;">VOIDZ V1.0</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
+                <button onclick="auth()" class="btn-main">IGNITE SYSTEM</button>
+            </div>
+        </div>
+
+        <div class="container" id="mainApp">
+            <header>
+                <h3 id="uDisplay" style="text-shadow: 0 0 5px var(--neon);">---</h3>
+                <p id="uRole" style="color: var(--neon); font-size: 10px; margin-top: 5px;"></p>
+            </header>
+            <div class="menu-grid" id="menuGrid"></div>
+            <button class="btn-main" style="margin-top:20px; height:45px;" onclick="location.reload()">SHUTDOWN</button>
+        </div>
+    </div>
+
+    <div id="genModal" class="modal"><div class="modal-content">
+        <h3 style="color: var(--neon);">INJECT KEY</h3>
+        <input type="text" id="gName" class="input-box" style="margin-top:15px;" placeholder="New Username">
+        <input type="text" id="gPass" class="input-box" placeholder="New Password">
+        <select id="gTime" class="input-box"><option value="30">30 DAYS</option><option value="999">LIFETIME</option></select>
+        <button class="btn-main" onclick="confirmGen()">PUSH DATA</button>
+        <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px; color:#666;">[ CANCEL ]</p>
+    </div></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        let SESSION = {}; let ALL_USERS = {};
+
+        function showNotify(msg) {
+            const c = document.getElementById('notification-container');
+            const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = msg;
+            c.appendChild(t); setTimeout(() => t.remove(), 3000);
+        }
+
+        async function auth() {
+            const u = document.getElementById('lUser').value.trim();
+            const p = document.getElementById('lPass').value.trim();
+            if(!u || !p) return showNotify('ISI DATA!');
+            showNotify('AUTHENTICATING...');
+
+            try {
+                const res = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'login', username: u, password: p })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    SESSION = { user: u, ...data.user };
+                    ALL_USERS = data.fullDB;
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    renderUI();
+                } else { showNotify(`FAILED: ${data.msg}`); }
+            } catch (e) { showNotify('CORE ERROR: CHECK VERCEL!'); }
+        }
+
+        function renderUI() {
+            document.getElementById('uDisplay').innerText = `WELCOME, ${SESSION.user.toUpperCase()}`;
+            document.getElementById('uRole').innerText = `LEVEL: ${SESSION.role.toUpperCase()}`;
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = "";
+            if(SESSION.role !== 'member') {
+                grid.innerHTML += `<div class="menu-item" onclick="document.getElementById('genModal').style.display='flex'"><i class="fas fa-plus-circle"></i>GENERATE</div>`;
+            }
+            grid.innerHTML += `<div class="menu-item"><i class="fas fa-radiation"></i>INJECT</div>`;
+        }
+
+        async function confirmGen() {
+            const n = document.getElementById('gName').value.trim();
+            const p = document.getElementById('gPass').value.trim();
+            if(!n || !p) return showNotify('ISI DATA!');
+            
+            const exp = (document.getElementById('gTime').value === "999") ? "LIFETIME" : Date.now() + (30*24*60*60*1000);
+            const newData = { ...ALL_USERS, [n]: { pw: p, role: "member", exp: exp } };
+
+            try {
+                const res = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'update', newData: newData })
+                });
+                if(res.ok) { showNotify('KEY GENERATED!'); location.reload(); }
+            } catch (e) { showNotify('SERVER ERROR!'); }
+        }
+
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "color": { "value": ["#ff0000", "#ff5500"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3, "random": true },
+                "move": { "enable": true, "speed": 4, "direction": "top", "out_mode": "out" }
+            }
+        });
+    </script>
+</body>
+</html>
