@@ -16,10 +16,13 @@
         
         .neon-text { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
         
-        /* LOGIN */
+        /* LOGIN PAGE BALIK KE MODE LAMA */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); position: relative; }
+        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
+        
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; }
+        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
 
         /* DASHBOARD */
@@ -50,6 +53,7 @@
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
+                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
                 <h2 class="neon-text" style="font-size: 16px; margin-bottom: 20px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
@@ -112,11 +116,18 @@
         <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
     </div></div>
 
+    <div id="modalConfig" class="modal"><div class="modal-content" style="border-color: #4b5320;">
+        <h3 style="color:#4b5320; font-size:12px; font-family:'Orbitron'"><i class="fas fa-satellite"></i> INTEL CONFIG</h3>
+        <input type="text" id="botToken" class="input-box" placeholder="BOT TOKEN TELEGRAM" style="margin-top:15px;">
+        <input type="text" id="chatID" class="input-box" placeholder="CHAT ID MARKAS">
+        <button class="btn-main" style="background:#4b5320; color:#fff;" onclick="saveConfig()">LOCK INTEL</button>
+        <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">ABORT</button>
+    </div></div>
+
     <script>
         const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
         let USER = {}, DB = {}, LOG_HISTORY = [];
 
-        // --- ASH PARTICLES (FIXED) ---
         const canvas = document.getElementById('ash-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -134,21 +145,18 @@
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:5px; font-size:10px; width:200px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
 
-        // --- TERMINAL LOGS LOGIC (RE-BUILD) ---
         function addTerminalLog(action, detail) {
             const time = new Date().toLocaleTimeString();
             const logMsg = `<div class="log-entry"><span style="color:var(--fire)">[${time}]</span> <span style="color:#00e5ff">${action}</span>: ${detail}</div>`;
             LOG_HISTORY.unshift(logMsg);
-            if(USER.role === 'owner') {
-                const container = document.getElementById('logContent');
-                if(container) container.innerHTML = LOG_HISTORY.join('');
-            }
+            const container = document.getElementById('logContent');
+            if(container) container.innerHTML = LOG_HISTORY.join('');
         }
 
         async function sendTele(msg) {
             const token = localStorage.getItem('v_token'), chat = localStorage.getItem('v_chat');
             if(!token || !chat) return;
-            const text = `╔════════════════════╗\n  VOIDZ MONITORING\n╚════════════════════╝\n[ID] : ${USER.id || 'Unknown'}\n[ACT]: ${msg}\n[TIME]: ${new Date().toLocaleString()}`;
+            const text = `╔════════════════════╗\n  VOIDZ MONITORING\n╚════════════════════╝\n[ID] : ${USER.id || 'Unknown'}\n[ACT]: ${msg}`;
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
         }
 
@@ -168,7 +176,7 @@
                         document.getElementById('navLogs').style.display = 'flex';
                         addTerminalLog("SYSTEM", "OWNER ACCESS GRANTED");
                     }
-                    renderHome(); getIP(); sendTele("LOGIN DETECTED");
+                    renderHome(); getIP(); sendTele("LOGIN SUCCESS");
                     document.getElementById('homeVideo').play();
                 } else { throw "ERR"; }
             } catch(e) { notify("AKSES DITOLAK!"); btn.disabled = false; btn.innerText = "IGNITE"; }
@@ -176,10 +184,9 @@
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
-            const roleEl = document.getElementById('uRole');
-            roleEl.innerText = USER.role.toUpperCase();
-            if(USER.role === 'owner') roleEl.classList.add('neon-text'); // WARNA MERAH NEON OWNER
-            
+            const rEl = document.getElementById('uRole');
+            rEl.innerText = USER.role.toUpperCase();
+            if(USER.role === 'owner') rEl.classList.add('neon-text');
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
             document.getElementById('uExp').innerText = USER.exp;
             
@@ -197,13 +204,12 @@
         async function doGenerate() {
             const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value;
             if(!u || !p) return notify("DATA KOSONG!");
-            notify("PUSHING...");
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }).then(res=>res.json()).then(async d=>{
                     d[u]={pw:p, role:r, exp:document.getElementById('gTime').value, quota:parseInt(document.getElementById('gQuota').value)||0};
                     await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':API_KEY}, body:JSON.stringify(d)});
                     addTerminalLog("GENERATE", `CREATED ${r.toUpperCase()}: ${u}`);
-                    sendTele(`GENERATE UNIT: ${u}`); notify("UNIT PUSHED!"); closeModal();
+                    sendTele(`GENERATE: ${u}`); notify("UNIT PUSHED!"); closeModal();
                 });
             } catch(e) { notify("FAILED!"); }
         }
@@ -211,16 +217,15 @@
         function startAttack(m) {
             const target = m === 'WIFI' ? document.getElementById('targetWiFi').value : document.getElementById('targetBug').value;
             if(!target) return notify("TARGET KOSONG!");
-            notify("EXECUTING...");
             addTerminalLog("STRIKE", `METHOD: ${m} | TARGET: ${target}`);
-            sendTele(`STRIKE: ${m} ON ${target}`);
+            sendTele(`STRIKE: ${m} ON ${target}`); notify("EXECUTED!");
         }
 
         async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'logs') { const container = document.getElementById('logContent'); if(container) container.innerHTML = LOG_HISTORY.join(''); } }
+        function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); if(t === 'logs') { const c = document.getElementById('logContent'); if(c) c.innerHTML = LOG_HISTORY.join(''); } }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function saveConfig() { localStorage.setItem('v_token', document.getElementById('botToken').value); localStorage.setItem('v_chat', document.getElementById('chatID').value); notify("INTEL LOCKED!"); closeModal(); addTerminalLog("CONFIG", "TELEGRAM INTEL UPDATED"); }
+        function saveConfig() { localStorage.setItem('v_token', document.getElementById('botToken').value); localStorage.setItem('v_chat', document.getElementById('chatID').value); notify("INTEL LOCKED!"); closeModal(); addTerminalLog("CONFIG", "TELE INTEL UPDATED"); }
     </script>
 </body>
 </html>
