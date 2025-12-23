@@ -56,7 +56,7 @@
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
-        #userList, #logContent { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
+        #userList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
         
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; }
         .toast { background: rgba(20,0,0,0.9); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 5px; font-size: 11px; }
@@ -120,11 +120,15 @@
         <p onclick="closeModal()" style="color:red; margin-top:10px; cursor:pointer;">[ ABORT ]</p>
     </div></div>
 
-    <div id="userModal" class="modal"><div class="modal-content"><h3>DATABASE</h3><input type="text" id="userSearch" class="input-box" placeholder="SEARCH..." oninput="searchUser()"><div id="userList"></div><button class="btn-main" onclick="closeModal()">CLOSE</button></div></div>
+    <div id="userModal" class="modal"><div class="modal-content">
+        <h3 style="color:var(--neon-blue);">DATABASE</h3>
+        <input type="text" id="userSearch" class="input-box" placeholder="SEARCH OPERATOR..." oninput="searchUser()">
+        <div id="userList"></div>
+        <button class="btn-main" onclick="closeModal()">CLOSE</button>
+    </div></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // BIN BARU LU LEK
         const BIN_ID = '694a5a6fae596e708fabef99';
         const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW'; 
         let SESSION = {}; let ALL_USERS = {};
@@ -150,11 +154,9 @@
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
                 ALL_USERS = await res.json();
                 
-                // IF BIN IS EMPTY, AUTO CREATE OWNER
                 if (Object.keys(ALL_USERS).length === 0) {
                     ALL_USERS = { [u]: { pw: p, role: "owner", exp: "999", quota: 999 } };
                     await pushCloudDB(ALL_USERS);
-                    showNotify("BIN INITIALIZED AS OWNER!");
                 }
 
                 if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
@@ -164,7 +166,7 @@
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
                 } else { showNotify('KEY SALAH!'); }
-            } catch(e) { showNotify('DATABASE ERROR / INVALID JSON!'); }
+            } catch(e) { showNotify('DATABASE ERROR!'); }
         }
 
         function renderUI() {
@@ -178,7 +180,7 @@
             if(SESSION.role === 'owner') {
                 g.innerHTML += `<div class="menu-item" onclick="openUserModal()"><i class="fas fa-database"></i><br>DATABASE</div>`;
             }
-            g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><br>EXIT</div>`;
+            g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red"></i><br>EXIT</div>`;
         }
 
         function openModalGen() {
@@ -207,20 +209,26 @@
         }
 
         function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
+
         function searchUser() {
-            const q = document.getElementById('userSearch').value.toLowerCase(); const l = document.getElementById('userList'); l.innerHTML = "";
+            const q = document.getElementById('userSearch').value.toLowerCase();
+            const l = document.getElementById('userList'); l.innerHTML = "";
             Object.keys(ALL_USERS).forEach(k => {
                 if(!k.startsWith('_') && k.includes(q)) {
-                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111;">
-                        <span>${k} [${ALL_USERS[k].role}]</span>
-                        <span onclick="deleteUser('${k}')" style="color:red; cursor:pointer;">DEL</span>
+                    const isOwner = ALL_USERS[k].role === 'owner';
+                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; align-items:center;">
+                        <div>
+                            <span style="color:${isOwner ? 'var(--neon-blue)' : '#fff'}; font-weight:bold;">${k.toUpperCase()}</span><br>
+                            <small style="font-size:8px; color:#888;">${ALL_USERS[k].role.toUpperCase()} | ${ALL_USERS[k].exp === '999' ? 'PERM' : '30D'}</small>
+                        </div>
+                        ${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:1px solid red; font-size:9px; padding:2px 5px;">DEL</button>` : `<span style="color:var(--neon-blue); font-size:8px;">[OWNER]</span>`}
                     </div>`;
                 }
             });
         }
 
         async function deleteUser(id) {
-            if (id === SESSION.username) return showNotify('ANTI SELF-DESTRUCT ACTIVE!');
+            if (id === SESSION.username) return showNotify('CANT DELETE SELF!');
             if (ALL_USERS[id].role === 'owner') return showNotify('OWNER IS IMMORTAL!');
             if (!confirm(`HAPUS ${id.toUpperCase()}?`)) return;
             delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('ERASED!');
