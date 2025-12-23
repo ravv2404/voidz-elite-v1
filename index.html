@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | MOTION FIXED</title>
+    <title>VOIDZ SUPREME V1 | FINAL GOD MODE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,55 +12,45 @@
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
-        
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 20px; border-radius: 10px; text-align: center; border-top: 3px solid var(--neon-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--neon-red); margin: 0 auto 15px; object-fit: cover; display: block; }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 12px; outline: none; border-radius: 5px; }
-        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; }
-
+        .btn-main { width: 100%; background: var(--neon-red); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; text-transform: uppercase; }
         .container { flex: 1; display: none; padding: 15px; overflow-y: auto; padding-bottom: 90px; }
-        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; position: relative; }
-        .banner-video { width: 100%; height: 100%; object-fit: cover; display: block; }
-        
+        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border: 2px solid var(--neon-red); border-radius: 8px; overflow: hidden; background: #000; }
+        .banner-video { width: 100%; height: 100%; object-fit: cover; }
         .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 10px; border-left: 5px solid var(--neon-red); margin-bottom: 15px; }
         .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .info-icon { color: var(--neon-red); font-size: 14px; width: 20px; }
         .info-label { font-size: 10px; color: #666; font-weight: bold; }
-        .info-val { font-size: 12px; color: #fff; display: block; }
-        
+        .info-val { font-size: 13px; color: #fff; display: block; font-weight: bold; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
         .menu-item i { color: var(--neon-red); font-size: 20px; margin-bottom: 8px; }
         .menu-item span { font-size: 10px; font-family: 'Orbitron'; display: block; }
-
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #110000; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #300; }
         .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; inset: 0; background-color: #222; transition: .4s; border-radius: 24px; border: 1px solid #444; }
+        .slider { position: absolute; cursor: pointer; inset: 0; background-color: #222; transition: .4s; border-radius: 24px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 3px; background-color: #555; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #4a0000; border-color: var(--neon-red); }
+        input:checked + .slider { background-color: #4a0000; }
         input:checked + .slider:before { transform: translateX(26px); background-color: var(--neon-red); }
-
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; grid-template-columns: 1fr 1fr; height: 70px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 10px; font-family: 'Orbitron'; }
         .nav-btn.active { color: var(--neon-red); }
-
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080000; border: 1px solid var(--neon-red); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
-        .list-container { max-height: 200px; overflow-y: auto; margin-top: 10px; background: #000; padding: 10px; border: 1px solid #222; font-size: 11px; }
-
         #notif-box { position: fixed; top: 20px; right: 20px; z-index: 9999; width: 250px; }
         .toast { background: #111; border-left: 4px solid var(--neon-red); color: #fff; padding: 12px; margin-bottom: 10px; font-size: 11px; animation: slideIn 0.3s; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
         .tab-content { display: none; }
         .active-tab { display: block; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #080000; border: 1px solid var(--neon-red); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
     </style>
 </head>
 <body onload="forceStart()">
     <div id="particles-js"></div>
     <div id="notif-box"></div>
-
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
@@ -71,15 +61,12 @@
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
-
         <div id="mainApp" class="container">
             <div class="banner-container">
                 <video id="homeVideo" class="banner-video" preload="auto" autoplay loop muted playsinline webkit-playsinline>
                     <source src="dashboard.mp4" type="video/mp4">
-                    Browser lu kaga support video lek!
                 </video>
             </div>
-
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
                     <div class="info-row"><i class="fas fa-id-badge info-icon"></i><div><span class="info-label">OPERATOR</span><span id="uName" class="info-val">-</span></div></div>
@@ -89,16 +76,21 @@
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
             </div>
-
             <div id="tabWA" class="tab-content">
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300; margin-bottom:15px;">
-                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:12px; font-family:'Orbitron';">WA ATTACK UNIT</h3>
+                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:11px; font-family:'Orbitron';">WA BUG SELECTOR</h3>
                     <input type="number" id="target" class="input-box" placeholder="628xxxxxxx">
-                    <button class="btn-main" onclick="startAttack()">EXECUTE WA</button>
+                    <select id="bugType" class="input-box">
+                        <option value="NULL_POINTER">NULL POINTER CRASH (GADA LAWAN)</option>
+                        <option value="DB_OVERLOAD">DATABASE OVERLOAD (NGERII)</option>
+                        <option value="DOUBLE_KILL">DOUBLE KILL VIRUS (MATI TOTAL)</option>
+                        <option value="VOID_FREEZE">VOID UI FREEZE (PERMANENT)</option>
+                    </select>
+                    <button class="btn-main" onclick="startAttack()">EXECUTE BUG</button>
                 </div>
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #300;">
-                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:12px; font-family:'Orbitron';">WIFI KILLER UNIT</h3>
-                    <input type="text" id="wifiIp" class="input-box" placeholder="IP TARGET (192.168.x.x)">
+                    <h3 style="color:red; text-align:center; margin-bottom:12px; font-size:11px; font-family:'Orbitron';">WIFI KILLER UNIT</h3>
+                    <input type="text" id="wifiIp" class="input-box" placeholder="IP TARGET">
                     <div class="switch-container">
                         <span style="font-size:10px; color:#888;">STATUS: <b id="wifiStatus" style="color:#555">STANDBY</b></span>
                         <label class="switch"><input type="checkbox" id="wifiToggle" onchange="toggleWifi()"><span class="slider"></span></label>
@@ -106,85 +98,53 @@
                 </div>
             </div>
         </div>
-
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('wa', this)"><i class="fab fa-whatsapp"></i><span>ATTACK</span></div>
         </nav>
     </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <h3 style="color:red;margin-bottom:15px;">CREATE ACCESS</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="ID">
-            <input type="text" id="gPass" class="input-box" placeholder="KEY">
-            <select id="gRole" class="input-box" onchange="checkRole()"></select>
-            <select id="gTime" class="input-box"></select>
-            <div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div>
-            <button class="btn-main" onclick="doGenerate()">PUSH DATA</button>
-            <button onclick="closeModal()" style="color:#555;margin-top:10px;background:none;border:none;width:100%">CANCEL</button>
-        </div>
-    </div>
-
-    <div id="modalDB" class="modal">
-        <div class="modal-content">
-            <h3 style="color:red;margin-bottom:10px;">DATABASE</h3>
-            <input type="text" id="search" class="input-box" placeholder="Search..." oninput="renderDB()"><div id="dbList" class="list-container"></div>
-            <button class="btn-main" onclick="closeModal()">CLOSE</button>
-        </div>
-    </div>
-
+    <div id="modalGen" class="modal"><div class="modal-content"><h3 style="color:red;margin-bottom:15px;">CREATE ACCESS</h3><input type="text" id="gUser" class="input-box" placeholder="ID"><input type="text" id="gPass" class="input-box" placeholder="KEY"><select id="gRole" class="input-box" onchange="checkRole()"></select><select id="gTime" class="input-box"></select><div id="resellerOnly" style="display:none;"><input type="number" id="gQuota" class="input-box" placeholder="QUOTA"></div><button class="btn-main" onclick="doGenerate()">PUSH DATA</button><button onclick="closeModal()" style="color:#555;margin-top:10px;background:none;border:none;width:100%">CANCEL</button></div></div>
+    
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', 
-              API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', 
-              TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', 
-              TELE_ID = '7259275306';
+        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', TELE_TOKEN = '8508134035:AAEesfiGVQ2ypaq2vnnFW75Xv8DGR35K_ok', TELE_ID = '7259275306';
         let USER = {}, DB = {};
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
-        async function tele(m) { fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(m)}&parse_mode=html`); }
         
-        function forceStart() {
-            const v = document.getElementById('homeVideo');
-            if(v) {
-                v.muted = true;
-                v.play().catch(() => { console.log("Video butuh klik user"); });
-            }
+        async function tele(m) { 
+            const finalMsg = "<b>〔 VOIDZ SUPREME V1 〕</b>\n" + m + "\n━━━━━━━━━━━━━━━";
+            fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_ID}&text=${encodeURIComponent(finalMsg)}&parse_mode=html`); 
         }
 
-        async function syncDB() { 
-            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
-            DB = await res.json(); 
-        }
-
-        async function pushDB() { 
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); 
-        }
+        function forceStart() { const v = document.getElementById('homeVideo'); if(v) { v.muted = true; v.play().catch(() => {}); } }
+        async function syncDB() { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); }
+        async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
 
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim();
             if(!u || !p) return notify("ISI DATA!");
-            document.getElementById('btnLog').innerText = "WAIT...";
-            
+            document.getElementById('btnLog').innerText = "IGNITING...";
             try {
                 await syncDB();
                 if(DB[u] && DB[u].pw === p) {
                     USER = { id: u, ...DB[u] };
-                    
-                    // Maksa video jalan pas login sukses
-                    const v = document.getElementById('homeVideo');
-                    if(v) { 
-                        v.muted = true; 
-                        v.play().catch(() => {}); 
-                    }
-
+                    forceStart();
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderHome();
-                    tele(`🟢 <b>LOGIN</b>\nUser: ${u}`);
-                } else { notify("WRONG ACCESS!"); }
+                    
+                    const device = navigator.userAgent.split(')')[0].split('(')[1] || "Mobile Device";
+                    tele(`👤 <b>LOGIN DETECTED</b>
+━━━━━━━━━━━━━━━
+<b>• Operator:</b> <code>${u}</code>
+<b>• Role:</b> <code>${USER.role.toUpperCase()}</code>
+<b>• Status:</b> <code>ONLINE</code>
+<b>• Device:</b> <code>${device}</code>
+<b>• Time:</b> <code>${new Date().toLocaleString()}</code>`);
+                } else { notify("ACCESS DENIED!"); }
             } catch(e) { notify("SYNC ERROR!"); }
             document.getElementById('btnLog').innerText = "IGNITE";
         }
@@ -192,16 +152,29 @@
         function renderHome() {
             document.getElementById('uName').innerText = USER.id.toUpperCase();
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
-            document.getElementById('uTimeDisplay').innerText = USER.exp || 'LIFETIME';
+            document.getElementById('uTimeDisplay').innerText = (USER.role === 'owner' || USER.exp === 'LIFETIME') ? '∞' : USER.exp;
             const qR = document.getElementById('quotaRow');
             if(USER.role === 'member') { qR.style.display = 'none'; } else {
                 qR.style.display = 'flex';
-                document.getElementById('uQuota').innerText = USER.role === 'owner' ? 'INF' : (USER.quota || 0);
+                document.getElementById('uQuota').innerText = (USER.role === 'owner') ? '∞' : (USER.quota || 0);
             }
             const m = document.getElementById('menuContainer'); m.innerHTML = "";
             if(USER.role !== 'member') m.innerHTML += `<div class="menu-item" onclick="openGen()"><i class="fas fa-key"></i><span>GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div class="menu-item" onclick="openDB()"><i class="fas fa-database"></i><span>DATABASE</span></div>`;
             m.innerHTML += `<div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off"></i><span>LOGOUT</span></div>`;
+        }
+
+        async function startAttack() {
+            const t = document.getElementById('target').value, b = document.getElementById('bugType').value;
+            if(!t) return notify("TARGET KOSONG!");
+            notify("SENDING BUG...");
+            tele(`🚀 <b>ATTACK EXECUTED</b>
+━━━━━━━━━━━━━━━
+<b>• Target:</b> <code>${t}</code>
+<b>• Method:</b> <code>${b}</code>
+<b>• Power:</b> <code>MAXIMUM</code>
+<b>• Operator:</b> <code>${USER.id}</code>
+<b>• Result:</b> <code>BUG SENT!</code>`);
+            setTimeout(() => notify("BUG GACOR SENT!"), 2000);
         }
 
         function toggleWifi() {
@@ -209,18 +182,16 @@
             if(!ip && on) { document.getElementById('wifiToggle').checked = false; return notify("IP TARGET?"); }
             st.innerText = on ? "KILLING..." : "STANDBY";
             st.style.color = on ? "red" : "#555";
-            if(on) tele(`🔥 <b>WIFI KILL</b>\nIP: ${ip}\nBy: ${USER.id}`);
+            if(on) tele(`🔥 <b>WIFI KILL EXECUTED</b>\n<b>• IP:</b> <code>${ip}</code>\n<b>• Operator:</b> <code>${USER.id}</code>`);
         }
 
         function openGen() {
             document.getElementById('modalGen').style.display = 'flex';
             const rS = document.getElementById('gRole'), tS = document.getElementById('gTime');
             rS.innerHTML = (USER.role === 'owner') ? '<option value="member">MEMBER</option><option value="reseller">RESELLER</option>' : '<option value="member">MEMBER</option>';
-            tS.innerHTML = '<option value="30D">1 MONTH</option>';
-            if(USER.role === 'owner' || USER.exp === 'LIFETIME') tS.innerHTML += '<option value="LIFETIME">LIFETIME</option>';
+            tS.innerHTML = '<option value="30D">1 MONTH</option><option value="LIFETIME">LIFETIME</option>';
             checkRole();
         }
-
         function checkRole() { document.getElementById('resellerOnly').style.display = document.getElementById('gRole').value === 'reseller' ? 'block' : 'none'; }
         
         async function doGenerate() {
@@ -232,36 +203,23 @@
             }
             DB[u] = { pw: p, role: r, quota: q, exp: t };
             await pushDB(); notify("PUSHED!"); closeModal(); renderHome();
-            tele(`💎 <b>NEW KEY</b>\nTarget: ${u}\nBy: ${USER.id}`);
+            tele(`💎 <b>NEW ACCESS CREATED</b>
+━━━━━━━━━━━━━━━
+<b>• From:</b> <code>${USER.id}</code>
+<b>• Target:</b> <code>${u}</code>
+<b>• Role:</b> <code>${r.toUpperCase()}</code>
+<b>• Exp:</b> <code>${t}</code>
+<b>• Status:</b> <code>ACTIVATED</code>`);
         }
 
-        function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
-        function renderDB() {
-            const s = document.getElementById('search').value.toLowerCase(), l = document.getElementById('dbList'); l.innerHTML = "";
-            Object.keys(DB).forEach(k => {
-                if(!k.startsWith('_') && k.includes(s)) {
-                    const isO = DB[k].role === 'owner';
-                    l.innerHTML += `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #111">
-                        <div style="font-size:10px"><b>${isO?'👑':''}${k}</b> [${DB[k].role}]<br><small>${DB[k].exp}</small></div>
-                        ${isO?'<i class="fas fa-shield-alt" style="color:red"></i>':`<i class="fas fa-trash" onclick="delUser('${k}')"></i>`}
-                    </div>`;
-                }
-            });
-        }
-
-        async function delUser(k) { if(confirm(`Hapus ${k}?`)) { delete DB[k]; await pushDB(); renderDB(); } }
-        
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function switchTab(t, el) { 
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab' + t.toUpperCase()).classList.add('active-tab');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            
-            // Re-trigger video pas pindah tab
             if(t === 'home') forceStart();
         }
-        
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         particlesJS("particles-js", { "particles": { "number": { "value": 30 }, "color": { "value": "#ff0000" }, "line_linked": { "color": "#ff0000", "opacity": 0.1 } } });
     </script>
 </body>
