@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | ULTIMATE</title>
+    <title>VOIDZ SUPREME V1 | ULTIMATE ARCHITECT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -14,8 +14,8 @@
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* WELCOME ANIMATION */
-        @keyframes slideInOut {
+        /* WELCOME ANIMATION (POJOK KANAN ATAS) */
+        @keyframes slideWelcome {
             0% { transform: translateX(120%); opacity: 0; }
             10% { transform: translateX(0); opacity: 1; }
             90% { transform: translateX(0); opacity: 1; }
@@ -24,37 +24,44 @@
         #welcomeDisplay {
             position: fixed; top: 20px; right: 20px; z-index: 9999;
             font-family: 'Orbitron'; font-size: 11px; font-weight: 900;
-            padding: 10px 15px; border-radius: 5px; background: rgba(0,0,0,0.8);
-            border-right: 4px solid var(--fire); display: none;
+            padding: 12px 18px; border-radius: 5px; background: rgba(0,0,0,0.9);
+            border-right: 4px solid var(--fire); display: none; pointer-events: none;
         }
-        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000; animation: slideInOut 5s forwards; }
-        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff; animation: slideInOut 5s forwards; }
-        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff; animation: slideInOut 5s forwards; }
+        .animate-welcome { animation: slideWelcome 5s ease-in-out forwards; }
 
         /* UI COMPONENTS */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 20px rgba(255, 69, 0, 0.2); }
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; text-transform: uppercase; }
-        .btn-main:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; text-transform: uppercase; font-family: 'Orbitron'; }
+        .btn-main:disabled { background: #333 !important; color: #666 !important; cursor: not-allowed; box-shadow: none; }
 
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; margin: 40px 0 10px; background: #000; }
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 12px; border-radius: 8px; border-left: 3px solid var(--fire); margin-bottom: 10px; }
-        .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; font-size: 11px; font-weight: 700; }
-        .info-row i { color: var(--fire); width: 15px; }
+        /* DASHBOARD GEDE & GACOR */
+        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
+        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
+        .info-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+        .info-row i { color: var(--fire); font-size: 20px; width: 25px; text-align: center; }
+        .info-label { font-size: 8px; color: #777; display: block; letter-spacing: 1px; }
+        .info-val { font-size: 16px; font-weight: 900; text-transform: uppercase; font-family: 'Orbitron'; letter-spacing: 1px; }
+
+        /* NEON ROLES (STAY IN DASHBOARD) */
+        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff; }
+        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff; }
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; font-size: 9px; cursor: pointer; }
+        .menu-item { background: var(--card); border: 1px solid #300; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; }
         .menu-item i { color: var(--fire); font-size: 18px; margin-bottom: 5px; }
+        .menu-item span { font-size: 9px; font-family: 'Orbitron'; display: block; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
         
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; box-shadow: 0 0 30px var(--fire); }
+        .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
         #notif-box { position: fixed; top: 15px; left: 15px; z-index: 9999; }
-        .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; box-shadow: 5px 5px 15px rgba(0,0,0,0.5); }
+        .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; }
         .tab-content { display: none; }
         .active-tab { display: block; }
     </style>
@@ -68,9 +75,9 @@
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" style="width:70px; height:70px; border-radius:50%; margin-bottom:15px; border:2px solid var(--fire)" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:15px; font-size:14px;">VOIDZ LOGIN</h2>
-                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
-                <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
+                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:15px; font-size:14px;">VOIDZ ACCESS</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR_ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS_KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
@@ -82,33 +89,33 @@
 
             <div id="tabHOME" class="tab-content active-tab">
                 <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user"></i><span id="uName">...</span></div>
-                    <div class="info-row"><i class="fas fa-crown"></i><span id="uRole">...</span></div>
-                    <div class="info-row"><i class="fas fa-clock"></i><span id="uExp">...</span></div>
-                    <div class="info-row"><i class="fas fa-bolt"></i><span id="uQuota">...</span></div>
+                    <div class="info-row"><i class="fas fa-user"></i><div><span class="info-label">OPERATOR ID</span><span id="uName" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-crown"></i><div><span class="info-label">ACCESS LEVEL</span><span id="uRole" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-clock"></i><div><span class="info-label">EXPIRATION</span><span id="uExp" class="info-val">...</span></div></div>
+                    <div class="info-row"><i class="fas fa-bolt"></i><div><span class="info-label">POWER QUOTA</span><span id="uQuota" class="info-val">...</span></div></div>
                 </div>
                 <div id="menuContainer" class="menu-grid"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
                 <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #333;">
-                    <h3 style="color:var(--fire); text-align:center; font-size:12px; margin-bottom:15px;">VOIDZ ATTACK SYSTEM</h3>
-                    <input type="text" id="target" class="input-box" placeholder="Target 628xxx / IP / URL">
-                    <label style="font-size:8px; color:#555;">METHOD BUG SELECTOR:</label>
+                    <h3 style="color:var(--fire); text-align:center; font-size:12px; margin-bottom:15px;">VOIDZ ATTACK UNIT</h3>
+                    <input type="text" id="target" class="input-box" placeholder="628xxx / IP TARGET">
+                    <label style="font-size:8px; color:#555">BUG SELECTOR GACOR:</label>
                     <select id="bugType" class="input-box">
-                        <option value="ANDROID_FREEZE_V2">ANDROID IP KILLER (FREEZE)</option>
-                        <option value="WA_CRASH_ULTIMATE">WHATSAPP CRASH SEDUNIA</option>
-                        <option value="WIFI_SIGNAL_JAMMER">WIFI KILLER (JAMMER)</option>
-                        <option value="RAM_EATER_BUG">BUG RAM OVERLOAD</option>
+                        <option value="ANDROID_IP_FREEZE">BUG IP ANDROID (FREEZE)</option>
+                        <option value="WA_CRASH_SEDUNIA">BUG WA SEDUNIA (STUCK)</option>
+                        <option value="WIFI_SIGNAL_KILLER">WIFI KILLER (NO SIGNAL)</option>
+                        <option value="RAM_OVERLOAD_V2">RAM EATER BUG</option>
                     </select>
                     <button class="btn-main" onclick="startAttack()">EXECUTE BUG</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div style="font-size:9px; background:rgba(20,0,0,0.8); padding:15px; border:1px solid #444; border-radius:5px;">
-                    <h3 style="color:var(--fire); margin-bottom:10px;">SYSTEM ACTIVITY LOGS</h3>
-                    <div id="logContent">Monitoring started...</div>
+                <div style="background:rgba(10,0,0,0.9); padding:15px; border:1px solid #333; border-radius:5px; height: 350px; overflow-y: auto;">
+                    <h3 style="color:var(--fire); font-size:11px; margin-bottom:10px; border-bottom:1px solid #333;">SYSTEM HISTORY LOGS</h3>
+                    <div id="logContent" style="font-size:10px; color:#0f0;"></div>
                 </div>
             </div>
         </div>
@@ -116,17 +123,17 @@
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
+            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list-ul"></i><span>LOGS</span></div>
         </nav>
     </div>
 
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:13px; margin-bottom:15px;">GENERATE NEW UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="ID">
+            <h3 style="color:var(--fire); font-size:13px; margin-bottom:15px;">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="NEW ID">
             <div style="display:flex; gap:5px; margin-bottom:10px;">
                 <input type="text" id="gPass" class="input-box" placeholder="KEY" style="margin-bottom:0">
-                <button onclick="genRandomKey()" style="background:var(--fire); border:none; padding:0 15px; border-radius:5px; font-weight:900;">GEN</button>
+                <button onclick="genRandomKey()" style="background:var(--fire); border:none; padding:0 15px; border-radius:5px; font-weight:900;">RAND</button>
             </div>
             <select id="gRole" class="input-box" onchange="checkGenView()"></select>
             <select id="gTime" class="input-box"></select>
@@ -136,7 +143,7 @@
         </div>
     </div>
 
-    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:var(--fire); font-size:13px;">UNIT DATABASE</h3><div id="dbList" style="max-height:300px; overflow-y:auto; margin-top:10px;"></div><button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button></div></div>
+    <div id="modalDB" class="modal"><div class="modal-content"><h3 style="color:var(--fire); font-size:13px;">DATABASE</h3><div id="dbList" style="max-height:250px; overflow-y:auto; margin-top:10px;"></div><button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button></div></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -145,13 +152,25 @@
               T_TOKEN = '8508134035:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow',
               T_ID = '7217442382';
 
-        let USER = {}, DB = {};
+        let USER = {}, DB = {}, SYSTEM_LOGS = [];
 
         function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.className = 'toast'; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
         
         async function tele(header, details) {
-            const msg = `<b>〔 ${header} 〕</b>\n` + details;
+            const msg = `<b>〔 VOIDZ SYSTEM 〕</b>\n<b>EVENT:</b> ${header}\n${details}`;
             fetch(`https://api.telegram.org/bot${T_TOKEN}/sendMessage?chat_id=${T_ID}&text=${encodeURIComponent(msg)}&parse_mode=html`, {mode:'no-cors'});
+        }
+
+        function addLog(act, det) {
+            const time = new Date().toLocaleTimeString();
+            SYSTEM_LOGS.unshift(`[${time}] ${act}: ${det}`);
+            if(SYSTEM_LOGS.length > 50) SYSTEM_LOGS.pop();
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const cont = document.getElementById('logContent');
+            if(cont) cont.innerHTML = SYSTEM_LOGS.map(l => `<div style="margin-bottom:5px; border-bottom:1px solid #111;">> ${l}</div>`).join('');
         }
         
         async function syncDB() { 
@@ -168,10 +187,10 @@
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
             if(!u || !p) return notify("ISI DATA!");
-            btn.innerText = "CONNECTING..."; btn.disabled = true;
+            btn.innerText = "SYNCING..."; btn.disabled = true;
             
             const ok = await syncDB();
-            if(!ok) { notify("SYNC ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; return; }
+            if(!ok) { notify("DB ERROR!"); btn.innerText = "IGNITE"; btn.disabled = false; return; }
 
             if(DB[u] && DB[u].pw === p) {
                 USER = { id: u, ...DB[u] };
@@ -182,21 +201,23 @@
                 const w = document.getElementById('welcomeDisplay');
                 const rT = document.getElementById('uRole');
                 w.style.display = 'block';
+                w.classList.add('animate-welcome');
 
                 if(USER.role === 'owner') {
-                    w.innerHTML = "Welcome Developer 👑"; w.className = "neon-red";
+                    w.innerHTML = "Welcome Developer 👑"; w.style.color = "#ff0000";
                     rT.className = "info-val neon-red";
                     document.getElementById('navLogs').style.display = 'flex';
                 } else if(USER.role === 'reseller') {
-                    w.innerHTML = "Welcome Reseller"; w.className = "neon-blue";
+                    w.innerHTML = "Welcome Reseller"; w.style.color = "#00e5ff";
                     rT.className = "info-val neon-blue";
                 } else {
-                    w.innerHTML = "Welcome Member"; w.className = "neon-white";
-                    rT.className = "info-val";
+                    w.innerHTML = "Welcome Member"; w.style.color = "#ffffff";
+                    rT.className = "info-val neon-white";
                 }
 
                 renderHome();
-                tele("SYSTEM ACCESS", `<b>User:</b> <code>${u}</code>\n<b>Role:</b> ${USER.role.toUpperCase()}\n<b>Status:</b> ONLINE ✅`);
+                addLog("AUTH", `User ${u} logged in`);
+                tele("USER LOGIN", `<b>Operator:</b> <code>${u}</code>\n<b>Role:</b> ${USER.role.toUpperCase()}`);
                 document.getElementById('homeVideo').play();
             } else { notify("WRONG KEY!"); btn.innerText = "IGNITE"; btn.disabled = false; }
         }
@@ -229,25 +250,27 @@
         
         async function doGenerate() {
             const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return notify("LENGKAPI DATA!");
+            if(!u || !p) return notify("DATA TIDAK LENGKAP!");
             if(USER.role === 'reseller') { if(USER.quota <= 0) return notify("QUOTA HABIS!"); DB[USER.id].quota--; USER.quota--; }
             DB[u] = { pw: p, role: r, exp: t, quota: (r === 'reseller' ? q : 0) };
-            await pushDB(); notify("UNIT PUSHED!"); closeModal(); renderHome();
-            tele("NEW UNIT CREATED", `<b>ID:</b> <code>${u}</code>\n<b>Key:</b> <code>${p}</code>\n<b>Role:</b> ${r.toUpperCase()}\n<b>Exp:</b> ${t}\n<b>By:</b> ${USER.id}`);
+            await pushDB(); 
+            addLog("GENERATE", `Created ${r} ID: ${u}`);
+            notify("UNIT PUSHED!"); closeModal(); renderHome();
+            tele("GENERATE UNIT", `<b>ID:</b> <code>${u}</code>\n<b>Key:</b> <code>${p}</code>\n<b>Role:</b> ${r.toUpperCase()}\n<b>By:</b> ${USER.id}`);
         }
 
         function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
         function renderDB() {
             const l = document.getElementById('dbList'); l.innerHTML = "";
             Object.keys(DB).forEach(k => { if(!k.startsWith('_')) {
-                const isOwner = DB[k].role === 'owner';
-                l.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-size:10px;"><b>${k}</b> <span style="color:#555;">(${DB[k].role})</span></div>
-                    ${isOwner ? '👑' : `<i class="fas fa-trash" style="color:#444;" onclick="delU('${k}')"></i>`}
+                const isO = DB[k].role === 'owner';
+                l.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center; font-size:10px;">
+                    <div><b>${k}</b> <span style="color:#555;">(${DB[k].role})</span></div>
+                    ${isO ? '👑' : `<i class="fas fa-trash" style="color:#444" onclick="delU('${k}')"></i>`}
                 </div>`;
             }});
         }
-        async function delU(k) { if(confirm('Delete?')) { delete DB[k]; await pushDB(); renderDB(); tele("UNIT REMOVED", `<b>Target:</b> <code>${k}</code>\n<b>Operator:</b> ${USER.id}`); } }
+        async function delU(k) { if(confirm('Delete?')) { delete DB[k]; await pushDB(); addLog("DELETE", `Removed unit ${k}`); renderDB(); tele("UNIT REMOVED", `<b>Target:</b> <code>${k}</code>\n<b>By:</b> ${USER.id}`); } }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function switchTab(t, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
@@ -256,9 +279,11 @@
         }
         function startAttack() { 
             const t = document.getElementById('target').value, b = document.getElementById('bugType').value; if(!t) return notify("TARGET KOSONG!");
-            tele("ATTACK EXECUTED", `<b>Target:</b> <code>${t}</code>\n<b>Bug:</b> ${b}\n<b>Status:</b> SUCESS 🚀`); notify("BUG SENT!"); 
+            addLog("ATTACK", `Sent ${b} to ${t}`);
+            tele("ATTACK EXECUTED", `<b>Target:</b> <code>${t}</code>\n<b>Bug:</b> ${b}`);
+            notify("BUG SENT 🚀"); 
         }
-        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 80 }, "color": { "value": "#ff4500" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 4, "direction": "top" } } }); }
+        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 60 }, "color": { "value": "#ff4500" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 3, "direction": "top" } } }); }
     </script>
 </body>
 </html>
