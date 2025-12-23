@@ -165,6 +165,17 @@
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'grid';
                     renderUI();
+
+                    // --- STYLED GREETING ---
+                    if(SESSION.role === 'owner') {
+                        setTimeout(() => {
+                            alert("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n   WELCOME DEVELOPER 👑\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n› STATUS: SUPREME ACTIVATED\n› BYPASS: GRANTED\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            showNotify("◢◤ Welcome !! ◢◤");
+                        }, 500);
+                    }
                 } else { showNotify('KEY SALAH!'); }
             } catch(e) { showNotify('DATABASE ERROR!'); }
         }
@@ -253,6 +264,8 @@
         function switchTab(t, el) { 
             document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active-tab'));
             document.getElementById("tab"+t.toUpperCase()).classList.add('active-tab');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
         }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function executeLethalAtk() { showNotify("ATTACK SENT!"); }
