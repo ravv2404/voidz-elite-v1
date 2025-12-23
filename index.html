@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V1 | FIX VERSION</title>
+    <title>VOIDZ SUPREME V1 | FINAL BOSS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,40 +11,50 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
-        /* 1. PARTIKEL API FIX */
+        /* PARTIKEL API */
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* 2. LOGIN PAGE */
+        /* WELCOME KANAN ATAS */
+        #welcomeDisplay {
+            position: fixed; top: 15px; right: 15px; z-index: 9999;
+            font-family: 'Orbitron'; font-size: 11px; font-weight: 900;
+            text-align: right; pointer-events: none; display: none;
+        }
+
+        /* NEON COLORS */
+        .neon-red { color: #ff0000 !important; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+        .neon-blue { color: #00e5ff !important; text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff; }
+        .neon-white { color: #ffffff !important; text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff; }
+
+        /* LOGIN */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
         .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #4a0000; padding: 25px; border-radius: 10px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 25px rgba(255, 69, 0, 0.3); }
         .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--fire); margin: 0 auto 15px; object-fit: cover; display: block; background: #111; }
+        
         .input-box { width: 100%; background: #000; border: 1px solid #4a0000; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
         .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; text-transform: uppercase; box-shadow: 0 0 10px var(--fire); }
-        .btn-main:disabled { background: #333; box-shadow: none; color: #666; cursor: not-allowed; }
 
-        /* 3. DASHBOARD & INFO */
-        .welcome-msg { text-align: center; font-family: 'Orbitron'; font-size: 14px; font-weight: 900; margin-bottom: 10px; }
-        .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-        .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
-        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 10px; border-radius: 8px; border-left: 3px solid var(--fire); margin-bottom: 10px; }
+        /* DASHBOARD */
+        .home-info { background: var(--card); border: 1px solid #4a0000; padding: 10px; border-radius: 8px; border-left: 3px solid var(--fire); margin-bottom: 10px; margin-top: 10px; }
         .info-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
         .info-label { font-size: 8px; color: #888; font-weight: bold; }
         .info-val { font-size: 11px; color: #fff; font-weight: 700; text-transform: uppercase; }
 
-        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 10px; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; background: #000; }
+        .banner-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 10px; border: 1px solid var(--fire); border-radius: 8px; overflow: hidden; background: #000; margin-top: 30px; }
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .menu-item { background: var(--card); border: 1px solid #300; padding: 12px; border-radius: 8px; text-align: center; }
         .menu-item i { color: var(--fire); font-size: 16px; margin-bottom: 4px; }
         .menu-item span { font-size: 8px; font-family: 'Orbitron'; display: block; }
 
-        /* 4. NAV & MODAL */
+        /* NAV */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #080000; border-top: 1px solid #333; display: none; height: 65px; z-index: 1000; }
         .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 9px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
+        
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #080000; border: 1px solid var(--fire); padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; }
-        #notif-box { position: fixed; top: 15px; right: 15px; z-index: 9999; }
+        #notif-box { position: fixed; top: 15px; left: 15px; z-index: 9999; }
         .toast { background: #111; border-left: 4px solid var(--fire); color: #fff; padding: 10px; margin-bottom: 8px; font-size: 10px; width: 180px; }
         .tab-content { display: none; }
         .active-tab { display: block; }
@@ -53,6 +63,7 @@
 <body onload="initApp()">
     <div id="particles-js"></div>
     <div id="notif-box"></div>
+    <div id="welcomeDisplay"></div>
 
     <div class="content-layer">
         <div id="loginPage">
@@ -66,7 +77,6 @@
         </div>
 
         <div id="mainApp" style="display:none; flex:1; padding:15px; overflow-y:auto; padding-bottom:80px;">
-            <div id="welcomeDisplay" class="welcome-msg"></div>
             <div class="banner-container">
                 <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
             </div>
@@ -130,8 +140,7 @@
         
         async function syncDB() { 
             const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); 
-            DB = await res.json(); 
-            return true;
+            DB = await res.json(); return true;
         }
 
         async function pushDB() { 
@@ -149,10 +158,23 @@
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
                     document.getElementById('bottomNav').style.display = 'flex';
+                    
                     const w = document.getElementById('welcomeDisplay');
-                    w.innerHTML = `WELCOME ${USER.role.toUpperCase()}`;
-                    w.className = USER.role === 'owner' ? "welcome-msg neon-red" : "welcome-msg neon-blue";
-                    if(USER.role === 'owner') document.getElementById('navLogs').style.display = 'flex';
+                    const rText = document.getElementById('uRole');
+                    w.style.display = 'block';
+
+                    if(USER.role === 'owner') {
+                        w.innerHTML = "Welcome Developer 👑"; w.className = "neon-red";
+                        rText.className = "info-val neon-red"; // ROLE JADI MERAH NEON
+                        document.getElementById('navLogs').style.display = 'flex';
+                    } else if(USER.role === 'reseller') {
+                        w.innerHTML = "Welcome Reseller"; w.className = "neon-blue";
+                        rText.className = "info-val neon-blue";
+                    } else {
+                        w.innerHTML = "Welcome Member"; w.className = "neon-white";
+                        rText.className = "info-val";
+                    }
+
                     renderHome();
                     tele(`👤 <b>LOGIN</b>\n<b>User:</b> ${u}`);
                     document.getElementById('homeVideo').play();
@@ -187,7 +209,6 @@
             if(USER.role === 'reseller') { if(USER.quota <= 0) return notify("QUOTA HABIS!"); DB[USER.id].quota--; USER.quota--; }
             DB[u] = { pw: p, role: r, exp: t, quota: (r === 'reseller' ? q : 0) };
             await pushDB(); notify("PUSHED!"); closeModal(); renderHome();
-            tele(`💎 <b>GENERATE</b>\n<b>Target:</b> ${u}\n<b>Exp:</b> ${t}`);
         }
 
         function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
@@ -200,25 +221,15 @@
         function switchTab(t, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab'));
             document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active');
         }
 
         function initApp() {
             particlesJS("particles-js", {
-                "particles": {
-                    "number": { "value": 80 },
-                    "color": { "value": "#ff4500" },
-                    "shape": { "type": "circle" },
-                    "opacity": { "value": 0.5 },
-                    "size": { "value": 2 },
-                    "move": { "enable": true, "speed": 4, "direction": "top", "out_mode": "out" }
-                },
-                "interactivity": { "events": { "onclick": { "enable": false } } }
+                "particles": { "number": { "value": 80 }, "color": { "value": "#ff4500" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 2 }, "move": { "enable": true, "speed": 4, "direction": "top", "out_mode": "out" } }
             });
         }
         function startAttack() { const t = document.getElementById('target').value; if(t) { tele(`🚀 <b>ATTACK</b>\n<b>Target:</b> ${t}`); notify("EXECUTED!"); } }
     </script>
 </body>
 </html>
-
