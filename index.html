@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ SUPREME V3 | FINAL FIXED</title>
+    <title>VOIDZ ELITE V1 | SUPREME SYSTEM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,53 +12,47 @@
         body { background: var(--bg); color: #fff; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
         
         #particles-js { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
         /* LOGIN PAGE */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px 25px; border-radius: 15px; text-align: center; border-top: 2px solid var(--fire); }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 2px solid var(--fire); box-shadow: 0 0 20px rgba(255, 69, 0, 0.1); }
+        .profile-img { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--fire); box-shadow: 0 0 15px var(--fire); margin-bottom: 20px; object-fit: cover; }
         
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; text-transform: uppercase; }
-        .btn-main:disabled { background: #222 !important; color: #444 !important; }
-        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
+        /* TOMBOL IGNITE ANTI-STUCK */
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 15px; font-weight: 900; cursor: pointer; border-radius: 5px; font-family: 'Orbitron'; text-transform: uppercase; transition: transform 0.1s active; }
+        .btn-main:active { transform: scale(0.98); background: #e63e00; }
+        .btn-main:disabled { background: #333 !important; color: #666 !important; cursor: not-allowed; }
+        
+        .input-box { width: 100%; background: #0b0b0b; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 12px; text-align: center; font-size: 11px; outline: none; border-radius: 5px; }
 
-        /* DASHBOARD INFO */
-        .banner-container { width: 100%; aspect-ratio: 16/9; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 45px 0 10px; background: #000; }
-        .home-info { background: var(--card); border: 1px solid #222; padding: 15px; border-radius: 12px; border-left: 5px solid var(--fire); margin-bottom: 15px; }
-        .info-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .info-val { font-size: 16px; font-weight: 900; font-family: 'Orbitron'; letter-spacing: 1px; }
-        .neon-red { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-        .neon-blue { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
-        .neon-white { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
-
-        /* DB & MODAL */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #080808; padding: 20px; border: 1px solid var(--fire); width: 90%; max-width: 400px; border-radius: 10px; }
-        .db-item { padding: 12px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
-
-        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 40px; padding-bottom: 100px; }
+        /* TAB SYSTEM */
+        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-top: 50px; padding-bottom: 90px; }
         .active-tab { display: block; }
 
+        /* DB & LOGS UI */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #080808; padding: 25px; border: 1px solid var(--fire); width: 92%; max-width: 400px; border-radius: 12px; }
+        .db-scroll { max-height: 280px; overflow-y: auto; border: 1px solid #222; margin-top: 10px; background: #050505; }
+        .db-row { padding: 12px; border-bottom: 1px solid #111; display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
+
+        /* NAV */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 8px; flex: 1; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; flex: 1; font-size: 8px; font-family: 'Orbitron'; }
         .nav-btn.active { color: var(--fire); }
         
-        #welcomeDisplay { position: fixed; top: 20px; right: 20px; z-index: 9999; font-family: 'Orbitron'; font-size: 10px; padding: 10px; background: #000; border-right: 3px solid var(--fire); display: none; }
-        .animate-welcome { animation: slideWelcome 4s ease-in-out forwards; }
-        @keyframes slideWelcome { 0%,100% {transform: translateX(150%)} 10%,90% {transform: translateX(0)} }
+        #logBox { font-size: 9px; color: #00ff41; line-height: 1.6; font-family: 'JetBrains Mono'; }
     </style>
 </head>
 <body onload="initApp()">
     <div id="particles-js"></div>
-    <div id="notif-box" style="position:fixed; top:15px; left:15px; z-index:9999;"></div>
-    <div id="welcomeDisplay"></div>
+    <div id="notif-box" style="position:fixed; top:20px; left:20px; z-index:9999;"></div>
 
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
                 <img src="login.jpg" class="profile-img" onerror="this.src='https://api.dicebear.com/7.x/pixel-art/svg?seed=voidz'">
-                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:14px;">VOIDZ ACCESS</h2>
+                <h2 style="font-family:'Orbitron'; color:var(--fire); margin-bottom:20px; font-size:16px; letter-spacing:1px;">VOIDZ ELITE V1</h2>
                 <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
                 <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
                 <button onclick="auth()" class="btn-main" id="btnLog">IGNITE</button>
@@ -67,37 +61,33 @@
 
         <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
             <div id="tabHOME" class="tab-content active-tab">
-                <div class="banner-container">
-                    <video id="homeVideo" loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="dashboard.mp4" type="video/mp4"></video>
+                <div style="background:var(--card); border-left:4px solid var(--fire); padding:20px; border-radius:10px; margin-bottom:20px;">
+                    <div style="font-size:10px; color:#666; margin-bottom:5px;">CURRENT OPERATOR:</div>
+                    <div id="uName" style="font-family:'Orbitron'; font-size:18px; color:var(--fire); margin-bottom:10px;">...</div>
+                    <div style="display:flex; gap:15px; font-size:10px;">
+                        <span>ROLE: <b id="uRole" style="color:#00e5ff">...</b></span>
+                        <span>QUOTA: <b id="uQuota" style="color:#fff">...</b></span>
+                    </div>
                 </div>
-                <div class="home-info">
-                    <div class="info-row"><i class="fas fa-user" style="color:var(--fire)"></i><span id="uName" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-crown" style="color:var(--fire)"></i><span id="uRole" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-clock" style="color:var(--fire)"></i><span id="uExp" class="info-val">...</span></div>
-                    <div class="info-row"><i class="fas fa-bolt" style="color:var(--fire)"></i><span id="uQuota" class="info-val">...</span></div>
-                </div>
-                <div id="menuContainer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+                <div id="menuGrid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
             </div>
 
             <div id="tabATTACK" class="tab-content">
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #333; margin-bottom:15px; border-top:2px solid #00e5ff">
-                    <h3 style="color:#00e5ff; font-size:11px; margin-bottom:10px; font-family:'Orbitron'">WIFI KILLER</h3>
-                    <input type="text" id="wifiIP" class="input-box" readonly style="color:#00e5ff">
-                    <input type="text" id="targetWiFi" class="input-box" placeholder="Target IP / Gateway">
-                    <button class="btn-main" style="background:#00e5ff" onclick="startAttack('WIFI')">KILL NETWORK</button>
-                </div>
-                <div style="background:var(--card); padding:15px; border-radius:10px; border:1px solid #333; border-top:2px solid var(--fire)">
-                    <h3 style="color:var(--fire); font-size:11px; margin-bottom:10px; font-family:'Orbitron'">BUG SELECTOR</h3>
-                    <input type="text" id="targetBug" class="input-box" placeholder="Target WA / Android ID">
-                    <select id="bugType" class="input-box"><option value="WA_CRASH">WA CRASH</option><option value="IP_FREEZE">IP FREEZE</option></select>
-                    <button class="btn-main" onclick="startAttack('BUG')">EXECUTE</button>
+                <div style="background:var(--card); padding:20px; border:1px solid #222; border-top:2px solid var(--fire); border-radius:12px;">
+                    <h3 style="font-family:'Orbitron'; color:var(--fire); font-size:12px; margin-bottom:15px;">STRIKE PROTOCOL</h3>
+                    <input type="text" id="target" class="input-box" placeholder="TARGET ID / IP">
+                    <select id="method" class="input-box">
+                        <option value="WA_CRASH_V1">WA CRASH ELITE</option>
+                        <option value="IP_FREEZE_V1">IP NETWORK FREEZE</option>
+                    </select>
+                    <button class="btn-main" onclick="runAttack()">EXECUTE STRIKE</button>
                 </div>
             </div>
 
             <div id="tabLOGS" class="tab-content">
-                <div style="background:rgba(0,0,0,0.9); padding:15px; border:1px solid #222; height:100%; overflow-y:auto;">
-                    <h3 style="color:var(--fire); font-size:10px; margin-bottom:10px;">SYSTEM LOGS</h3>
-                    <div id="logContent" style="font-size:9px; color:#0f0;"></div>
+                <div style="background:#050505; border:1px solid #222; padding:15px; min-height:100%; border-radius:8px;">
+                    <h3 style="font-family:'Orbitron'; font-size:10px; color:var(--fire); margin-bottom:10px;">SYSTEM HISTORY</h3>
+                    <div id="logBox"></div>
                 </div>
             </div>
         </div>
@@ -105,27 +95,26 @@
         <nav id="bottomNav" class="bottom-nav">
             <div class="nav-btn active" onclick="switchTab('home', this)"><i class="fas fa-home"></i><span>HOME</span></div>
             <div class="nav-btn" onclick="switchTab('attack', this)"><i class="fas fa-skull"></i><span>ATTACK</span></div>
-            <div id="navLogs" class="nav-btn" style="display:none" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
+            <div class="nav-btn" onclick="switchTab('logs', this)"><i class="fas fa-list"></i><span>LOGS</span></div>
         </nav>
     </div>
 
     <div id="modalDB" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px;">USER DATABASE</h3>
-            <input type="text" id="dbSearch" class="input-box" placeholder="Search User..." oninput="renderDB()">
-            <div id="dbList" style="max-height:300px; overflow-y:auto; background:#000; border:1px solid #222;"></div>
-            <button class="btn-main" onclick="closeModal()" style="margin-top:10px;">CLOSE</button>
+            <h3 style="font-family:'Orbitron'; color:var(--fire); font-size:13px;">USER DATABASE</h3>
+            <input type="text" id="dbSearch" class="input-box" placeholder="Search ID..." oninput="renderDB()" style="margin-top:15px;">
+            <div id="dbList" class="db-scroll"></div>
+            <button class="btn-main" onclick="closeModal()" style="margin-top:15px;">CLOSE</button>
         </div>
     </div>
 
     <div id="modalGen" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--fire); font-size:12px; margin-bottom:10px;">GENERATE UNIT</h3>
-            <input type="text" id="gUser" class="input-box" placeholder="ID">
-            <input type="text" id="gPass" class="input-box" placeholder="KEY">
-            <select id="gRole" class="input-box" onchange="checkGenView()"></select>
-            <select id="gTime" class="input-box"></select>
-            <div id="quotaArea" style="display:none"><input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA"></div>
+            <h3 style="font-family:'Orbitron'; color:var(--fire); font-size:13px;">GENERATE UNIT</h3>
+            <input type="text" id="gUser" class="input-box" placeholder="NEW OPERATOR ID" style="margin-top:15px;">
+            <input type="text" id="gPass" class="input-box" placeholder="NEW ACCESS KEY">
+            <select id="gRole" class="input-box"><option value="member">MEMBER</option><option value="reseller">RESELLER</option></select>
+            <input type="number" id="gQuota" class="input-box" placeholder="SET QUOTA">
             <button class="btn-main" onclick="doGenerate()" id="btnPush">PUSH UNIT</button>
             <button onclick="closeModal()" style="color:#444; width:100%; border:none; background:none; margin-top:10px; font-size:9px;">CANCEL</button>
         </div>
@@ -133,78 +122,91 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW', T_TOKEN = '8508134035:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow', T_ID = '7217442382';
-        let USER = {}, DB = {}, SYSTEM_LOGS = [];
+        const BIN_ID = '694a5a6fae596e708fabef99', API_KEY = '$2a$10$dgiow6eyY5CjGfEYQtuAQ.E6b5sEA7j91bc4IexzX9cWV3uAksXgW';
+        let USER = {}, DB = {}, LOGS = [];
 
-        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:4px solid var(--fire); color:#fff; padding:10px; margin-bottom:8px; font-size:10px; width:180px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 3000); }
-        async function syncDB() { try { const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } }); DB = await res.json(); return true; } catch(e) { return false; } }
-        async function pushDB() { await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) }); }
+        function notify(m) { const b = document.getElementById('notif-box'); const t = document.createElement('div'); t.style="background:#111; border-left:3px solid var(--fire); color:#fff; padding:10px; margin-bottom:8px; font-size:10px; width:170px;"; t.innerText = m; b.appendChild(t); setTimeout(() => t.remove(), 2500); }
         
+        async function fetchDB() {
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': false } });
+                DB = await res.json();
+                return true;
+            } catch(e) { notify("CONNECTION ERROR!"); return false; }
+        }
+
+        async function saveDB() {
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+                body: JSON.stringify(DB)
+            });
+        }
+
+        function addLog(act, msg) {
+            const time = new Date().toLocaleTimeString();
+            LOGS.unshift(`[${time}] ${act.toUpperCase()} » ${msg}`);
+            const box = document.getElementById('logBox');
+            if(box) box.innerHTML = LOGS.map(l => `<div>${l}</div>`).join('');
+        }
+
         async function auth() {
             const u = document.getElementById('lUser').value.trim(), p = document.getElementById('lPass').value.trim(), btn = document.getElementById('btnLog');
-            btn.disabled = true; btn.innerText = "SYNCING...";
-            await syncDB();
-            if(DB[u] && DB[u].pw === p) {
-                USER = { id: u, ...DB[u] };
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('bottomNav').style.display = 'flex';
-                document.getElementById('welcomeDisplay').style.display = 'block';
-                document.getElementById('welcomeDisplay').innerText = `WELCOME ${u.toUpperCase()}`;
-                document.getElementById('welcomeDisplay').classList.add('animate-welcome');
-                if(USER.role==='owner'){ document.getElementById('uRole').className="info-val neon-red"; document.getElementById('navLogs').style.display='flex'; }
-                else if(USER.role==='reseller'){ document.getElementById('uRole').className="info-val neon-blue"; }
-                else { document.getElementById('uRole').className="info-val neon-white"; }
-                renderHome(); getIP(); document.getElementById('homeVideo').play();
-            } else { notify("WRONG KEY!"); btn.disabled = false; btn.innerText = "IGNITE"; }
+            if(!u || !p) return notify("FILL ALL FIELDS!");
+            btn.disabled = true; btn.innerText = "AUTHENTICATING...";
+            if(await fetchDB()) {
+                if(DB[u] && DB[u].pw === p) {
+                    USER = { id: u, ...DB[u] };
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('bottomNav').style.display = 'flex';
+                    renderHome();
+                    addLog("auth", `User ${u} joined VOIDZ ELITE`);
+                } else { notify("INVALID KEY!"); btn.disabled = false; btn.innerText = "IGNITE"; }
+            }
         }
 
         function renderHome() {
             document.getElementById('uName').innerText = USER.id;
             document.getElementById('uRole').innerText = USER.role.toUpperCase();
-            document.getElementById('uExp').innerText = USER.exp;
             document.getElementById('uQuota').innerText = USER.role === 'owner' ? '∞' : USER.quota;
-            const m = document.getElementById('menuContainer'); m.innerHTML = "";
-            if(USER.role !== 'member') m.innerHTML += `<div onclick="openGen()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-key" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
-            if(USER.role === 'owner') m.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-database" style="color:var(--fire)"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
-            m.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:15px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-power-off" style="color:var(--fire)"></i><br><span style="font-size:9px;">LOGOUT</span></div>`;
+            const grid = document.getElementById('menuGrid'); grid.innerHTML = "";
+            if(USER.role !== 'member') grid.innerHTML += `<div onclick="openM('modalGen')" style="background:var(--card); padding:20px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-plus-circle" style="color:var(--fire)"></i><br><span style="font-size:9px;">GENERATE</span></div>`;
+            if(USER.role === 'owner') grid.innerHTML += `<div onclick="openDB()" style="background:var(--card); padding:20px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-hdd" style="color:var(--fire)"></i><br><span style="font-size:9px;">DATABASE</span></div>`;
+            grid.innerHTML += `<div onclick="location.reload()" style="background:var(--card); padding:20px; text-align:center; border:1px solid #222; border-radius:10px;"><i class="fas fa-sign-out-alt" style="color:var(--fire)"></i><br><span style="font-size:9px;">EXIT</span></div>`;
         }
 
-        function openDB() { document.getElementById('modalDB').style.display = 'flex'; renderDB(); }
+        async function doGenerate() {
+            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, q = parseInt(document.getElementById('gQuota').value) || 0;
+            if(!u || !p) return notify("DATA MISSING!");
+            document.getElementById('btnPush').innerText = "PUSHING...";
+            await fetchDB();
+            DB[u] = { pw: p, role: r, quota: q, exp: "LIFETIME" };
+            await saveDB();
+            addLog("generate", `Operator ${u} created`);
+            notify("UNIT SYNCED!"); closeModal();
+        }
+
+        function openDB() { openM('modalDB'); renderDB(); }
         function renderDB() {
             const list = document.getElementById('dbList'), search = document.getElementById('dbSearch').value.toLowerCase();
             list.innerHTML = "";
             Object.keys(DB).forEach(k => {
                 if(k.toLowerCase().includes(search)) {
-                    const isOw = DB[k].role === 'owner';
-                    list.innerHTML += `<div class="db-item">
-                        <div><b>${k}</b> <br><span style="color:#555; font-size:8px;">${DB[k].role.toUpperCase()} | ${DB[k].pw}</span></div>
-                        ${isOw ? '<i class="fas fa-shield-alt" style="color:var(--fire)"></i>' : `<i class="fas fa-trash-alt" style="color:#444" onclick="delU('${k}')"></i>`}
+                    list.innerHTML += `<div class="db-row">
+                        <div><b>${k}</b><br><small style="color:#555">${DB[k].role} | ${DB[k].pw}</small></div>
+                        ${DB[k].role === 'owner' ? '👑' : `<i class="fas fa-trash-alt" style="color:#333" onclick="delU('${k}')"></i>`}
                     </div>`;
                 }
             });
         }
 
-        async function delU(k) { if(confirm(`Hapus ${k}?`)) { delete DB[k]; await pushDB(); renderDB(); notify("DELETED!"); } }
-        function openGen() { document.getElementById('modalGen').style.display = 'flex'; const r = document.getElementById('gRole'), t = document.getElementById('gTime'); if(USER.role === 'owner'){ r.innerHTML='<option value="member">MEMBER</option><option value="reseller">RESELLER</option>'; t.innerHTML='<option value="1 MONTH">1 MONTH</option><option value="LIFETIME">LIFETIME</option>'; } else { r.innerHTML='<option value="member">MEMBER</option>'; t.innerHTML='<option value="1 MONTH">1 MONTH</option>'; } }
-        
-        async function doGenerate() {
-            const u = document.getElementById('gUser').value.trim(), p = document.getElementById('gPass').value.trim(), r = document.getElementById('gRole').value, t = document.getElementById('gTime').value, q = parseInt(document.getElementById('gQuota').value) || 0;
-            if(!u || !p) return notify("DATA KOSONG!");
-            if(USER.role === 'reseller' && USER.quota <= 0) return notify("QUOTA HABIS!");
-            
-            document.getElementById('btnPush').innerText = "PUSHING...";
-            DB[u] = { pw: p, role: r, exp: t, quota: q };
-            if(USER.role === 'reseller') { DB[USER.id].quota--; USER.quota--; }
-            await pushDB();
-            notify("UNIT CREATED!"); closeModal(); renderHome();
-        }
-
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        async function delU(k) { if(confirm(`Delete ${k}?`)) { delete DB[k]; await saveDB(); renderDB(); addLog("delete", `User ${k} wiped`); } }
+        function runAttack() { const t = document.getElementById('target').value; if(!t) return notify("TARGET NULL!"); addLog("strike", `Execute ${document.getElementById('method').value} on ${t}`); notify("PROTOCOL EXECUTED!"); }
         function switchTab(t, el) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
-        async function getIP() { try { const res = await fetch('https://api.ipify.org?format=json'); const data = await res.json(); document.getElementById('wifiIP').value = data.ip; } catch(e) { document.getElementById('wifiIP').value = "127.0.0.1"; } }
-        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#444444" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 1, "direction": "top" } } }); }
-        function checkGenView() { document.getElementById('quotaArea').style.display = (USER.role === 'owner' && document.getElementById('gRole').value === 'reseller') ? 'block' : 'none'; }
+        function openM(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function initApp() { particlesJS("particles-js", { "particles": { "number": { "value": 45 }, "color": { "value": "#555" }, "size": { "value": 2 }, "move": { "enable": true, "speed": 1.2, "direction": "top" } } }); }
     </script>
 </body>
 </html>
