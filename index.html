@@ -1,110 +1,222 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            dark: '#030308',
-                            surface: '#070915',
-                            card: '#0a0d1d',
-                            border: '#1b2247',
-                            neonRed: '#ff0055',
-                            neonBlue: '#00f0ff',
-                            neonPurple: '#9d00ff'
-                        }
-                    },
-                    fontFamily: {
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        rajdhani: ['Rajdhani', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'neon-blue': '0 0 25px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(0, 240, 255, 0.1)',
-                        'neon-red': '0 0 25px rgba(255, 0, 85, 0.3), inset 0 0 15px rgba(255, 0, 85, 0.1)',
-                        'cyber-card': '0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.05)'
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-deep: #030308;
+            --panel-bg: rgba(10, 10, 20, 0.75);
+            --neon-red: #ff073a;
+            --neon-blue: #00f0ff;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            background-color: #030308;
-            color: #f1f5f9;
-            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .cyber-grid {
-            background-size: 50px 50px;
+        /* Cyberpunk Grid & Glow Background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
             background-image: 
-                linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 0, 85, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 7, 58, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
         }
 
-        .glass-panel {
-            background: rgba(10, 13, 29, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(27, 34, 71, 0.8);
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
         }
 
-        .text-glow-blue {
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
+        .ambient-light {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
         }
 
-        .text-glow-red {
-            text-shadow: 0 0 15px rgba(255, 0, 85, 0.8);
+        .light-blue {
+            top: 10%;
+            left: 15%;
+            background: var(--neon-blue);
         }
 
-        .cyber-button-blue {
-            background: linear-gradient(135deg, #00f0ff 0%, #0077ff 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .light-red {
+            bottom: 10%;
+            right: 15%;
+            background: var(--neon-red);
         }
 
-        .cyber-button-blue:hover {
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
-            filter: brightness(1.15);
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), 
+                        inset 0 0 20px rgba(255, 7, 58, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 7, 58, 0.5);
+            box-shadow: 0 0 40px rgba(255, 7, 58, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(3, 3, 8, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px rgba(255, 7, 58, 0.3);
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: linear-gradient(135deg, var(--neon-red), #990022);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 7, 58, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-generate:hover {
+            background: linear-gradient(135deg, #ff2a55, var(--neon-red));
+            box-shadow: 0 0 30px rgba(255, 7, 58, 0.7);
             transform: translateY(-2px);
         }
 
-        .cyber-button-red {
-            background: linear-gradient(135deg, #ff0055 0%, #9d00ff 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .btn-generate:active {
+            transform: translateY(1px);
         }
 
-        .cyber-button-red:hover {
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.7);
-            filter: brightness(1.15);
-            transform: translateY(-2px);
+        .terminal-box {
+            margin-top: 25px;
+            background: #010104;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            min-height: 110px;
+            max-height: 160px;
+            overflow-y: auto;
+            color: var(--neon-blue);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            display: none;
         }
 
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(1000%); }
+        .terminal-box.active {
+            display: block;
         }
 
-        .scanline {
-            position: fixed;
-            top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.5), transparent);
-            animation: scanline 7s linear infinite;
-            pointer-events: none;
-            z-index: 100;
+        .log-line {
+            margin-bottom: 6px;
+            word-break: break-all;
         }
 
+        .log-success { color: #00ff66; }
+        .log-error { color: var(--neon-red); }
+        .log-info { color: var(--neon-blue); }
+
+        /* Scrollbar styling */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -112,220 +224,114 @@
             background: #030308;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1b2247;
+            background: rgba(0, 240, 255, 0.3);
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #00f0ff;
+            background: var(--neon-blue);
         }
     </style>
 </head>
-<body class="cyber-grid min-h-screen flex flex-col justify-between relative selection:bg-cyber-neonBlue selection:text-black">
+<body>
 
-    <div class="scanline"></div>
+    <div class="ambient-light light-blue"></div>
+    <div class="ambient-light light-red"></div>
 
-    <header class="w-full border-b border-cyber-border glass-panel sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="relative">
-                    <div class="w-3.5 h-3.5 rounded-full bg-cyber-neonBlue animate-ping absolute"></div>
-                    <div class="w-3.5 h-3.5 rounded-full bg-cyber-neonBlue shadow-[0_0_12px_#00f0ff]"></div>
-                </div>
-                <span class="font-orbitron font-black text-cyber-neonBlue tracking-widest text-xs md:text-sm text-glow-blue">AM KERNEL SECURE v3.2</span>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</h1>
+                <p>System v1.0 // Secured API Interface</p>
             </div>
-            <div class="flex items-center space-x-3">
-                <span class="px-3 py-1 rounded-full border border-cyber-neonRed/40 bg-cyber-neonRed/10 text-cyber-neonRed text-xs font-bold font-orbitron tracking-wider flex items-center shadow-[0_0_15px_rgba(255,0,85,0.2)]">
-                    <i class="fa-solid fa-crown mr-1.5"></i> BY R4VV
-                </span>
+
+            <div class="form-group">
+                <label for="emailInput">Alight Motion Email</label>
+                <div class="input-wrapper">
+                    <input type="email" id="emailInput" class="form-control" placeholder="Masukkan email akun lu..." required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="linkInput">Project / Account Link</label>
+                <div class="input-wrapper">
+                    <input type="text" id="linkInput" class="form-control" placeholder="Masukkan link atau token..." required>
+                </div>
+            </div>
+
+            <button type="button" class="btn-generate" id="generateBtn" onclick="runGenerator()">Generate Premium</button>
+
+            <div class="terminal-box" id="terminalBox">
+                <div class="log-line log-info">> [SYSTEM]: Ready for execution...</div>
             </div>
         </div>
-    </header>
-
-    <main class="w-full max-w-2xl mx-auto px-4 py-12 my-auto z-10">
-        <div class="glass-panel shadow-cyber-card rounded-3xl p-6 md:p-10 relative overflow-hidden transition-all duration-300 border border-cyber-border">
-            
-            <!-- Ambient Glow Accents -->
-            <div class="absolute -top-36 -right-36 w-72 h-72 bg-cyber-neonBlue/15 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-36 -left-36 w-72 h-72 bg-cyber-neonRed/15 rounded-full blur-3xl pointer-events-none"></div>
-
-            <!-- Title & Branding -->
-            <div class="text-center mb-10 relative z-10">
-                <div class="inline-block px-4 py-1 mb-3 rounded-full border border-cyber-neonBlue/50 bg-cyber-neonBlue/10 text-cyber-neonBlue text-xs font-bold tracking-widest uppercase text-glow-blue font-orbitron">
-                    <i class="fa-solid fa-microchip mr-1.5"></i> Sovereign License Injector
-                </div>
-                <h1 class="font-orbitron text-2xl md:text-4xl font-black text-white tracking-wider mb-3">
-                    ALIGHT MOTION PREMIUM <span class="text-cyber-neonBlue text-glow-blue">GENERATOR</span>
-                </h1>
-                <p class="text-sm md:text-base font-semibold text-gray-300 tracking-wider max-w-lg mx-auto font-rajdhani">
-                    Engine crafted by <span class="text-cyber-neonRed font-black text-glow-red text-lg font-orbitron">R4VV</span>. Masukkan target email dan link project untuk injeksi premium instan tanpa batas.
-                </p>
-            </div>
-
-            <form id="amForm" class="space-y-6 relative z-10" onsubmit="handleGenerate(event)">
-                
-                <!-- Email Input Field -->
-                <div class="space-y-2">
-                    <label class="block text-xs font-orbitron uppercase tracking-widest text-cyber-neonBlue font-black flex items-center">
-                        <i class="fa-solid fa-envelope mr-2 text-cyber-neonBlue text-sm"></i> Target Account Email
-                    </label>
-                    <div class="relative group">
-                        <div class="absolute -inset-0.5 bg-gradient-to-r from-cyber-neonBlue to-cyber-neonPurple rounded-2xl blur opacity-30 group-hover:opacity-80 transition duration-500"></div>
-                        <input 
-                            type="email" 
-                            id="emailInput" 
-                            required 
-                            placeholder="nama.akun@domain.com" 
-                            class="relative w-full bg-[#030308] border border-cyber-border rounded-2xl px-5 py-4 text-white placeholder-gray-600 font-rajdhani font-bold text-base md:text-lg focus:outline-none focus:border-cyber-neonBlue focus:ring-2 focus:ring-cyber-neonBlue/30 transition-all shadow-inner"
-                        >
-                    </div>
-                </div>
-
-                <!-- Link Input Field -->
-                <div class="space-y-2">
-                    <label class="block text-xs font-orbitron uppercase tracking-widest text-cyber-neonRed font-black flex items-center">
-                        <i class="fa-solid fa-link mr-2 text-cyber-neonRed text-sm"></i> Share / Export / Redemption Link
-                    </label>
-                    <div class="relative group">
-                        <div class="absolute -inset-0.5 bg-gradient-to-r from-cyber-neonRed to-cyber-neonBlue rounded-2xl blur opacity-30 group-hover:opacity-80 transition duration-500"></div>
-                        <input 
-                            type="url" 
-                            id="linkInput" 
-                            required 
-                            placeholder="https://alightmotion.com/project/..." 
-                            class="relative w-full bg-[#030308] border border-cyber-border rounded-2xl px-5 py-4 text-white placeholder-gray-600 font-rajdhani font-bold text-base md:text-lg focus:outline-none focus:border-cyber-neonRed focus:ring-2 focus:ring-cyber-neonRed/30 transition-all shadow-inner"
-                        >
-                    </div>
-                </div>
-
-                <!-- Action Button -->
-                <button 
-                    type="submit" 
-                    id="submitBtn"
-                    class="cyber-button-red w-full mt-4 text-white font-orbitron font-black py-4 px-6 rounded-2xl tracking-widest active:scale-[0.99] transition-all shadow-xl flex items-center justify-center space-x-3 cursor-pointer text-sm md:text-base uppercase"
-                >
-                    <i class="fa-solid fa-bolt text-white text-lg animate-bounce"></i>
-                    <span id="btnText" class="font-black text-white">EXECUTE PREMIUM INJECTION</span>
-                </button>
-            </form>
-
-            <div id="responseContainer" class="mt-8 hidden transition-all duration-300 relative z-10">
-                <div class="border border-cyber-border bg-[#030308]/95 rounded-2xl p-5 font-rajdhani text-sm relative overflow-hidden shadow-2xl">
-                    <div class="flex justify-between items-center mb-3 pb-3 border-b border-cyber-border/80 text-gray-400">
-                        <span id="responseStatusTitle" class="flex items-center space-x-2 font-bold">
-                            <span class="w-3 h-3 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_12px_#eab308]" id="statusIndicator"></span>
-                            <span id="statusText" class="tracking-wider text-yellow-400 font-orbitron text-xs">PROCESSING API HANDSHAKE...</span>
-                        </span>
-                        <button onclick="copyResponse()" class="text-cyber-neonBlue hover:text-white transition-colors cursor-pointer text-xs font-bold font-orbitron flex items-center space-x-1 px-3 py-1.5 rounded-xl border border-cyber-neonBlue/30 hover:bg-cyber-neonBlue/10 shadow-[0_0_10px_rgba(0,240,255,0.15)]" title="Copy Output">
-                            <i class="fa-regular fa-copy mr-1"></i> COPY RESULT
-                        </button>
-                    </div>
-                    <pre id="responseOutput" class="text-cyber-neonBlue whitespace-pre-wrap break-all max-h-60 overflow-y-auto p-3 text-xs font-mono leading-relaxed bg-[#050712] rounded-xl border border-cyber-border/50"></pre>
-                </div>
-            </div>
-
-            <!-- Footer Badge inside Card -->
-            <div class="mt-8 pt-4 border-t border-cyber-border/60 text-center text-xs font-rajdhani font-semibold text-gray-500 tracking-widest">
-                <span>Alight Motion Premium Generator Engine • Developed by R4VV</span>
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="w-full text-center py-5 font-rajdhani font-bold text-xs text-gray-500 border-t border-cyber-border glass-panel z-10 tracking-widest">
-        <p>ALIGHT MOTION PREMIUM GENERATOR BY R4VV © ALL RIGHTS RESERVED.</p>
-    </footer>
+    </div>
 
     <script>
-        async function handleGenerate(event) {
-            event.preventDefault();
-            
+        async function runGenerator() {
             const email = document.getElementById('emailInput').value.trim();
             const link = document.getElementById('linkInput').value.trim();
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const responseContainer = document.getElementById('responseContainer');
-            const responseOutput = document.getElementById('responseOutput');
-            const statusIndicator = document.getElementById('statusIndicator');
-            const statusText = document.getElementById('statusText');
+            const terminal = document.getElementById('terminalBox');
+            const btn = document.getElementById('generateBtn');
 
-            // Lock submit button during execution
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
-            btnText.innerText = 'INJECTING KERNEL PAYLOAD...';
-            
-            responseContainer.classList.remove('hidden');
-            statusIndicator.className = 'w-3 h-3 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_12px_#eab308]';
-            statusText.className = 'tracking-wider text-yellow-400 font-orbitron text-xs';
-            statusText.innerText = 'CONNECTING TO API SERVER...';
-            responseOutput.innerText = `[SYSTEM]: Initiating secure connection...\n[EMAIL]: ${email}\n[LINK]: ${link}`;
+            if (!email || !link) {
+                alert("Woy, isi dulu data email sama link-nya dengan benar, BAJINGAN!");
+                return;
+            }
+
+            terminal.classList.add('active');
+            terminal.innerHTML = `<div class="log-line log-info">> [SYSTEM]: Initializing connection to endpoint...</div>`;
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+
+            setTimeout(() => {
+                appendLog(`> [INFO]: Target Email -> ${email}`, 'log-info');
+            }, 400);
+
+            const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodeURIComponent(email)}&link=${encodeURIComponent(link)}`;
 
             try {
-                const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodeURIComponent(email)}&link=${encodeURIComponent(link)}`;
+                setTimeout(() => {
+                    appendLog(`> [PROCESS]: Sending secure GET request...`, 'log-info');
+                }, 900);
 
-                const res = await fetch(apiUrl, {
+                const response = await fetch(apiUrl, {
                     method: 'GET',
                     headers: {
-                        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36',
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Content-Type': 'application/json'
                     }
                 });
 
-                const contentType = res.headers.get("content-type");
-                let data;
-                if (contentType && contentType.includes("application/json")) {
-                    data = await res.json();
-                } else {
-                    data = { rawText: await res.text(), status: res.status };
-                }
+                const data = await response.json();
 
-                if(res.ok) {
-                    statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonBlue shadow-[0_0_15px_#00f0ff]';
-                    statusText.className = 'tracking-wider text-cyber-neonBlue font-orbitron text-xs';
-                    statusText.innerText = 'SUCCESS // INJECTION COMPLETED';
-                } else {
-                    statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonRed shadow-[0_0_15px_#ff0055]';
-                    statusText.className = 'tracking-wider text-cyber-neonRed font-orbitron text-xs';
-                    statusText.innerText = 'WARNING // API RESPONSE FAILED';
-                }
-                
-                responseOutput.innerText = JSON.stringify(data, null, 2);
+                setTimeout(() => {
+                    if (response.ok) {
+                        appendLog(`> [SUCCESS]: Premium successfully applied to account!`, 'log-success');
+                        appendLog(`> [RESPONSE]: ${JSON.stringify(data)}`, 'log-success');
+                    } else {
+                        appendLog(`> [ERROR]: Server rejected request. Status: ${response.status}`, 'log-error');
+                        appendLog(`> [DETAIL]: ${JSON.stringify(data)}`, 'log-error');
+                    }
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                }, 1500);
 
-            } catch (err) {
-                statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonRed shadow-[0_0_15px_#ff0055]';
-                statusText.className = 'tracking-wider text-cyber-neonRed font-orbitron text-xs';
-                statusText.innerText = 'ERROR // CONNECTION REFUSED';
-                responseOutput.innerText = `[EXCEPTION]: ${err.message}\n\nNote: Make sure your network is stable or CORS policy permits external fetch.`;
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
-                btnText.innerText = 'EXECUTE PREMIUM INJECTION';
+            } catch (error) {
+                setTimeout(() => {
+                    appendLog(`> [CRITICAL ERROR]: Failed to fetch API endpoint!`, 'log-error');
+                    appendLog(`> [DETAILS]: ${error.message}`, 'log-error');
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                }, 1500);
             }
         }
 
-        function copyResponse() {
-            const textToCopy = document.getElementById('responseOutput').innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast('Result successfully copied to clipboard!');
-        }
-
-        function showToast(msg) {
-            const existingToast = document.getElementById('customToast');
-            if(existingToast) existingToast.remove();
-
-            const toast = document.createElement('div');
-            toast.id = 'customToast';
-            toast.className = 'fixed bottom-6 right-6 z-50 bg-[#0a0d1d] border border-cyber-neonBlue text-cyber-neonBlue font-orbitron text-xs px-5 py-3.5 rounded-2xl shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center space-x-2 animate-bounce';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check text-cyber-neonBlue"></i> <span>${msg}</span>`;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
+        function appendLog(text, className) {
+            const terminal = document.getElementById('terminalBox');
+            const div = document.createElement('div');
+            div.className = `log-line ${className}`;
+            div.textContent = text;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
         }
     </script>
 </body>
