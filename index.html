@@ -4,335 +4,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #030308;
-            --panel-bg: rgba(10, 10, 20, 0.75);
-            --neon-red: #ff073a;
-            --neon-blue: #00f0ff;
-            --text-main: #ffffff;
-            --text-muted: #8b9bb4;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            min-height: 100vh;
+            background-color: #0b0f19;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 20px;
             overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Cyberpunk Grid & Glow Background */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 200vw;
-            height: 200vh;
-            background-image: 
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 7, 58, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: gridMove 20s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(40px); }
-        }
-
-        .ambient-light {
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: -1;
-            opacity: 0.35;
-        }
-
-        .light-blue {
-            top: 10%;
-            left: 15%;
-            background: var(--neon-blue);
-        }
-
-        .light-red {
-            bottom: 10%;
-            right: 15%;
-            background: var(--neon-red);
         }
 
         .container {
+            background: rgba(18, 24, 38, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.2), 
+                        0 0 25px rgba(0, 242, 255, 0.2);
             width: 100%;
-            max-width: 520px;
-            padding: 20px;
-            z-index: 1;
-        }
-
-        .card {
-            background: var(--panel-bg);
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            padding: 35px 30px;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), 
-                        inset 0 0 20px rgba(255, 7, 58, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: rgba(255, 7, 58, 0.5);
-            box-shadow: 0 0 40px rgba(255, 7, 58, 0.2);
-        }
-
-        .header {
+            max-width: 420px;
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
+        h1 {
+            font-size: 16px;
+            margin-bottom: 22px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-red));
+            letter-spacing: 1.2px;
+            background: linear-gradient(90deg, #ff0055, #00f2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
         }
 
-        .header p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 8px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
 
-        .form-group {
-            margin-bottom: 22px;
-        }
-
-        .form-group label {
+        label {
             display: block;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--neon-blue);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #8ab4f8;
+            font-weight: 500;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
-        .form-control {
+        input {
             width: 100%;
-            background: rgba(3, 3, 8, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 14px 16px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            padding: 11px 14px;
+            border: 1px solid #2a344e;
+            border-radius: 8px;
+            background-color: #121826;
+            color: #fff;
             outline: none;
+            transition: all 0.3s ease;
+            font-size: 13px;
         }
 
-        .form-control:focus {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 15px rgba(255, 7, 58, 0.3);
+        input:focus {
+            border-color: #00f2ff;
+            box-shadow: 0 0 8px rgba(0, 242, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-execute {
+            background: linear-gradient(135deg, #ff0055, #cc0044);
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+            margin-bottom: 5px;
+        }
+
+        .btn-execute:hover {
+            background: linear-gradient(135deg, #ff1a66, #e6004c);
         }
 
         .btn-generate {
-            width: 100%;
-            background: linear-gradient(135deg, var(--neon-red), #990022);
-            border: none;
-            border-radius: 12px;
-            padding: 16px;
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 7, 58, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            background: linear-gradient(135deg, #00f2ff, #0077ff);
+            color: #0b0f19;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+            margin-top: 5px;
         }
 
         .btn-generate:hover {
-            background: linear-gradient(135deg, #ff2a55, var(--neon-red));
-            box-shadow: 0 0 30px rgba(255, 7, 58, 0.7);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #33f5ff, #1a8cff);
         }
 
-        .btn-generate:active {
-            transform: translateY(1px);
+        button:active {
+            transform: scale(0.97);
         }
 
-        .terminal-box {
-            margin-top: 25px;
-            background: #010104;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            min-height: 110px;
-            max-height: 160px;
-            overflow-y: auto;
-            color: var(--neon-blue);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+        .result {
+            margin-top: 15px;
+            font-size: 12px;
+            word-wrap: break-word;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left;
             display: none;
+            max-height: 180px;
+            overflow-y: auto;
         }
 
-        .terminal-box.active {
+        .success-text {
             display: block;
+            background-color: rgba(0, 242, 255, 0.08);
+            color: #00f2ff;
+            border: 1px solid rgba(0, 242, 255, 0.4);
         }
 
-        .log-line {
-            margin-bottom: 6px;
-            word-break: break-all;
+        .error-text {
+            display: block;
+            background-color: rgba(255, 0, 85, 0.08);
+            color: #ff4d88;
+            border: 1px solid rgba(255, 0, 85, 0.4);
         }
 
-        .log-success { color: #00ff66; }
-        .log-error { color: var(--neon-red); }
-        .log-info { color: var(--neon-blue); }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #030308;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 240, 255, 0.3);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-blue);
+        .loading-text {
+            display: block;
+            background-color: rgba(138, 180, 248, 0.08);
+            color: #8ab4f8;
+            border: 1px solid rgba(138, 180, 248, 0.4);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-light light-blue"></div>
-    <div class="ambient-light light-red"></div>
+<div class="container">
+    <h1>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</h1>
+    
+    <div class="input-group">
+        <label for="email">Masukkan Email</label>
+        <input type="email" id="email" placeholder="contoh@gmail.com" required>
+    </div>
+    
+    <button class="btn-execute" onclick="executeEmail()">Execute (Kirim Request Email)</button>
 
-    <div class="container">
-        <div class="card">
-            <div class="header">
-                <h1>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</h1>
-                <p>System v1.0 // Secured API Interface</p>
-            </div>
-
-            <div class="form-group">
-                <label for="emailInput">Alight Motion Email</label>
-                <div class="input-wrapper">
-                    <input type="email" id="emailInput" class="form-control" placeholder="Masukkan email akun lu..." required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="linkInput">Project / Account Link</label>
-                <div class="input-wrapper">
-                    <input type="text" id="linkInput" class="form-control" placeholder="Masukkan link atau token..." required>
-                </div>
-            </div>
-
-            <button type="button" class="btn-generate" id="generateBtn" onclick="runGenerator()">Generate Premium</button>
-
-            <div class="terminal-box" id="terminalBox">
-                <div class="log-line log-info">> [SYSTEM]: Ready for execution...</div>
-            </div>
-        </div>
+    <div class="input-group" style="margin-top: 15px;">
+        <label for="linkUrl">Paste URL</label>
+        <input type="text" id="linkUrl" placeholder="Paste URL verifikasi dari email di sini" required>
     </div>
 
-    <script>
-        async function runGenerator() {
-            const email = document.getElementById('emailInput').value.trim();
-            const link = document.getElementById('linkInput').value.trim();
-            const terminal = document.getElementById('terminalBox');
-            const btn = document.getElementById('generateBtn');
+    <button class="btn-generate" onclick="generatePremium()">Generate</button>
 
-            if (!email || !link) {
-                alert("Woy, isi dulu data email sama link-nya dengan benar, BAJINGAN!");
-                return;
-            }
+    <div id="resultBox" class="result"></div>
+</div>
 
-            terminal.classList.add('active');
-            terminal.innerHTML = `<div class="log-line log-info">> [SYSTEM]: Initializing connection to endpoint...</div>`;
-            btn.disabled = true;
-            btn.style.opacity = "0.6";
+<script>
+    async function executeEmail() {
+        const email = document.getElementById('email').value.trim();
+        const resultBox = document.getElementById('resultBox');
 
-            setTimeout(() => {
-                appendLog(`> [INFO]: Target Email -> ${email}`, 'log-info');
-            }, 400);
+        resultBox.textContent = '';
+        resultBox.className = 'result';
 
-            const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodeURIComponent(email)}&link=${encodeURIComponent(link)}`;
-
-            try {
-                setTimeout(() => {
-                    appendLog(`> [PROCESS]: Sending secure GET request...`, 'log-info');
-                }, 900);
-
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-
-                setTimeout(() => {
-                    if (response.ok) {
-                        appendLog(`> [SUCCESS]: Premium successfully applied to account!`, 'log-success');
-                        appendLog(`> [RESPONSE]: ${JSON.stringify(data)}`, 'log-success');
-                    } else {
-                        appendLog(`> [ERROR]: Server rejected request. Status: ${response.status}`, 'log-error');
-                        appendLog(`> [DETAIL]: ${JSON.stringify(data)}`, 'log-error');
-                    }
-                    btn.disabled = false;
-                    btn.style.opacity = "1";
-                }, 1500);
-
-            } catch (error) {
-                setTimeout(() => {
-                    appendLog(`> [CRITICAL ERROR]: Failed to fetch API endpoint!`, 'log-error');
-                    appendLog(`> [DETAILS]: ${error.message}`, 'log-error');
-                    btn.disabled = false;
-                    btn.style.opacity = "1";
-                }, 1500);
-            }
+        if (!email) {
+            resultBox.className = 'result error-text';
+            resultBox.textContent = 'Woy masukin dulu kolom email-nya, jangan setengah-setengah!';
+            return;
         }
 
-        function appendLog(text, className) {
-            const terminal = document.getElementById('terminalBox');
-            const div = document.createElement('div');
-            div.className = `log-line ${className}`;
-            div.textContent = text;
-            terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight;
+        resultBox.className = 'result loading-text';
+        resultBox.textContent = 'Mengirim request execute email ke server...';
+
+        try {
+            // Menembak API dengan link kosong sesuai skema awal (untuk memicu kirim email)
+            const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodeURIComponent(email)}&link=`;
+
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+
+            // Tampilkan hasil sukses eksekusi di kotak bawah (tanpa alert yang ngebug di Acode)
+            resultBox.className = 'result success-text';
+            resultBox.innerHTML = `<strong>[EXECUTE BERHASIL]</strong><br>Email terkirim/terproses!<br><pre style="margin-top:5px; white-space: pre-wrap;">${JSON.stringify(data, null, 2)}</pre>`;
+            
+            // Otomatis nyimpen email ke memori internal buat bantuan
+            localStorage.setItem('target_email', email);
+
+        } catch (error) {
+            resultBox.className = 'result error-text';
+            resultBox.textContent = 'Gagal nge-hit API execute. Cek koneksi internet atau status server lu, sampah!';
+            console.error('Error:', error);
         }
-    </script>
+    }
+
+    async function generatePremium() {
+        const email = document.getElementById('email').value.trim();
+        const link = document.getElementById('linkUrl').value.trim();
+        const resultBox = document.getElementById('resultBox');
+
+        resultBox.textContent = '';
+        resultBox.className = 'result';
+
+        if (!email || !link) {
+            resultBox.className = 'result error-text';
+            resultBox.textContent = 'Kolom Email dan Paste URL wajib diisi dengan benar, BAJINGAN!';
+            return;
+        }
+
+        resultBox.className = 'result loading-text';
+        resultBox.textContent = 'Menghubungkan ke API Generate...';
+
+        try {
+            const encodedEmail = encodeURIComponent(email);
+            const encodedLink = encodeURIComponent(link);
+            
+            const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodedEmail}&link=${encodedLink}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+
+            resultBox.className = 'result success-text';
+            resultBox.innerHTML = `<strong>[GENERATE BERHASIL]</strong><br><pre style="margin-top:5px; white-space: pre-wrap;">${JSON.stringify(data, null, 2)}</pre>`;
+            
+        } catch (error) {
+            resultBox.className = 'result error-text';
+            resultBox.textContent = 'API Generate gagal diakses atau diblokir sistem. Periksa kembali URL-nya!';
+            console.error('Error:', error);
+        }
+    }
+</script>
+
 </body>
 </html>
